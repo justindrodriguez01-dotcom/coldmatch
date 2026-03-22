@@ -80,7 +80,7 @@ router.post("/", async (req, res) => {
 });
 
 // ─── POST /profile/parse-resume ───────────────────────────────────────────────
-router.post("/parse-resume", upload.single("resume"), async (req, res) => {
+router.post("/parse-resume", requireAuth, upload.single("resume"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded." });
   }
