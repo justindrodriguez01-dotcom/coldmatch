@@ -12,22 +12,14 @@ const PORT = process.env.PORT || 3000;
 
 // ─── CORS ────────────────────────────────────────────────────────────────────
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (e.g. curl, Postman) and any
-    // chrome-extension:// origin, plus localhost for local dev.
-    if (
-      !origin ||
-      origin.startsWith("chrome-extension://") ||
-      origin.startsWith("http://localhost") ||
-      origin.startsWith("http://127.0.0.1")
-    ) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: [
+    'https://coldmatch.co',
+    'https://www.coldmatch.co',
+    'http://coldmatch.co',
+    'http://localhost:3000',
+    /^chrome-extension:\/\//
+  ],
+  credentials: true
 }));
 
 // ─── Body parsing ─────────────────────────────────────────────────────────────
