@@ -107,28 +107,30 @@ Use the sender context to write the intro and make the email feel personal and g
         role: "user",
         content: `Write a cold outreach email and a subject line for it.
 
-Structure — follow this exactly:
+Structure:
 - Greeting: The profile data begins with "Name: [full name]". Extract the first name and use it directly. Write "Hi [firstname]," on its own line. Never output a placeholder like [recipient first name].
-- Sentence 1: Sender's name and school only. Example: "My name is Justin Rodriguez and I'm a freshman at Michigan."
-- Sentence 2: Something specific about their firm or role that proves you read their profile, not just their headline. Reference what their firm actually does, a specific investment focus, a market they operate in, or a concrete detail from their career path. This is the most important sentence — it must go beyond their title and company name. Example: "I saw you went from Michigan straight into real estate PE at Vanbarton, which focuses on value-add multifamily in gateway cities, and have been there for 9 years."
-- Sentence 3: One genuine question about their path or perspective. Simple and direct. Example: "I'd love to hear what drew you to that space."
-- Sentences 4-5: The ask. Acknowledge their time with "I know you're likely busy" before making the request. Keep it to 15 minutes, low pressure. Example: "I know you're likely busy, but would you be open to a quick 15 minute call? Happy to work around your schedule."
-- Sign off: "Best," on its own line, then the sender's name on the next line. Never inline with the body.
+- Intro: One sentence. Sender's name and school only. Example: "My name is Justin Rodriguez and I'm a freshman at Michigan."
+- Body: 1-2 sentences. Include a specific observation about their background AND genuine curiosity about their path. These can be one sentence or two — combine them naturally if it reads better. The observation must go beyond restating their job title.
+- Ask: Acknowledge they're busy, then make a low-pressure request for a 15-minute call. Example: "I know you're likely busy, but would you be open to a quick call? Happy to work around your schedule."
+- Sign off: "Best," on its own line, then the sender's name on the next line.
 
 Hard rules:
+- Total email body must be under 120 words
 - No em dashes anywhere in the email
 - Never mention internships, job seeking, recruiting, or resume
-- Never use any of these phrases: "came across your profile", "was impressed", "extensive experience", "would greatly appreciate", "any insights you could share", "thank you for considering", "I look forward to the possibility", "your journey", "that kind of focus is rare", "truly inspiring", "really resonated", "I hope this message finds you well", "built a strong career", "transitioned from", "eager to learn", "I'd be grateful"
-- The observation in sentence 2 must reference something real about what the firm does or a concrete detail from their career — repeating their job title and company name alone is not acceptable
 - Never ask for anything except a conversation
 - Sound like a confident college student writing a real email, not a cover letter
 - Every email must feel like it could only be sent to this exact person
-- When referencing the recipient's work, follow these rules:
-  - You MAY reference what their company is known for doing (e.g. "BlackGen Capital is a PE firm focused on..." if that's publicly known) — use your general knowledge about the company
-  - You MAY reference what their specific role title implies they do day-to-day (e.g. an Investment Analyst likely sources deals and builds models)
+- Never editorialize after an observation. State the fact, then stop. BAD: "you've spent 8 years at TIAA, which must involve incredibly complex work" — GOOD: "you've spent 8 years at TIAA moving from wealth management into portfolio management"
+- Never use: "which must involve", "which is fascinating", "which is inspiring", "truly impressive", "really resonated", "I came across your profile", "was impressed by", "your journey", "that kind of dedication", "came across your profile", "was impressed", "extensive experience", "would greatly appreciate", "any insights you could share", "thank you for considering", "I look forward to the possibility", "that kind of focus is rare", "truly inspiring", "I hope this message finds you well", "built a strong career", "transitioned from", "eager to learn", "I'd be grateful", "your ability to"
+- Never compliment a skill or personal trait directly. "Your ability to..." is always banned. Do not repackage anything from their About section as a compliment or admiring observation.
+- The specific observation must come only from their career history: company names, role titles, career transitions, tenure, or schools. Never pull the observation from their About section or self-description. They wrote their About section themselves — they already know it. BAD: "Your ability to cultivate trust-based client relationships while consistently exceeding financial goals is impressive" (this is just their About section reworded). GOOD: "I saw you've been at TIAA for 8 years, moving from wealth management into portfolio management."
+- When referencing the recipient's work:
+  - You MAY use your general knowledge of what their company is known for doing
+  - You MAY reference what their role title implies they do day-to-day
   - If they have multiple current roles, mention the one most relevant to the sender's goal
-  - You MUST NOT invent specific personal focus areas, specializations, sectors, or tasks unless they are explicitly stated in the profile data provided
-  - If you don't have enough specific information about the company or role to say something accurate, keep sentence 2 focused on their career path or school instead
+  - You MUST NOT invent specific personal focus areas, specializations, or tasks unless explicitly stated in the profile data
+  - If you lack specific information, anchor the observation on their career path or school instead
 
 Subject line rules:
 - Never use the recipient's name
