@@ -34,7 +34,6 @@ router.get("/auth", requireAuth, (req, res) => {
     access_type: "offline",
     scope: ["https://www.googleapis.com/auth/gmail.compose"],
     state: req.userId,
-    prompt: "consent",
   });
   res.json({ authUrl });
 });
@@ -42,23 +41,25 @@ router.get("/auth", requireAuth, (req, res) => {
 // ─── GET /gmail/callback ───────────────────────────────────────────────────────
 // Google redirects here after the user grants permission.
 router.get("/callback", async (req, res) => {
-  const { code, state: userId } = req.query;
-  if (!code || !userId) {
-    return res.status(400).send("Missing code or state parameter.");
-  }
+  const { code, state } = req.query;
+
+  console.log("[gmail/callback] code received:", !!code);
+  console.log("[gmail/callback] state (userId):", state);
+
   try {
     const { tokens } = await oauth2Client.getToken(code);
-    await query(
-      `INSERT INTO profiles (user_id, gmail_tokens)
-       VALUES ($1, $2)
-       ON CONFLICT (user_id)
-       DO UPDATE SET gmail_tokens = EXCLUDED.gmail_tokens`,
-      [userId, JSON.stringify(tokens)]
+    console.log("[gmail/callback] tokens received:", !!tokens);
+
+    const result = await query(
+      "UPDATE profiles SET gmail_tokens = $1 WHERE user_id = $2",
+      [JSON.stringify(tokens), state]
     );
+    console.log("[gmail/callback] db update result:", result.rowCount);
+
     res.redirect("https://coldmatch.co/dashboard.html?gmail=connected");
   } catch (err) {
-    console.error("[gmail/callback]", err);
-    res.status(500).send("Failed to connect Gmail. Please try again.");
+    console.error("[gmail/callback] error:", err);
+    res.redirect("https://coldmatch.co/dashboard.html?gmail=error");
   }
 });
 
