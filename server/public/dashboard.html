@@ -227,6 +227,17 @@
         </ul>
       </div>
 
+      <div class="card" id="gmail-card">
+        <div class="card-title">Connect Gmail</div>
+        <div class="card-sub">Save drafts directly to Gmail from the ColdMatch extension.</div>
+        <div id="gmail-not-connected">
+          <button class="btn-primary" id="connect-gmail-btn">Connect Gmail</button>
+        </div>
+        <div id="gmail-connected" style="display:none;">
+          <span style="color:#059669;font-weight:500;font-size:14px;">✓ Gmail connected</span>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-title">Your profile</div>
         <div id="profile-details"></div>
@@ -301,6 +312,30 @@
     }
 
     loadDashboard();
+
+    // ── Gmail connection ──
+    const gmailParam = new URLSearchParams(window.location.search).get('gmail');
+    if (gmailParam === 'connected') {
+      localStorage.setItem('gmail_connected', 'true');
+      // Clean URL without reloading
+      history.replaceState(null, '', '/dashboard.html');
+    }
+    if (localStorage.getItem('gmail_connected') === 'true') {
+      document.getElementById('gmail-not-connected').style.display = 'none';
+      document.getElementById('gmail-connected').style.display = 'block';
+    }
+
+    document.getElementById('connect-gmail-btn').addEventListener('click', async () => {
+      try {
+        const res = await fetch('/gmail/auth', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (data.authUrl) window.location.href = data.authUrl;
+      } catch (e) {
+        alert('Could not start Gmail connection. Try again.');
+      }
+    });
   </script>
 
 </body>

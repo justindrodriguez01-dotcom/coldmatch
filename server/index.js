@@ -6,6 +6,7 @@ const path    = require("path");
 const authRoutes     = require("./routes/auth");
 const profileRoutes  = require("./routes/profile");
 const generateRoutes = require("./routes/generate");
+const gmailRoutes    = require("./routes/gmail");
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/auth",     authRoutes);
 app.use("/profile",  profileRoutes);
 app.use("/generate", generateRoutes);
+app.use("/gmail",    gmailRoutes);
 
 // ─── Global error handler ────────────────────────────────────────────────────
 app.use((err, _req, res, _next) => {

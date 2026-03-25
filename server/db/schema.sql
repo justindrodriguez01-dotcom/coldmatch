@@ -33,3 +33,6 @@ CREATE TABLE IF NOT EXISTS profiles (
 
 -- One profile per user
 CREATE UNIQUE INDEX IF NOT EXISTS profiles_user_id_idx ON profiles(user_id);
+
+-- Gmail OAuth tokens (run separately if table already exists)
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS gmail_tokens JSONB;
