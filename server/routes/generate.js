@@ -10,22 +10,31 @@ function getOpenAI() {
   return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 }
 
-function buildToneInstruction(goal) {
-  switch (goal) {
-    case "Finding a job":
-      return "The sender is actively looking for opportunities. The tone should be purposeful and professional — subtly signal their interest in roles or teams without being blunt about job-seeking. The ask should feel natural, not transactional.";
-    case "Seeking mentorship":
-      return "The sender wants guidance from this person. Use a curious, deferential, and eager-to-learn tone. Genuine admiration for the recipient's path is appropriate. The ask should be humble — a short call to learn from their experience.";
-    case "Exploring a career pivot":
-      return "The sender is considering a career change and is drawn to this person's background. The tone should be open and exploratory — someone trying to understand a new field through the lens of someone who has navigated it.";
-    case "Networking generally":
-      return "No specific agenda — the sender genuinely wants to connect. Keep the tone warm, low-pressure, and authentic. The ask should feel like a conversation, not a pitch.";
-    case "Finding collaborators":
-      return "The sender is looking for people to work with on projects or ideas. Use an energetic, collaborative tone — convey excitement about what the recipient is building and suggest exploring shared interests.";
-    default:
-      return "Polished, respectful, and human. Confident but not pushy. Keep it natural and not overly formal.";
-  }
+function buildSenderBlock(u) {
+  return [
+    `- Name: ${u.name || "not provided"}`,
+    `- School: ${u.school || "not provided"}${u.year ? `, ${u.year} year` : ""}`,
+    `- Major: ${u.major || "not provided"}`,
+    `- Hometown: ${u.hometown || "not provided"}`,
+    `- Target job location: ${u.target_job_location || "not provided"}`,
+    `- Career goal: ${u.goal || "not provided"}`,
+    `- Target field: ${u.target_field || "not provided"}`,
+    `- Target role type: ${u.target_role || "not provided"} (internship/full-time/exploring)`,
+    `- Timeline: ${u.timeline || "not provided"}`,
+    `- Work experience: ${u.work_experience || "not provided"}`,
+    `- Activities and clubs: ${u.activities || "not provided"}`,
+    `- Background: ${u.background_blurb || "not provided"}`,
+  ].join("\n");
 }
+
+const ANGLE_DESCRIPTIONS = {
+  career_path:        "sender wants to understand how recipient built their career and what decisions led them here",
+  firm_industry:      "sender is specifically curious about what the recipient's firm does and how they think about their work",
+  internship_advice:  "sender wants honest advice on how to break into this field and what to focus on",
+  referral:           "sender is respectfully seeing if recipient knows of opportunities or could make an introduction",
+  day_to_day:         "sender wants to understand what the work actually looks like day to day beyond the job title",
+  general:            "sender wants to start a genuine professional relationship with no specific immediate ask",
+};
 
 // ─── POST /generate/score ──────────────────────────────────────────────────────
 // Body: { profileData: string, userProfile: object }
@@ -45,25 +54,41 @@ router.post("/score", async (req, res) => {
       temperature: 0.3,
       messages: [{
         role: "user",
-        content: `You are evaluating whether it is worth sending a cold outreach email to a LinkedIn contact.
+        content: `You are an experienced career mentor helping a college student decide whether a specific LinkedIn connection is worth cold emailing right now.
 
-Sender context:
-- Name: ${userProfile.name || "not provided"}
-- School / Company: ${userProfile.school || "not provided"}
-- Goal: ${userProfile.goal || "not provided"}
-- Background: ${userProfile.background_blurb || "not provided"}
+You have full context on both people:
 
-Recipient profile:
+SENDER:
+${buildSenderBlock(userProfile)}
+
+RECIPIENT:
 ${profileData}
 
-Score this match 0–100 based on how relevant this recipient is to the sender's stated goal.
+Your job: Give an honest, calibrated score from 0-100 representing how valuable it would be for THIS sender to reach out to THIS recipient RIGHT NOW given the sender's specific goals and stage.
 
-Return ONLY valid JSON with no explanation outside it:
+Think like a mentor who actually knows the sender personally and is advising them on whether this is a good use of their time. Consider:
+- Is this person genuinely relevant to what the sender wants to achieve right now? Not just impressive, but actually useful for their specific goal.
+- Is there any real common ground that makes the outreach feel natural rather than random? (shared school, hometown proximity, similar background, relevant career path)
+- Given the sender's stage and experience level, is this person realistically going to respond and provide value?
+- Does the recipient's seniority, field, role, and company actually align with what the sender is trying to do?
+- Is the timing right? (e.g. a freshman reaching out to a senior banker during peak recruiting season)
+
+Be honest. A peer with only student orgs is not useful for someone trying to get a PE internship. A senior professional in a completely different field is not useful regardless of how impressive they are. A mid-level professional at a target firm who shares the sender's school is extremely valuable.
+
+Return ONLY this JSON, no explanation:
 {
-  "score": <integer 0-100>,
-  "reasons": [<exactly 3 short strings, no bullet characters>],
-  "recommendation": <"strong match" | "worth reaching out" | "weak match">
-}`,
+  "score": number,
+  "reasons": [
+    "specific reason 1",
+    "specific reason 2",
+    "specific reason 3"
+  ],
+  "recommendation": "strong match" | "worth reaching out" | "weak match"
+}
+
+Reasons must be specific to these two people — never generic.
+Bad: "Relevant industry experience"
+Good: "VP at Vanbarton Group, a real estate PE firm aligned with sender's target field of private equity"`,
       }],
     });
 
@@ -77,77 +102,66 @@ Return ONLY valid JSON with no explanation outside it:
 });
 
 // ─── POST /generate/email ──────────────────────────────────────────────────────
-// Body: { profileData: string, userProfile: object }
+// Body: { profileData: string, userProfile: object, targetingAngle: string }
 // Returns: { subject, body }
 router.post("/email", async (req, res) => {
-  const { profileData, userProfile } = req.body;
+  const { profileData, userProfile, targetingAngle } = req.body;
 
   if (!profileData || !userProfile) {
     return res.status(400).json({ error: "profileData and userProfile are required" });
   }
 
+  const angleKey = targetingAngle && ANGLE_DESCRIPTIONS[targetingAngle] ? targetingAngle : "general";
+  const angleDescription = ANGLE_DESCRIPTIONS[angleKey];
+
   try {
     const openai = getOpenAI();
-
-    const hasSenderContext = userProfile.name || userProfile.background_blurb;
-    const senderSection = hasSenderContext ? `
-
-Sender context:
-- Name: ${userProfile.name || "not provided"}
-- School / Company: ${userProfile.school || "not provided"}
-- Goal: ${userProfile.goal || "not provided"}
-- Background: ${userProfile.background_blurb || "not provided"}
-
-Use the sender context to write the intro and make the email feel personal and grounded. Reference their background naturally — don't list it robotically.` : "";
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.8,
       messages: [{
         role: "user",
-        content: `Write a cold outreach email and a subject line for it.
+        content: `You are writing a cold outreach email on behalf of a college student. This email must sound like a real human wrote it — not AI, not a template, not a cover letter.
 
-Structure:
-- Greeting: The profile data begins with "Name: [full name]". Extract the first name and use it directly. Write "Hi [firstname]," on its own line. Never output a placeholder like [recipient first name].
-- Intro: One sentence. Sender's name and school only. Example: "My name is Justin Rodriguez and I'm a freshman at Michigan."
-- Body: 1-2 sentences. Include a specific observation about their background AND genuine curiosity about their path. These can be one sentence or two — combine them naturally if it reads better. The observation must go beyond restating their job title.
-- Ask: Acknowledge they're busy, then make a low-pressure request for a 15-minute call. Example: "I know you're likely busy, but would you be open to a quick call? Happy to work around your schedule."
-- Sign off: "Best," on its own line, then the sender's name on the next line.
+SENDER CONTEXT:
+${buildSenderBlock(userProfile)}
 
-Hard rules:
-- Total email body must be under 120 words
-- No em dashes anywhere in the email
-- Never mention internships, job seeking, recruiting, or resume
-- Never ask for anything except a conversation
+RECIPIENT CONTEXT:
+${profileData}
+
+SENDER'S ANGLE FOR THIS EMAIL:
+${angleDescription}
+
+HOOK PRIORITY — use the strongest available hook, in this order:
+1. Same school as sender → always lead with this if true
+2. Recipient's firm is in or near sender's hometown → mention the geographic connection
+3. Recipient made a notable career transition or has an unusual path → reference that specifically
+4. Specific knowledge of what their firm does → show you did research
+5. Their career progression over time → reference tenure or growth
+6. Nothing specific → keep email very short and purely curiosity-driven, do not invent details
+
+EMAIL RULES:
+- Greeting: Hi [first name],
+- Introduce yourself: name, school, year (1 sentence max)
+- One specific observation anchored in real profile data (NOT from their About section — from their actual career history, school, or firm). State the fact. Do not editorialize or compliment.
+- Express genuine curiosity shaped by the targeting angle
+- Low-pressure ask: reference being busy, 15 min call
+- Sign off: Best, then name on separate line
+- Total length: under 120 words
 - Sound like a confident college student writing a real email, not a cover letter
-- Every email must feel like it could only be sent to this exact person
-- Never editorialize after an observation. State the fact, then stop. BAD: "you've spent 8 years at TIAA, which must involve incredibly complex work" — GOOD: "you've spent 8 years at TIAA moving from wealth management into portfolio management"
-- Never use: "which must involve", "which is fascinating", "which is inspiring", "truly impressive", "really resonated", "I came across your profile", "was impressed by", "your journey", "that kind of dedication", "came across your profile", "was impressed", "extensive experience", "would greatly appreciate", "any insights you could share", "thank you for considering", "I look forward to the possibility", "that kind of focus is rare", "truly inspiring", "I hope this message finds you well", "built a strong career", "transitioned from", "eager to learn", "I'd be grateful", "your ability to"
-- Never compliment a skill or personal trait directly. "Your ability to..." is always banned. Do not repackage anything from their About section as a compliment or admiring observation.
-- The specific observation must come only from their career history: company names, role titles, career transitions, tenure, or schools. Never pull the observation from their About section or self-description. They wrote their About section themselves — they already know it. BAD: "Your ability to cultivate trust-based client relationships while consistently exceeding financial goals is impressive" (this is just their About section reworded). GOOD: "I saw you've been at TIAA for 8 years, moving from wealth management into portfolio management."
-- When referencing the recipient's work:
-  - You MAY use your general knowledge of what their company is known for doing
-  - You MAY reference what their role title implies they do day-to-day
-  - If they have multiple current roles, mention the one most relevant to the sender's goal
-  - You MUST NOT invent specific personal focus areas, specializations, or tasks unless explicitly stated in the profile data
-  - If you lack specific information, anchor the observation on their career path or school instead
+- NEVER use: "which must involve", "which is fascinating", "truly impressive", "really resonated", "your journey", "I came across your profile", "was impressed by", "that kind of dedication", "I hope this finds you well", "would greatly appreciate", "any insights you could share", "thank you for considering", "I look forward to", "extensive experience", "built a strong career"
+- NEVER summarize their About section back to them
+- NEVER compliment a skill or trait directly
+- NEVER invent details not in the profile data
+- NEVER mention internships, jobs, or recruiting directly unless the angle is internship_advice or referral
+- If nothing specific and accurate can be said, write a very short generic curiosity email rather than inventing details
 
-Subject line rules:
-- Never use the recipient's name
-- Never say "Quick Introduction" or any variant of it
-- Make it specific to something in their background or the connection angle
-- Curiosity-driven, like something a real person would write
-- Under 8 words
-- Examples: "Freshman curious about your path to PE", "Question about the jump from Wharton to SM", "Advice from someone who's been through IB recruiting"
-
-Output:
-- Return ONLY valid JSON, no explanation, no markdown
-- Format: { "subject": "...", "body": "..." }
-- The body must not include a subject line
-- In the body field, use \\n\\n between paragraphs and \\n for single line breaks (e.g. between "Best," and the sender's name) so the email displays correctly in a textarea
-${senderSection}
-Profile Data:
-${profileData}`,
+Return ONLY this JSON:
+{
+  "subject": "under 8 words, specific, no recipient name, curiosity-driven",
+  "body": "the full email body — use \\n\\n between paragraphs and \\n for single line breaks (e.g. between Best, and sender name)"
+}`,
       }],
     });
 
