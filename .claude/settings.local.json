@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(node generate-icons.js)",
+      "Bash(node -e \"const j = require\\(''jimp''\\); console.log\\(Object.keys\\(j\\).slice\\(0,10\\)\\); console.log\\(j.Jimp ? ''has Jimp'' : ''no Jimp''\\);\")",
+      "Bash(node -e \"const {Jimp}=require\\(''jimp''\\); const img = new Jimp\\({width:16,height:16,color:0xff0000ff}\\); console.log\\(img.width, img.height, typeof img.setPixelColor\\);\")",
+      "Bash(node -e \"const {Jimp}=require\\(''jimp''\\); const img = new Jimp\\({width:16,height:16,color:0xff0000ff}\\); console.log\\(typeof img.write, typeof img.writeAsync\\);\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(node -e \"const p = require\\(''pdf-parse''\\); console.log\\(typeof p\\); console.log\\(Object.keys\\(p || {}\\)\\); console.log\\(p\\)\")",
+      "Bash(node -e \"try { const p = require\\(''''pdf-parse''''\\); console.log\\(''''type:'''', typeof p\\); } catch\\(e\\) { console.log\\(''''ERROR:'''', e.message\\); }\")",
+      "Bash(node -e \"const p = require\\(''pdf-parse''\\); console.log\\(''type:'', typeof p\\);\")",
+      "Bash(xargs wc:*)"
+    ]
+  }
+}

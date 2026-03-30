@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ColdMatch</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">✦</div>
+      <span class="header-title">ColdMatch</span>
+      <button id="settings-btn" class="settings-btn" title="Settings">⚙</button>
+    </div>
+
+    <!-- Loading: data extraction -->
+    <div id="loading" class="state state-center">
+      <div class="spinner"></div>
+      <p class="state-label">Analyzing profile…</p>
+    </div>
+
+    <!-- Error -->
+    <div id="error" class="state state-center hidden">
+      <div class="error-icon">!</div>
+      <p id="error-message">Could not extract profile data.</p>
+      <p class="hint">Open a LinkedIn profile page<br>(linkedin.com/in/…) and try again.</p>
+    </div>
+
+    <!-- Not logged in: inline login form -->
+    <div id="not-logged-in" class="state hidden">
+      <div class="login-header">
+        <div class="login-logo">✦</div>
+        <h1 class="login-heading">Welcome to ColdMatch</h1>
+        <p class="login-subtitle">Sign in to personalize your outreach</p>
+      </div>
+      <form id="login-form" class="login-form-inline">
+        <div class="field-group">
+          <label class="field-label" for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+        <div id="login-error" class="login-error hidden"></div>
+        <button type="submit" id="login-submit-btn" class="setup-btn login-submit-btn">Sign in</button>
+        <p class="login-signup-link">Don't have an account? <a id="signup-link" href="#">Create one</a></p>
+      </form>
+    </div>
+
+    <!-- Setup prompt (shown when user context is missing) -->
+    <div id="setup-prompt" class="state state-center hidden">
+      <div class="profile-card setup-prompt-card">
+        <p id="setup-name" class="profile-name"></p>
+      </div>
+      <p class="setup-prompt-msg">Set up your profile to get personalized emails</p>
+      <button id="setup-btn" class="setup-btn">Set up (30 seconds)</button>
+    </div>
+
+    <!-- Score card (shown after Stage 1: extraction + scoring) -->
+    <div id="score-card" class="state hidden">
+      <div class="profile-card">
+        <p id="score-name" class="profile-name"></p>
+      </div>
+      <div class="score-block">
+        <span id="score-number" class="score-number">—</span>
+        <span id="score-rec" class="score-badge">—</span>
+      </div>
+      <ul id="score-reasons" class="score-reasons"></ul>
+      <div class="score-actions">
+        <button id="generate-btn" class="score-generate-btn">Generate email →</button>
+        <button id="skip-btn" class="score-skip-btn">Not worth it</button>
+      </div>
+    </div>
+
+    <!-- Targeting step (shown after "Generate email →" on score card) -->
+    <div id="targeting-step" class="state hidden">
+      <p class="targeting-heading">What's your angle?</p>
+      <p class="targeting-subtitle">This focuses your email on what matters most</p>
+      <div class="field-group">
+        <select id="targeting-angle" class="targeting-select">
+          <option value="career_path">Their career path and how they got here</option>
+          <option value="firm_industry">Their firm or industry specifically</option>
+          <option value="internship_advice">Breaking in — internships and recruiting</option>
+          <option value="referral">An introduction or referral</option>
+          <option value="day_to_day">What their day-to-day actually looks like</option>
+          <option value="general">General conversation and networking</option>
+        </select>
+      </div>
+      <button id="targeting-generate-btn" class="score-generate-btn">Generate email →</button>
+      <button id="targeting-back-btn" class="targeting-back-btn">← Back</button>
+    </div>
+
+    <!-- Skip state (shown after "Not worth it") -->
+    <div id="skip-state" class="state state-center hidden">
+      <p class="state-label">Skipped — try another LinkedIn profile.</p>
+    </div>
+
+    <!-- Result -->
+    <div id="result" class="state hidden">
+
+      <!-- Context banner -->
+      <div id="context-banner" class="context-banner hidden"></div>
+
+      <!-- Profile summary -->
+      <div class="profile-card">
+        <p id="name" class="profile-name"></p>
+      </div>
+
+      <!-- Loading: AI generation (shown while callAI + generateMessage run) -->
+      <div id="ai-loading" class="ai-loading hidden">
+        <div class="spinner"></div>
+        <p class="state-label">Analyzing profile and generating message…</p>
+      </div>
+
+      <!-- Compose (hidden while AI is generating) -->
+      <div id="compose-inputs" class="compose-section hidden">
+
+        <div class="field-group">
+          <label class="field-label" for="email-input">To</label>
+          <input type="email" id="email-input" placeholder="Recipient email (optional)" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="subject-input">Subject line</label>
+          <input type="text" id="subject-input" placeholder="" />
+        </div>
+
+        <!-- Angle section -->
+        <div id="angle-section" class="angle-section hidden">
+          <p class="angle-label">Why this message works</p>
+          <p id="angle-text" class="angle-text"></p>
+        </div>
+
+        <div class="field-group">
+          <div class="message-label-row">
+            <label class="field-label" for="message-body">Suggested message</label>
+            <button id="regen-btn" class="regen-btn">↻ Regenerate</button>
+          </div>
+          <textarea id="message-body" placeholder=""></textarea>
+        </div>
+
+        <p class="tailored-hint">Tailored based on their profile</p>
+
+        <button id="draft-btn" class="draft-btn">Save as draft</button>
+        <div class="action-btns">
+          <button id="gmail-btn">Open in Gmail</button>
+          <button id="copy-msg-btn">Copy</button>
+        </div>
+
+        <p id="draft-confirm" class="draft-confirm hidden"></p>
+        <span id="copy-confirm" class="copy-confirm hidden">✓ Copied</span>
+
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

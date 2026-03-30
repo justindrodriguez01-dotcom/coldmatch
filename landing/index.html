@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ColdMatch — Cold email for finance recruiting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0C0B0A;
+      --bg-card: #111111;
+      --bg-card-hover: #161616;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.13);
+      --accent: #2563EB;
+      --accent-hover: #1d4ed8;
+      --white: #ffffff;
+      --gray-1: #e5e7eb;
+      --gray-2: #9ca3af;
+      --gray-3: #6b7280;
+      --gray-4: #374151;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2 {
+      font-family: 'Instrument Serif', Georgia, serif;
+    }
+
+    /* ── Utilities ── */
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--gray-3);
+      margin-bottom: 16px;
+    }
+
+    /* ── Fade-in on scroll ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12,11,10,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      background: var(--accent);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 100px 0 80px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(15px, 1.8vw, 17px);
+      color: var(--gray-2);
+      margin-bottom: 36px;
+      line-height: 1.65;
+      max-width: 440px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .hero-cta-group .btn-primary {
+      font-size: 15px;
+      padding: 12px 24px;
+    }
+
+    .hero-fine-print {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--gray-3);
+    }
+
+    /* ── Extension mockup ── */
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .extension-mockup {
+      background: #141414;
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 12px;
+      padding: 24px;
+      width: 272px;
+      box-shadow: 0 32px 72px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .mockup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .mockup-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-3);
+      letter-spacing: -0.01em;
+    }
+
+    .mockup-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .mockup-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
+
+    .mockup-status-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: #22c55e;
+      font-weight: 500;
+    }
+
+    .mockup-score-section {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 16px 0;
+    }
+
+    .mockup-score-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--gray-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .mockup-score {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 76px;
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: -0.03em;
+    }
+
+    .mockup-score-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 2px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+
+    .mockup-score-fill {
+      height: 100%;
+      width: 84%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .mockup-reasons {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mockup-reason {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .mockup-reason-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--gray-4);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .mockup-reason p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--gray-3);
+      line-height: 1.45;
+    }
+
+    /* ── Video section ── */
+    .video-section {
+      padding: 0 0 100px;
+    }
+
+    .video-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Problem section ── */
+    .problem-section {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: 56px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--white);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: background 0.2s;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .card-num {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--gray-3);
+      margin-bottom: 14px;
+      display: block;
+      letter-spacing: 0.04em;
+    }
+
+    .card h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--gray-2);
+      line-height: 1.6;
+    }
+
+    /* ── How it works ── */
+    .how-section {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: start;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-row:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .step-num-large {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 80px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.07);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      padding-top: 2px;
+    }
+
+    .step-content h3 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .step-content p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--gray-2);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    /* ── Bottom CTA ── */
+    .cta-section {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-section h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 32px;
+      max-width: 560px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--gray-3);
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 72px 0 64px;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .hero-right {
+        justify-content: flex-start;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .step-row {
+        grid-template-columns: 80px 1fr;
+        gap: 0;
+      }
+
+      .step-num-large {
+        font-size: 56px;
+      }
+
+      .problem-section,
+      .how-section,
+      .cta-section {
+        padding: 72px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .step-row {
+        grid-template-columns: 60px 1fr;
+      }
+
+      .step-num-large {
+        font-size: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">ColdMatch</a>
+        <a href="/signup" class="btn-primary">Get ColdMatch free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-left fade-in">
+          <h1>Know who to email. Know what to say.</h1>
+          <p class="hero-sub">
+            ColdMatch scores any LinkedIn profile against your background, then writes a cold email that does not sound like one.
+          </p>
+          <div class="hero-cta-group">
+            <a href="/signup" class="btn-primary">Get ColdMatch free</a>
+            <p class="hero-fine-print">Free to use · Chrome extension</p>
+          </div>
+        </div>
+        <div class="hero-right fade-in fade-in-delay-2">
+          <div class="extension-mockup">
+            <div class="mockup-header">
+              <span class="mockup-logo">ColdMatch</span>
+              <div class="mockup-status">
+                <span class="mockup-dot"></span>
+                <span class="mockup-status-text">Active</span>
+              </div>
+            </div>
+            <div class="mockup-score-section">
+              <div class="mockup-score-label">Match Score</div>
+              <div class="mockup-score">84</div>
+              <div class="mockup-score-bar">
+                <div class="mockup-score-fill"></div>
+              </div>
+            </div>
+            <div class="mockup-reasons">
+              <div class="mockup-reason">
+                <span class="mockup-reason-dot"></span>
+                <p>Strong overlap in investment banking recruiting pipeline</p>
+              </div>
+              <div class="mockup-reason">
+                <span class="mockup-reason-dot"></span>
+                <p>Both hold buy-side internship experience</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Video ── -->
+  <section class="video-section">
+    <div class="container">
+      <div class="fade-in">
+        <div class="video-wrapper">
+          <iframe src="https://www.loom.com/embed/4af07e4c7857494baea83aba11db8289" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Problem ── -->
+  <section class="problem-section">
+    <div class="container">
+      <div class="fade-in section-header">
+        <span class="section-label">The problem</span>
+        <h2>Cold outreach is broken.</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card fade-in fade-in-delay-1">
+          <span class="card-num">01</span>
+          <h3>You don't know who's worth it</h3>
+          <p>You spend 20 minutes reading a profile only to realize there's no real connection worth reaching out over.</p>
+        </div>
+        <div class="card fade-in fade-in-delay-2">
+          <span class="card-num">02</span>
+          <h3>Generic emails get ignored</h3>
+          <p>People can smell a template from the first line. If it doesn't feel personal, it goes straight to the archive.</p>
+        </div>
+        <div class="card fade-in fade-in-delay-3">
+          <span class="card-num">03</span>
+          <h3>Writing well takes forever</h3>
+          <p>A genuinely good cold email takes 30+ minutes done right, including research, drafting, and editing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works ── -->
+  <section class="how-section">
+    <div class="container">
+      <div class="fade-in section-header">
+        <span class="section-label">How it works</span>
+        <h2>From profile to sent email in under a minute.</h2>
+      </div>
+      <div class="steps-list">
+        <div class="step-row fade-in">
+          <div class="step-num-large">1</div>
+          <div class="step-content">
+            <h3>See your match score</h3>
+            <p>Open any LinkedIn profile and ColdMatch instantly scores how relevant that person is to your specific goal, with reasons why.</p>
+          </div>
+        </div>
+        <div class="step-row fade-in fade-in-delay-1">
+          <div class="step-num-large">2</div>
+          <div class="step-content">
+            <h3>Get a personalized email</h3>
+            <p>If the match is worth it, one click generates a tailored cold email grounded in both their background and yours.</p>
+          </div>
+        </div>
+        <div class="step-row fade-in fade-in-delay-2">
+          <div class="step-num-large">3</div>
+          <div class="step-content">
+            <h3>Send it your way</h3>
+            <p>Review it in Gmail, copy it to any email client, or tweak the draft before you send. You stay in control.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Bottom CTA ── -->
+  <section class="cta-section" id="signup">
+    <div class="container">
+      <div class="fade-in">
+        <h2>Start sending emails that get replies.</h2>
+        <a href="/signup" class="btn-primary">Get ColdMatch free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <p class="footer-text">ColdMatch · Cold email, done right.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll fade-in ──
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ColdMatch — Settings</title>
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <div class="logo">✦</div>
+      <span class="header-title">ColdMatch</span>
+      <span class="header-sub">Settings</span>
+    </div>
+
+    <!-- Logged in state -->
+    <div id="logged-in" class="hidden">
+      <div class="profile-summary">
+        <p id="profile-name" class="profile-name-display"></p>
+        <p id="profile-school" class="profile-school-display"></p>
+      </div>
+      <button id="edit-profile-btn" class="action-btn">Edit profile</button>
+      <button id="sign-out-btn" class="action-btn secondary-btn">Sign out</button>
+    </div>
+
+    <!-- Not logged in state -->
+    <div id="not-logged-in" class="hidden">
+      <p class="auth-msg">Sign in to ColdMatch to get personalized emails</p>
+      <button id="signin-btn" class="action-btn">Sign in</button>
+      <button id="signup-btn" class="action-btn secondary-btn">Create account</button>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading">
+      <p class="loading-msg">Loading…</p>
+    </div>
+
+  </div>
+  <script src="settings.js"></script>
+</body>
+</html>
