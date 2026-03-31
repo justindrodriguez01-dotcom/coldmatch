@@ -71,13 +71,12 @@ function renderContextBanner() {
   if (!contextBanner) return;
   const hasName = userProfile && userProfile.name;
   if (hasName) {
-    contextBanner.textContent = `Personalizing for ${toTitleCase(userProfile.name)}`;
-    contextBanner.className = "context-banner has-context";
-  } else {
-    contextBanner.textContent = "Add your background for better results →";
-    contextBanner.className = "context-banner no-context";
-    contextBanner.onclick = () => chrome.runtime.openOptionsPage();
+    // Profile is set up — no banner needed
+    return;
   }
+  contextBanner.textContent = "Add your background for better results →";
+  contextBanner.className = "context-banner no-context";
+  contextBanner.onclick = () => chrome.runtime.openOptionsPage();
   contextBanner.classList.remove("hidden");
 }
 
@@ -256,7 +255,7 @@ document.getElementById("targeting-generate-btn").addEventListener("click", asyn
   console.log("MESSAGE:", generated);
   subjectInput.value = generated.subject;
   messageBody.value  = generated.body;
-  angleEl.textContent = deriveAngle(lastParsed);
+  angleEl.textContent = generated.hook || deriveAngle(lastParsed);
   angleSectionEl.classList.remove("hidden");
   showAILoading(false);
 });

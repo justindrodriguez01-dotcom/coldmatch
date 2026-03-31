@@ -86,9 +86,16 @@ Return ONLY this JSON, no explanation:
   "recommendation": "strong match" | "worth reaching out" | "weak match"
 }
 
-Reasons must be specific to these two people — never generic.
-Bad: "Relevant industry experience"
-Good: "VP at Vanbarton Group, a real estate PE firm aligned with sender's target field of private equity"`,
+Reasons must be specific, punchy, and max one line each. State a concrete fact and why it matters — no filler connector phrases.
+
+BANNED phrases (do not use): "which creates a natural connection", "which aligns with", "could lead to", "valuable insights", "which is relevant to", "making them a strong", "given sender's goals", "which may be helpful"
+
+Format: state the specific fact, then the direct implication — no padding.
+Bad: "Works in finance, which aligns with sender's goals and could lead to valuable insights"
+Bad: "Shares Michigan background, which creates a natural connection"
+Good: "VP at Blackstone NY — senior enough to speak to PE recruiting, not so senior they won't respond"
+Good: "Michigan Ross alum, same school as sender — shared background makes the outreach non-random"
+Good: "Went IB → PE at a mid-market fund — exactly the path sender wants to understand"`,
       }],
     });
 
@@ -160,7 +167,8 @@ EMAIL RULES:
 Return ONLY this JSON:
 {
   "subject": "under 8 words, specific, no recipient name, curiosity-driven",
-  "body": "the full email body — use \\n\\n between paragraphs and \\n for single line breaks (e.g. between Best, and sender name)"
+  "body": "the full email body — use \\n\\n between paragraphs and \\n for single line breaks (e.g. between Best, and sender name)",
+  "hook": "one line describing the specific hook used in this email — name the actual fact from their profile that anchors the email. Examples: 'Opens with their Goldman → Blackstone transition', 'Leads with shared Michigan background', 'References their 8 years at Carlyle before founding own fund', 'Built around their Houston base matching sender hometown'. Be specific to this email — never write 'Based on their experience' or anything generic."
 }`,
       }],
     });
