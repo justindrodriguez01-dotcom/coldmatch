@@ -5,39 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Log in — ColdMatch</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #f7f6f4;
+      --surface: #ffffff;
+      --border: #e5e4e2;
+      --border-strong: #d1d0ce;
+      --accent: #2563EB;
+      --accent-hover: #1d4ed8;
+      --accent-dim: rgba(37,99,235,0.08);
+      --text-primary: #111111;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f5f5f5;
-      color: #111827;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       -webkit-font-smoothing: antialiased;
     }
 
+    h1, h2 { font-family: 'Instrument Serif', Georgia, serif; }
+
     nav {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
       padding: 0 24px;
       height: 56px;
       display: flex;
       align-items: center;
     }
     .logo {
+      font-family: 'DM Sans', sans-serif;
       font-size: 15px;
       font-weight: 700;
-      color: #111827;
+      color: var(--text-primary);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       letter-spacing: -0.02em;
     }
-    .logo span { color: #7C3AED; }
 
     .page {
       flex: 1;
@@ -48,25 +61,24 @@
     }
 
     .card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 40px;
       width: 100%;
       max-width: 420px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
 
-    .card-heading {
-      font-size: 22px;
-      font-weight: 700;
+    .card h1 {
+      font-size: 24px;
       letter-spacing: -0.02em;
-      color: #111827;
+      color: var(--text-primary);
       margin-bottom: 6px;
     }
     .card-sub {
       font-size: 14px;
-      color: #6b7280;
+      color: var(--text-secondary);
       margin-bottom: 28px;
     }
 
@@ -81,28 +93,28 @@
     .field input {
       width: 100%;
       padding: 10px 13px;
-      background: #ffffff;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
       font-family: inherit;
       font-size: 14px;
-      color: #111827;
+      color: var(--text-primary);
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
     .field input:focus {
-      border-color: #7C3AED;
-      box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
     }
     .field input.error { border-color: #ef4444; }
 
     .btn {
       width: 100%;
       padding: 11px;
-      background: #7C3AED;
+      background: var(--accent);
       color: #ffffff;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-family: inherit;
       font-size: 15px;
       font-weight: 600;
@@ -111,15 +123,15 @@
       transition: background 0.15s, transform 0.1s;
       letter-spacing: -0.01em;
     }
-    .btn:hover { background: #6d28d9; }
+    .btn:hover { background: var(--accent-hover); }
     .btn:active { transform: scale(0.99); }
-    .btn:disabled { background: #a78bfa; cursor: not-allowed; }
+    .btn:disabled { background: #93c5fd; cursor: not-allowed; }
 
     .error-msg {
       display: none;
       background: #fef2f2;
       border: 1px solid #fecaca;
-      border-radius: 8px;
+      border-radius: 6px;
       padding: 10px 13px;
       font-size: 13px;
       color: #b91c1c;
@@ -131,10 +143,10 @@
       text-align: center;
       margin-top: 20px;
       font-size: 13px;
-      color: #6b7280;
+      color: var(--text-secondary);
     }
     .footer-link a {
-      color: #7C3AED;
+      color: var(--accent);
       font-weight: 500;
       text-decoration: none;
     }
@@ -144,12 +156,12 @@
 <body>
 
   <nav>
-    <a href="/" class="logo"><span>✦</span> ColdMatch</a>
+    <a href="/" class="logo">ColdMatch</a>
   </nav>
 
   <div class="page">
     <div class="card">
-      <h1 class="card-heading">Welcome back</h1>
+      <h1>Welcome back</h1>
       <p class="card-sub">Log in to your ColdMatch account.</p>
 
       <div id="error-msg" class="error-msg"></div>
@@ -166,7 +178,7 @@
         <button type="submit" class="btn" id="submit-btn">Log in</button>
       </form>
 
-      <p class="footer-link">Don't have an account? <a href="/signup.html">Sign up</a></p>
+      <p class="footer-link">Don't have an account? <a href="/signup">Sign up</a></p>
     </div>
   </div>
 
@@ -214,7 +226,7 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Login failed.');
         localStorage.setItem('cm_token', data.token);
-        window.location.href = '/dashboard.html';
+        window.location.href = '/dashboard';
       } catch (err) {
         showError(err.message);
         submitBtn.disabled = false;

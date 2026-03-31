@@ -3,139 +3,165 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Set up your profile — ColdMatch</title>
+  <title>Profile — ColdMatch</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #f7f6f4;
+      --surface: #ffffff;
+      --border: #e5e4e2;
+      --border-strong: #d1d0ce;
+      --accent: #2563EB;
+      --accent-hover: #1d4ed8;
+      --accent-dim: rgba(37,99,235,0.08);
+      --text-primary: #111111;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f5f5f5;
-      color: #111827;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Nav ── */
+    h1, h2 { font-family: 'Instrument Serif', Georgia, serif; }
+
     nav {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
       padding: 0 24px;
       height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     .logo {
+      font-family: 'DM Sans', sans-serif;
       font-size: 15px;
       font-weight: 700;
-      color: #111827;
+      color: var(--text-primary);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       letter-spacing: -0.02em;
     }
-    .logo span { color: #7C3AED; }
-    .step-label {
+    .nav-back {
       font-size: 13px;
-      color: #6b7280;
+      color: var(--text-secondary);
+      text-decoration: none;
       font-weight: 500;
     }
+    .nav-back:hover { color: var(--text-primary); }
 
-    /* ── Progress bar ── */
-    .progress-wrap {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 16px 24px;
-      flex-shrink: 0;
-    }
-    .progress-inner {
-      max-width: 520px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .progress-step {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-    }
-    .progress-step:last-child { flex: 0; }
-    .step-dot {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 2px solid #d1d5db;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
-      color: #9ca3af;
-      flex-shrink: 0;
-      transition: all 0.2s;
-    }
-    .step-dot.active { border-color: #7C3AED; background: #7C3AED; color: #fff; }
-    .step-dot.done { border-color: #7C3AED; background: #7C3AED; color: #fff; }
-    .step-dot.done::after { content: '✓'; }
-    .step-dot.done span { display: none; }
-    .step-name {
-      font-size: 12px;
-      font-weight: 500;
-      color: #9ca3af;
-      white-space: nowrap;
-    }
-    .step-name.active { color: #7C3AED; }
-    .step-name.done { color: #374151; }
-    .progress-line {
-      flex: 1;
-      height: 2px;
-      background: #e5e7eb;
-      border-radius: 1px;
-    }
-    .progress-line.done { background: #7C3AED; }
-
-    /* ── Page ── */
     .page {
       flex: 1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 36px 24px 60px;
+      padding: 48px 24px 80px;
     }
 
-    .card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      padding: 40px;
-      width: 100%;
-      max-width: 520px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    .settings-wrap {
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .card-heading {
-      font-size: 20px;
-      font-weight: 700;
+    .page-header {
+      margin-bottom: 36px;
+    }
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 400;
       letter-spacing: -0.02em;
-      color: #111827;
-      margin-bottom: 4px;
+      color: var(--text-primary);
+      margin-bottom: 6px;
     }
-    .card-sub {
+    .page-header p {
       font-size: 14px;
-      color: #6b7280;
-      margin-bottom: 28px;
+      color: var(--text-secondary);
     }
 
-    /* ── Fields ── */
+    /* Resume upload */
+    .upload-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .upload-section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .upload-zone {
+      border: 1.5px dashed var(--border-strong);
+      border-radius: 8px;
+      padding: 24px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+    .upload-zone:hover { border-color: var(--accent); background: var(--accent-dim); }
+    .upload-zone.dragover { border-color: var(--accent); background: var(--accent-dim); }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 3px;
+    }
+    .upload-hint { font-size: 12px; color: var(--text-muted); }
+
+    .upload-status {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 13px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #166534;
+      margin-top: 10px;
+    }
+    .upload-status.visible { display: flex; }
+    .upload-status.parsing {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1d4ed8;
+    }
+
+    /* Settings sections */
+    .settings-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
     .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
     .field label {
       display: block;
       font-size: 13px;
@@ -148,23 +174,30 @@
     .field textarea {
       width: 100%;
       padding: 10px 13px;
-      background: #ffffff;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
       font-family: inherit;
       font-size: 14px;
-      color: #111827;
+      color: var(--text-primary);
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
     .field input:focus,
     .field select:focus,
     .field textarea:focus {
-      border-color: #7C3AED;
-      box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
     }
-    .field textarea { resize: vertical; min-height: 90px; }
-    .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+    .field textarea { resize: vertical; min-height: 88px; }
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-color: var(--surface);
+    }
 
     .field-row {
       display: grid;
@@ -172,186 +205,119 @@
       gap: 12px;
     }
 
-    .section-divider {
-      border: none;
-      border-top: 1px solid #f3f4f6;
-      margin: 24px 0;
+    .field-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 5px;
     }
 
-    .section-title {
+    .exp-group {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .exp-group:last-of-type { margin-bottom: 0; }
+    .exp-group-label {
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #9ca3af;
-      margin-bottom: 16px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
     }
 
-    /* ── Resume upload zone ── */
-    .upload-zone {
-      border: 2px dashed #d1d5db;
-      border-radius: 10px;
-      padding: 28px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      margin-bottom: 8px;
-      position: relative;
+    /* Save area */
+    .save-area {
+      margin-top: 24px;
     }
-    .upload-zone:hover { border-color: #7C3AED; background: #faf5ff; }
-    .upload-zone.dragover { border-color: #7C3AED; background: #faf5ff; }
-    .upload-zone input[type="file"] { display: none; }
-    .upload-icon { font-size: 28px; margin-bottom: 8px; }
-    .upload-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: #374151;
-      margin-bottom: 4px;
-    }
-    .upload-hint { font-size: 12px; color: #9ca3af; }
-
-    .upload-status {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 13px;
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 8px;
-      font-size: 13px;
-      color: #166534;
-      margin-bottom: 8px;
-    }
-    .upload-status.visible { display: flex; }
-    .upload-status.parsing {
-      background: #faf5ff;
-      border-color: #e9d5ff;
-      color: #6d28d9;
-    }
-
-    .skip-link {
-      font-size: 13px;
-      color: #7C3AED;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .skip-link:hover { text-decoration: underline; }
-
-    .manual-fields { display: none; }
-    .manual-fields.visible { display: block; }
-
-    .exp-entry {
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 10px;
-    }
-    .exp-entry-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: #6b7280;
-      margin-bottom: 10px;
-    }
-
-    /* ── Buttons ── */
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 28px;
-    }
-    .btn {
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      border: none;
-      letter-spacing: -0.01em;
-    }
-    .btn-primary {
-      background: #7C3AED;
-      color: #ffffff;
-      flex: 1;
-    }
-    .btn-primary:hover { background: #6d28d9; }
-    .btn-primary:disabled { background: #a78bfa; cursor: not-allowed; }
-    .btn-back {
-      background: #f3f4f6;
-      color: #374151;
-      border: 1px solid #e5e7eb;
-    }
-    .btn-back:hover { background: #e5e7eb; }
-
     .error-msg {
       display: none;
       background: #fef2f2;
       border: 1px solid #fecaca;
-      border-radius: 8px;
+      border-radius: 6px;
       padding: 10px 13px;
       font-size: 13px;
       color: #b91c1c;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .error-msg.visible { display: block; }
 
-    /* ── Spinner ── */
+    .success-msg {
+      display: none;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 10px 13px;
+      font-size: 13px;
+      color: #166534;
+      margin-bottom: 14px;
+    }
+    .success-msg.visible { display: block; }
+
+    .btn-save {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: -0.01em;
+    }
+    .btn-save:hover { background: var(--accent-hover); }
+    .btn-save:active { transform: scale(0.99); }
+    .btn-save:disabled { background: #93c5fd; cursor: not-allowed; }
+
     .spinner {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(109,40,217,0.2);
-      border-top-color: #6d28d9;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(37,99,235,0.2);
+      border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       flex-shrink: 0;
+      display: inline-block;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     @media (max-width: 540px) {
-      .card { padding: 28px 20px; }
+      .settings-section { padding: 20px 16px; }
       .field-row { grid-template-columns: 1fr; }
-      .step-name { display: none; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="/" class="logo"><span>✦</span> ColdMatch</a>
-    <span class="step-label" id="nav-step">Step 1 of 3</span>
+    <a href="/" class="logo">ColdMatch</a>
+    <a href="/dashboard" class="nav-back">Back to dashboard</a>
   </nav>
 
-  <!-- Progress bar -->
-  <div class="progress-wrap">
-    <div class="progress-inner">
-      <div class="progress-step">
-        <div class="step-dot active" id="dot-1"><span>1</span></div>
-        <span class="step-name active" id="name-1">About you</span>
-      </div>
-      <div class="progress-line" id="line-1"></div>
-      <div class="progress-step">
-        <div class="step-dot" id="dot-2"><span>2</span></div>
-        <span class="step-name" id="name-2">Background</span>
-      </div>
-      <div class="progress-line" id="line-2"></div>
-      <div class="progress-step">
-        <div class="step-dot" id="dot-3"><span>3</span></div>
-        <span class="step-name" id="name-3">Goals</span>
-      </div>
-    </div>
-  </div>
-
   <div class="page">
-    <div class="card">
+    <div class="settings-wrap">
 
-      <!-- ── Step 1: About you ── -->
-      <div id="step-1">
-        <h2 class="card-heading">About you</h2>
-        <p class="card-sub">Tell us the basics so ColdMatch can personalize your outreach.</p>
-        <div id="error-1" class="error-msg"></div>
+      <div class="page-header">
+        <h1>Profile settings</h1>
+        <p>This information shapes your match scores and cold emails.</p>
+      </div>
+
+      <!-- Resume upload -->
+      <div class="upload-section">
+        <div class="upload-section-label">Upload resume to auto-fill</div>
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="resume-file" accept=".pdf" />
+          <p class="upload-label">Drop your resume here, or click to browse</p>
+          <p class="upload-hint">PDF only</p>
+        </div>
+        <div id="upload-status" class="upload-status"></div>
+      </div>
+
+      <!-- About you -->
+      <div class="settings-section">
+        <div class="section-title">About you</div>
 
         <div class="field">
           <label for="full-name">Full name</label>
@@ -387,78 +353,49 @@
             <input type="text" id="target-location" placeholder="e.g. New York, NY" />
           </div>
         </div>
+      </div>
 
-        <div class="btn-row">
-          <button class="btn btn-primary" id="next-1">Continue →</button>
+      <!-- Background -->
+      <div class="settings-section">
+        <div class="section-title">Background</div>
+
+        <div class="exp-group">
+          <div class="exp-group-label">Experience 1</div>
+          <div class="field-row">
+            <div class="field">
+              <label for="exp1-company">Company</label>
+              <input type="text" id="exp1-company" placeholder="e.g. Goldman Sachs" />
+            </div>
+            <div class="field">
+              <label for="exp1-role">Role</label>
+              <input type="text" id="exp1-role" placeholder="e.g. Summer Analyst" />
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-group">
+          <div class="exp-group-label">Experience 2</div>
+          <div class="field-row">
+            <div class="field">
+              <label for="exp2-company">Company</label>
+              <input type="text" id="exp2-company" placeholder="e.g. Startup name" />
+            </div>
+            <div class="field">
+              <label for="exp2-role">Role</label>
+              <input type="text" id="exp2-role" placeholder="e.g. Marketing Intern" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:16px;">
+          <label for="activities">Activities &amp; clubs</label>
+          <textarea id="activities" placeholder="e.g. Investment club (VP), Michigan Daily, intramural soccer…"></textarea>
         </div>
       </div>
 
-      <!-- ── Step 2: Background ── -->
-      <div id="step-2" style="display:none;">
-        <h2 class="card-heading">Your background</h2>
-        <p class="card-sub">Upload your resume to auto-fill, or fill in manually.</p>
-        <div id="error-2" class="error-msg"></div>
-
-        <!-- Resume upload -->
-        <div id="upload-area">
-          <div class="upload-zone" id="upload-zone">
-            <input type="file" id="resume-file" accept=".pdf" />
-            <div class="upload-icon">📄</div>
-            <p class="upload-label">Upload your resume (PDF)</p>
-            <p class="upload-hint">Drag and drop or click to browse</p>
-          </div>
-          <div id="upload-status" class="upload-status"></div>
-          <a class="skip-link" id="skip-resume">Skip resume, fill manually</a>
-        </div>
-
-        <!-- Manual fields (shown after upload or skip) -->
-        <div class="manual-fields" id="manual-fields">
-          <p class="section-title">Work experience</p>
-          <div class="exp-entry">
-            <p class="exp-entry-title">Role 1</p>
-            <div class="field-row">
-              <div class="field">
-                <label for="exp1-company">Company</label>
-                <input type="text" id="exp1-company" placeholder="e.g. Goldman Sachs" />
-              </div>
-              <div class="field">
-                <label for="exp1-role">Role</label>
-                <input type="text" id="exp1-role" placeholder="e.g. Summer Analyst" />
-              </div>
-            </div>
-          </div>
-          <div class="exp-entry">
-            <p class="exp-entry-title">Role 2</p>
-            <div class="field-row">
-              <div class="field">
-                <label for="exp2-company">Company</label>
-                <input type="text" id="exp2-company" placeholder="e.g. Startup name" />
-              </div>
-              <div class="field">
-                <label for="exp2-role">Role</label>
-                <input type="text" id="exp2-role" placeholder="e.g. Marketing Intern" />
-              </div>
-            </div>
-          </div>
-
-          <hr class="section-divider" />
-          <p class="section-title">Activities &amp; clubs</p>
-          <div class="field">
-            <textarea id="activities" placeholder="e.g. Investment club (VP), Michigan Daily, intramural soccer…"></textarea>
-          </div>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn btn-back" id="back-2">Back</button>
-          <button class="btn btn-primary" id="next-2">Continue →</button>
-        </div>
-      </div>
-
-      <!-- ── Step 3: Goals ── -->
-      <div id="step-3" style="display:none;">
-        <h2 class="card-heading">Your goals</h2>
-        <p class="card-sub">This shapes how ColdMatch scores and writes for you.</p>
-        <div id="error-3" class="error-msg"></div>
+      <!-- Goals -->
+      <div class="settings-section">
+        <div class="section-title">Goals</div>
 
         <div class="field">
           <label for="target-field">Target field</label>
@@ -504,11 +441,13 @@
           <label for="blurb">Background blurb <span style="font-weight:400;color:#9ca3af;">(3 sentences max)</span></label>
           <textarea id="blurb" placeholder="What makes you interesting or different? What drives your interest in this field?"></textarea>
         </div>
+      </div>
 
-        <div class="btn-row">
-          <button class="btn btn-back" id="back-3">Back</button>
-          <button class="btn btn-primary" id="submit-btn" disabled>Finish setup →</button>
-        </div>
+      <!-- Save -->
+      <div class="save-area">
+        <div id="error-msg" class="error-msg"></div>
+        <div id="success-msg" class="success-msg">Profile saved.</div>
+        <button class="btn-save" id="save-btn">Save profile</button>
       </div>
 
     </div>
@@ -518,61 +457,12 @@
     const urlToken = new URLSearchParams(window.location.search).get('token');
     if (urlToken) localStorage.setItem('cm_token', urlToken);
     const token = urlToken || localStorage.getItem('cm_token');
-    if (!token) window.location.href = '/login.html';
+    if (!token) window.location.href = '/login';
 
-    // ── Step state ──
-    let currentStep = 1;
-
-    function goToStep(n) {
-      document.getElementById(`step-${currentStep}`).style.display = 'none';
-      currentStep = n;
-      document.getElementById(`step-${currentStep}`).style.display = 'block';
-      updateProgress();
-      window.scrollTo(0, 0);
-    }
-
-    function updateProgress() {
-      document.getElementById('nav-step').textContent = `Step ${currentStep} of 3`;
-      for (let i = 1; i <= 3; i++) {
-        const dot  = document.getElementById(`dot-${i}`);
-        const name = document.getElementById(`name-${i}`);
-        dot.className  = 'step-dot ' + (i < currentStep ? 'done' : i === currentStep ? 'active' : '');
-        name.className = 'step-name ' + (i < currentStep ? 'done' : i === currentStep ? 'active' : '');
-        dot.innerHTML  = i < currentStep ? '' : `<span>${i}</span>`;
-      }
-      for (let i = 1; i <= 2; i++) {
-        document.getElementById(`line-${i}`).className = 'progress-line' + (i < currentStep ? ' done' : '');
-      }
-    }
-
-    function showError(step, msg) {
-      const el = document.getElementById(`error-${step}`);
-      el.textContent = msg;
-      el.classList.add('visible');
-    }
-    function clearError(step) {
-      document.getElementById(`error-${step}`).classList.remove('visible');
-    }
-
-    // ── Step 1 ──
-    document.getElementById('next-1').addEventListener('click', () => {
-      clearError(1);
-      const name   = document.getElementById('full-name').value.trim();
-      const school = document.getElementById('school').value.trim();
-      const year   = document.getElementById('year').value;
-      if (!name)   return showError(1, 'Please enter your full name.');
-      if (!school) return showError(1, 'Please enter your school.');
-      if (!year)   return showError(1, 'Please select your year.');
-      goToStep(2);
-    });
-
-    // ── Step 2: resume upload ──
-    const uploadZone  = document.getElementById('upload-zone');
-    const resumeFile  = document.getElementById('resume-file');
+    // ── Resume upload ──
+    const uploadZone   = document.getElementById('upload-zone');
+    const resumeFile   = document.getElementById('resume-file');
     const uploadStatus = document.getElementById('upload-status');
-    const manualFields = document.getElementById('manual-fields');
-
-    function showManual() { manualFields.classList.add('visible'); }
 
     uploadZone.addEventListener('click', () => resumeFile.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
@@ -587,17 +477,13 @@
       if (resumeFile.files[0]) handleResumeUpload(resumeFile.files[0]);
     });
 
-    document.getElementById('skip-resume').addEventListener('click', () => {
-      document.getElementById('upload-area').style.display = 'none';
-      showManual();
-    });
-
     async function handleResumeUpload(file) {
       if (file.type !== 'application/pdf') {
-        return showError(2, 'Please upload a PDF file.');
+        showError('Please upload a PDF file.');
+        return;
       }
       uploadStatus.className = 'upload-status parsing visible';
-      uploadStatus.innerHTML = '<div class="spinner"></div> Parsing resume…';
+      uploadStatus.innerHTML = '<div class="spinner"></div>&nbsp; Parsing resume…';
 
       const formData = new FormData();
       formData.append('resume', file);
@@ -611,7 +497,6 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Parse failed.');
 
-        // Auto-fill fields
         if (data.name)   document.getElementById('full-name').value  = data.name;
         if (data.school) document.getElementById('school').value     = data.school;
         if (data.year)   document.getElementById('year').value       = data.year;
@@ -629,33 +514,14 @@
         if (data.activities) document.getElementById('activities').value = data.activities;
 
         uploadStatus.className = 'upload-status visible';
-        uploadStatus.innerHTML = '✓ Resume parsed! Review and edit below.';
-        showManual();
+        uploadStatus.innerHTML = '&#10003; Resume parsed. Review your details below.';
       } catch (err) {
         uploadStatus.style.display = 'none';
-        showError(2, err.message);
-        showManual();
+        showError(err.message);
       }
     }
 
-    document.getElementById('back-2').addEventListener('click', () => goToStep(1));
-    document.getElementById('next-2').addEventListener('click', () => {
-      clearError(2);
-      goToStep(3);
-    });
-
-    // ── Step 3 ──
-    // Enable submit only when required fields are filled
-    const step3Inputs = ['target-field', 'target-role', 'timeline'];
-    step3Inputs.forEach(id => {
-      document.getElementById(id).addEventListener('change', checkStep3);
-    });
-    function checkStep3() {
-      const allFilled = step3Inputs.every(id => document.getElementById(id).value);
-      document.getElementById('submit-btn').disabled = !allFilled;
-    }
-
-    // Pre-fill all form fields from existing profile (e.g. when editing)
+    // ── Pre-fill from existing profile ──
     async function prefillFromProfile() {
       try {
         const res = await fetch('/profile', {
@@ -685,21 +551,26 @@
           document.getElementById('exp2-company').value = exp[1].company || '';
           document.getElementById('exp2-role').value    = exp[1].role    || '';
         }
-
-        if (exp.length > 0 || p.activities) {
-          document.getElementById('upload-area').style.display = 'none';
-          document.getElementById('manual-fields').classList.add('visible');
-        }
-
-        checkStep3();
       } catch (_) {}
     }
     prefillFromProfile();
 
-    document.getElementById('back-3').addEventListener('click', () => goToStep(2));
+    // ── Save ──
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+    function clearMessages() {
+      document.getElementById('error-msg').classList.remove('visible');
+      document.getElementById('success-msg').classList.remove('visible');
+    }
 
-    document.getElementById('submit-btn').addEventListener('click', async () => {
-      clearError(3);
+    document.getElementById('save-btn').addEventListener('click', async () => {
+      clearMessages();
+
+      const name = document.getElementById('full-name').value.trim();
+      if (!name) return showError('Please enter your full name.');
 
       const workExp = [];
       const c1 = document.getElementById('exp1-company').value.trim();
@@ -710,7 +581,7 @@
       if (c2 || r2) workExp.push({ company: c2, role: r2 });
 
       const payload = {
-        name:             document.getElementById('full-name').value.trim(),
+        name,
         school:           document.getElementById('school').value.trim(),
         year:             document.getElementById('year').value,
         major:            document.getElementById('major').value.trim(),
@@ -724,7 +595,7 @@
         activities:       document.getElementById('activities').value.trim(),
       };
 
-      const btn = document.getElementById('submit-btn');
+      const btn = document.getElementById('save-btn');
       btn.disabled = true;
       btn.textContent = 'Saving…';
 
@@ -739,11 +610,14 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to save profile.');
-        window.location.href = '/dashboard.html';
+
+        document.getElementById('success-msg').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => window.location.href = '/dashboard', 1200);
       } catch (err) {
-        showError(3, err.message);
+        showError(err.message);
         btn.disabled = false;
-        btn.textContent = 'Finish setup →';
+        btn.textContent = 'Save profile';
       }
     });
   </script>

@@ -5,23 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — ColdMatch</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #f7f6f4;
+      --surface: #ffffff;
+      --border: #e5e4e2;
+      --border-strong: #d1d0ce;
+      --accent: #2563EB;
+      --accent-hover: #1d4ed8;
+      --accent-dim: rgba(37,99,235,0.08);
+      --text-primary: #111111;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f5f5f5;
-      color: #111827;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       -webkit-font-smoothing: antialiased;
     }
 
+    h1, h2 { font-family: 'Instrument Serif', Georgia, serif; }
+
     nav {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
       padding: 0 24px;
       height: 56px;
       display: flex;
@@ -29,16 +45,13 @@
       justify-content: space-between;
     }
     .logo {
+      font-family: 'DM Sans', sans-serif;
       font-size: 15px;
       font-weight: 700;
-      color: #111827;
+      color: var(--text-primary);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       letter-spacing: -0.02em;
     }
-    .logo span { color: #7C3AED; }
 
     .nav-right {
       display: flex;
@@ -47,12 +60,12 @@
     }
     .nav-email {
       font-size: 13px;
-      color: #6b7280;
+      color: var(--text-secondary);
     }
     .btn-ghost {
       background: none;
-      border: 1px solid #d1d5db;
-      border-radius: 7px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
       padding: 6px 14px;
       font-family: inherit;
       font-size: 13px;
@@ -61,7 +74,7 @@
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .btn-ghost:hover { border-color: #9ca3af; color: #111827; }
+    .btn-ghost:hover { border-color: #9ca3af; color: var(--text-primary); }
 
     .page {
       flex: 1;
@@ -75,36 +88,36 @@
       margin-bottom: 32px;
     }
     .greeting h1 {
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 400;
       letter-spacing: -0.02em;
-      color: #111827;
+      color: var(--text-primary);
       margin-bottom: 6px;
     }
     .greeting p {
       font-size: 15px;
-      color: #6b7280;
+      color: var(--text-secondary);
     }
 
     .card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 28px;
       margin-bottom: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
 
     .card-title {
       font-size: 15px;
       font-weight: 600;
-      color: #111827;
+      color: var(--text-primary);
       margin-bottom: 6px;
       letter-spacing: -0.01em;
     }
     .card-sub {
       font-size: 13px;
-      color: #6b7280;
+      color: var(--text-secondary);
       margin-bottom: 20px;
       line-height: 1.5;
     }
@@ -114,10 +127,10 @@
       align-items: center;
       gap: 6px;
       padding: 9px 18px;
-      background: #7C3AED;
+      background: var(--accent);
       color: #ffffff;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-family: inherit;
       font-size: 14px;
       font-weight: 600;
@@ -126,12 +139,12 @@
       transition: background 0.15s;
       letter-spacing: -0.01em;
     }
-    .btn-primary:hover { background: #6d28d9; }
-    .btn-primary:disabled { background: #a78bfa; cursor: not-allowed; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:disabled { background: #93c5fd; cursor: not-allowed; }
 
     .link-subtle {
       font-size: 13px;
-      color: #7C3AED;
+      color: var(--accent);
       font-weight: 500;
       text-decoration: none;
     }
@@ -156,14 +169,14 @@
       flex-shrink: 0;
       width: 20px;
       height: 20px;
-      background: #f3f0ff;
+      background: #e8f0fd;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
       font-weight: 700;
-      color: #7C3AED;
+      color: var(--accent);
       margin-top: 1px;
     }
 
@@ -174,12 +187,12 @@
     }
     .profile-label {
       font-size: 13px;
-      color: #6b7280;
+      color: var(--text-secondary);
     }
     .profile-value {
       font-size: 13px;
       font-weight: 500;
-      color: #111827;
+      color: var(--text-primary);
     }
     .profile-divider {
       border: none;
@@ -190,7 +203,7 @@
     #loading-state {
       text-align: center;
       padding: 80px 0;
-      color: #9ca3af;
+      color: var(--text-muted);
       font-size: 14px;
     }
     #main-content { display: none; }
@@ -199,7 +212,7 @@
 <body>
 
   <nav>
-    <a href="/" class="logo"><span>✦</span> ColdMatch</a>
+    <a href="/" class="logo">ColdMatch</a>
     <div class="nav-right">
       <span class="nav-email" id="nav-email"></span>
       <button class="btn-ghost" id="logout-btn">Log out</button>
@@ -217,8 +230,8 @@
 
       <div class="card">
         <div class="card-title">Install the Chrome extension</div>
-        <div class="card-sub">Open LinkedIn profiles and get instant match scores + personalized cold emails.</div>
-        <a href="#" class="btn-primary" id="download-btn">Download Extension</a>
+        <div class="card-sub">Open LinkedIn profiles and get instant match scores and personalized cold emails.</div>
+        <a href="#" class="btn-primary" id="download-btn">Add to Chrome</a>
         <ul class="ext-steps">
           <li><span class="step-num">1</span> Download and unzip the extension file.</li>
           <li><span class="step-num">2</span> Go to <strong>chrome://extensions</strong> and enable Developer mode.</li>
@@ -234,21 +247,26 @@
           <button class="btn-primary" id="connect-gmail-btn">Connect Gmail</button>
         </div>
         <div id="gmail-connected" style="display:none;">
-          <span style="color:#059669;font-weight:500;font-size:14px;">✓ Gmail connected</span>
+          <span style="color:#059669;font-weight:500;font-size:14px;">Gmail connected</span>
         </div>
       </div>
 
       <div class="card">
         <div class="card-title">Your profile</div>
         <div id="profile-details"></div>
-        <a href="/onboarding.html" class="link-subtle">Edit profile →</a>
+        <a href="/onboarding" class="link-subtle" style="margin-top:16px;display:inline-block;">Edit profile</a>
       </div>
     </div>
   </div>
 
   <script>
     const token = localStorage.getItem('cm_token');
-    if (!token) window.location.href = '/login.html';
+    if (!token) window.location.href = '/login';
+
+    function toTitleCase(str) {
+      if (!str) return '';
+      return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+    }
 
     document.getElementById('logout-btn').addEventListener('click', () => {
       localStorage.removeItem('cm_token');
@@ -263,26 +281,24 @@
 
         if (res.status === 401) {
           localStorage.removeItem('cm_token');
-          window.location.href = '/login.html';
+          window.location.href = '/login';
           return;
         }
 
         const profile = res.ok ? await res.json() : null;
 
-        // Update greeting
         if (profile?.name) {
-          const firstName = profile.name.split(' ')[0];
+          const firstName = toTitleCase(profile.name.split(' ')[0]);
           document.getElementById('welcome-heading').textContent = `Welcome, ${firstName}.`;
         }
 
-        // Populate profile card
         const details = document.getElementById('profile-details');
         if (profile) {
           const rows = [
-            ['Name',   profile.name],
-            ['School', profile.school],
-            ['Major',  profile.major],
-            ['Goal',   profile.goal],
+            ['Name',        toTitleCase(profile.name)],
+            ['School',      toTitleCase(profile.school)],
+            ['Major',       toTitleCase(profile.major)],
+            ['Goal',        profile.goal],
             ['Target role', profile.target_role],
           ].filter(([, v]) => v);
 
@@ -297,7 +313,6 @@
           details.innerHTML = '<p style="font-size:13px;color:#6b7280;margin-bottom:16px;">No profile found.</p>';
         }
 
-        // Try to get email from JWT payload (base64 decode middle segment)
         try {
           const payload = JSON.parse(atob(token.split('.')[1]));
           if (payload.email) document.getElementById('nav-email').textContent = payload.email;
@@ -313,12 +328,10 @@
 
     loadDashboard();
 
-    // ── Gmail connection ──
     const gmailParam = new URLSearchParams(window.location.search).get('gmail');
     if (gmailParam === 'connected') {
       localStorage.setItem('gmail_connected', 'true');
-      // Clean URL without reloading
-      history.replaceState(null, '', '/dashboard.html');
+      history.replaceState(null, '', '/dashboard');
     }
     if (localStorage.getItem('gmail_connected') === 'true') {
       document.getElementById('gmail-not-connected').style.display = 'none';
