@@ -53,5 +53,5 @@ app.get("*", (_req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`ColdMatch server running on port ${PORT}`);
+  console.log(`ColdMatch server running on port ${PORT}`); // redeploy
 });
