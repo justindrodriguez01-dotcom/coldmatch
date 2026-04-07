@@ -436,10 +436,6 @@
             </select>
           </div>
         </div>
-        <div class="field">
-          <label for="blurb">Background blurb <span style="font-weight:400;color:#9ca3af;">(3 sentences max)</span></label>
-          <textarea id="blurb" placeholder="What makes you interesting or different? What drives your interest in this field?"></textarea>
-        </div>
       </div>
 
       <!-- Save -->
@@ -538,8 +534,7 @@
         if (p.target_field)     document.getElementById('target-field').value    = p.target_field;
         if (p.target_role)      document.getElementById('target-role').value     = p.target_role;
         if (p.timeline)         document.getElementById('timeline').value        = p.timeline;
-        if (p.background_blurb) document.getElementById('blurb').value          = p.background_blurb;
-        if (p.activities)       document.getElementById('activities').value      = p.activities;
+if (p.activities)       document.getElementById('activities').value      = p.activities;
 
         const exp = p.work_experience || [];
         if (exp[0]) {
@@ -589,7 +584,6 @@
         target_field:     document.getElementById('target-field').value,
         target_role:      document.getElementById('target-role').value,
         timeline:         document.getElementById('timeline').value,
-        background_blurb: document.getElementById('blurb').value.trim(),
         work_experience:  workExp,
         activities:       document.getElementById('activities').value.trim(),
       };

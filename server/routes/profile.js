@@ -42,8 +42,7 @@ router.post("/", async (req, res) => {
   const {
     name, school, year, major, hometown,
     goal, target_field, target_role,
-    timeline, background_blurb,
-    work_experience, activities,
+    timeline, work_experience, activities,
   } = req.body;
 
   try {
@@ -52,8 +51,8 @@ router.post("/", async (req, res) => {
       `INSERT INTO profiles
          (user_id, name, school, year, major, hometown,
           goal, target_field, target_role, timeline,
-          background_blurb, work_experience, activities, updated_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,NOW())
+          work_experience, activities, updated_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,NOW())
        ON CONFLICT (user_id) DO UPDATE SET
          name             = EXCLUDED.name,
          school           = EXCLUDED.school,
@@ -64,7 +63,6 @@ router.post("/", async (req, res) => {
          target_field     = EXCLUDED.target_field,
          target_role      = EXCLUDED.target_role,
          timeline         = EXCLUDED.timeline,
-         background_blurb = EXCLUDED.background_blurb,
          work_experience  = EXCLUDED.work_experience,
          activities       = EXCLUDED.activities,
          updated_at       = NOW()
@@ -72,7 +70,6 @@ router.post("/", async (req, res) => {
       [
         req.userId, name, school, year, major, hometown,
         goal, target_field, target_role, timeline,
-        background_blurb,
         work_experience ? JSON.stringify(work_experience) : null,
         activities,
       ]

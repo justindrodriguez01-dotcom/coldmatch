@@ -34,6 +34,24 @@ const targetingStepEl = document.getElementById("targeting-step");
 
 const BACKEND = "https://liken-server-production.up.railway.app";
 
+// Parse firm and role from a LinkedIn headline like "Analyst at Goldman Sachs | IB"
+function parseHeadlineFirm(headline) {
+  if (!headline) return null;
+  const atMatch = headline.match(/\bat\s+(.+?)(?:\s*\|.*)?$/i);
+  if (atMatch) return atMatch[1].trim();
+  const pipeMatch = headline.split("|");
+  if (pipeMatch.length > 1) return pipeMatch[pipeMatch.length - 1].trim();
+  return null;
+}
+function parseHeadlineRole(headline) {
+  if (!headline) return null;
+  const atMatch = headline.match(/^(.+?)\s+\bat\b/i);
+  if (atMatch) return atMatch[1].trim();
+  const pipeMatch = headline.split("|");
+  if (pipeMatch.length > 1) return pipeMatch[0].trim();
+  return headline.split(" ").slice(0, 4).join(" ") || null;
+}
+
 // Convert all-caps or mixed-case names to Title Case
 function toTitleCase(str) {
   if (!str) return "";
@@ -55,7 +73,7 @@ function show(el) {
 }
 
 function isContextComplete(profile) {
-  return profile && profile.name && profile.name.trim() && profile.background_blurb && profile.background_blurb.trim();
+  return profile && profile.name && profile.name.trim();
 }
 
 function showError(msg) {
@@ -172,7 +190,7 @@ function init() {
       const scoreData = await callAI(combinedText);
       console.log("SCORE:", scoreData);
       lastStructuredData = combinedText;
-      lastParsed = { name: toTitleCase(data.name) };
+      lastParsed = { name: toTitleCase(data.name), headline: data.headline || "" };
       const partialLoad = !data.experienceRaw && !data.educationRaw;
       showScoreCard(scoreData, { name: toTitleCase(data.name) }, partialLoad);
     }
@@ -316,7 +334,12 @@ draftBtn.addEventListener("click", () => {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + token,
         },
-        body: JSON.stringify({ to, subject, body }),
+        body: JSON.stringify({
+          to, subject, body,
+          contactName: lastParsed?.name || null,
+          contactFirm: parseHeadlineFirm(lastParsed?.headline),
+          contactRole: parseHeadlineRole(lastParsed?.headline),
+        }),
       });
       const data = await res.json();
 

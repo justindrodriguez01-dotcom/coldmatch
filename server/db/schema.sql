@@ -41,3 +41,20 @@ ALTER TABLE profiles ADD COLUMN IF NOT EXISTS gmail_tokens JSONB;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS attach_resume BOOLEAN DEFAULT FALSE;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS resume_pdf BYTEA;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS resume_filename TEXT;
+
+-- ─── Outreach tracker ─────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS outreach (
+  id              UUID      PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id         UUID      REFERENCES users(id) ON DELETE CASCADE,
+  name            TEXT      NOT NULL,
+  firm            TEXT,
+  role            TEXT,
+  date_added      DATE      DEFAULT CURRENT_DATE,
+  source          TEXT      DEFAULT 'manual',
+  stage           TEXT      DEFAULT 'Drafted',
+  reply_status    TEXT      DEFAULT 'Awaiting Reply',
+  follow_up_date  DATE,
+  notes           TEXT,
+  gmail_thread_id TEXT,
+  created_at      TIMESTAMP DEFAULT NOW()
+);

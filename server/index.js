@@ -7,6 +7,7 @@ const authRoutes     = require("./routes/auth");
 const profileRoutes  = require("./routes/profile");
 const generateRoutes = require("./routes/generate");
 const gmailRoutes    = require("./routes/gmail");
+const outreachRoutes = require("./routes/outreach");
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -34,6 +35,7 @@ app.use("/auth",     authRoutes);
 app.use("/profile",  profileRoutes);
 app.use("/generate", generateRoutes);
 app.use("/auth/gmail", gmailRoutes);
+app.use("/outreach", outreachRoutes);
 
 // ─── Global error handler ────────────────────────────────────────────────────
 app.use((err, _req, res, _next) => {

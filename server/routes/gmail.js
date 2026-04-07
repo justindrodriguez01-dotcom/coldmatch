@@ -99,7 +99,7 @@ router.get("/callback", async (req, res) => {
 // ─── POST /gmail/draft ─────────────────────────────────────────────────────────
 // Creates a Gmail draft for the authenticated user.
 router.post("/draft", requireAuth, async (req, res) => {
-  const { to, subject, body } = req.body;
+  const { to, subject, body, contactName, contactFirm, contactRole } = req.body;
   if (!subject || !body) {
     return res.status(400).json({ error: "subject and body are required" });
   }
@@ -145,10 +145,24 @@ router.post("/draft", requireAuth, async (req, res) => {
       message = createMimeMessage(to || "", subject, body);
     }
 
-    await gmail.users.drafts.create({
+    const draftRes = await gmail.users.drafts.create({
       userId: "me",
       requestBody: { message: { raw: message } },
     });
+
+    const threadId = draftRes.data?.message?.threadId || null;
+
+    // Auto-log to outreach tracker (best-effort)
+    if (contactName) {
+      const followUpDate = new Date();
+      followUpDate.setDate(followUpDate.getDate() + 7);
+      const followUpStr = followUpDate.toISOString().split("T")[0];
+      query(
+        `INSERT INTO outreach (user_id, name, firm, role, source, stage, reply_status, follow_up_date, gmail_thread_id)
+         VALUES ($1,$2,$3,$4,'extension','Drafted','Awaiting Reply',$5,$6)`,
+        [req.userId, contactName, contactFirm || null, contactRole || null, followUpStr, threadId]
+      ).catch((err) => console.error("[gmail/draft] outreach log failed:", err));
+    }
 
     res.json({ success: true, message: "Draft saved to Gmail" });
   } catch (err) {

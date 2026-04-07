@@ -33,7 +33,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-
     nav {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -42,6 +41,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
     .logo {
       font-family: 'DM Sans', sans-serif;
@@ -51,16 +53,8 @@
       text-decoration: none;
       letter-spacing: -0.02em;
     }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .nav-email {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-email { font-size: 13px; color: var(--text-secondary); }
     .btn-ghost {
       background: none;
       border: 1px solid var(--border-strong);
@@ -75,29 +69,45 @@
     }
     .btn-ghost:hover { border-color: #9ca3af; color: var(--text-primary); }
 
+    /* ── Tab bar ── */
+    .tab-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      gap: 0;
+      position: sticky;
+      top: 56px;
+      z-index: 19;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 14px 16px 12px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--text-primary); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Page layout ── */
     .page {
       flex: 1;
-      padding: 48px 24px;
-      max-width: 720px;
+      padding: 40px 24px 80px;
+      max-width: 900px;
       margin: 0 auto;
       width: 100%;
     }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
-    .greeting {
-      margin-bottom: 32px;
-    }
-    .greeting h1 {
-      font-size: 26px;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-    .greeting p {
-      font-size: 15px;
-      color: var(--text-secondary);
-    }
-
+    /* ── Cards ── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -106,7 +116,6 @@
       margin-bottom: 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
-
     .card-title {
       font-size: 15px;
       font-weight: 600;
@@ -120,6 +129,16 @@
       margin-bottom: 20px;
       line-height: 1.5;
     }
+
+    .greeting { margin-bottom: 28px; }
+    .greeting h1 {
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .greeting p { font-size: 15px; color: var(--text-secondary); }
 
     .btn-primary {
       display: inline-flex;
@@ -184,20 +203,9 @@
       align-items: center;
       justify-content: space-between;
     }
-    .profile-label {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-    .profile-value {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-    .profile-divider {
-      border: none;
-      border-top: 1px solid #f3f4f6;
-      margin: 12px 0;
-    }
+    .profile-label { font-size: 13px; color: var(--text-secondary); }
+    .profile-value { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .profile-divider { border: none; border-top: 1px solid #f3f4f6; margin: 12px 0; }
 
     #loading-state {
       text-align: center;
@@ -238,6 +246,251 @@
     .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); }
     .toggle-switch input:disabled + .toggle-slider { background: #e5e7eb; cursor: not-allowed; }
     .toggle-switch input:disabled:checked + .toggle-slider { background: #93c5fd; }
+
+    /* ── Follow-up reminders section ── */
+    .reminders-section {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .reminders-section.hidden { display: none; }
+    .reminders-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #92400e;
+      margin-bottom: 12px;
+    }
+    .reminder-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid #fde68a;
+      gap: 12px;
+    }
+    .reminder-item:first-of-type { border-top: none; }
+    .reminder-info { flex: 1; min-width: 0; }
+    .reminder-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .reminder-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .btn-followup {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      background: #d97706;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-followup:hover { background: #b45309; }
+
+    /* ── Outreach Tracker tab ── */
+    .tracker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .tracker-header h2 {
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+    .tracker-actions { display: flex; gap: 10px; align-items: center; }
+
+    .tracker-table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .tracker-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .tracker-table th {
+      background: #f9f9f8;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .tracker-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: middle;
+      color: var(--text-primary);
+    }
+    .tracker-table tr:last-child td { border-bottom: none; }
+    .tracker-table tr:hover td { background: #fafaf9; }
+
+    .tracker-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-drafted    { background: #e0e7ff; color: #3730a3; }
+    .badge-contacted  { background: #dbeafe; color: #1e40af; }
+    .badge-replied    { background: #d1fae5; color: #065f46; }
+    .badge-meeting    { background: #dcfce7; color: #14532d; }
+    .badge-offer      { background: #bbf7d0; color: #14532d; }
+    .badge-awaiting   { background: #fef3c7; color: #92400e; }
+    .badge-no-response{ background: #fee2e2; color: #991b1b; }
+    .badge-source-ext { background: #ede9fe; color: #5b21b6; }
+    .badge-source-manual { background: #f3f4f6; color: #374151; }
+
+    .action-link {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .action-link:hover { text-decoration: underline; }
+    .action-link.delete { color: #ef4444; }
+    .action-link + .action-link { margin-left: 10px; }
+
+    /* ── Modals ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 28px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    }
+    .modal-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .modal-field { margin-bottom: 14px; }
+    .modal-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .modal-field input,
+    .modal-field select,
+    .modal-field textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text-primary);
+      background: var(--surface);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .modal-field input:focus,
+    .modal-field select:focus,
+    .modal-field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    .modal-field textarea { resize: vertical; min-height: 72px; }
+    .modal-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: flex-end;
+    }
+    .modal-email-body {
+      background: #f9f9f8;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      min-height: 120px;
+    }
+    .modal-subject-line {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    .modal-subject-line strong { color: var(--text-primary); }
+    .modal-generating {
+      text-align: center;
+      padding: 32px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(37,99,235,0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .followup-copy-confirm {
+      font-size: 12px;
+      color: #059669;
+      display: none;
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
@@ -250,61 +503,169 @@
     </div>
   </nav>
 
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="home">Home</button>
+    <button class="tab-btn" data-tab="tracker">Outreach Tracker</button>
+  </div>
+
   <div class="page">
     <div id="loading-state">Loading…</div>
 
     <div id="main-content">
-      <div class="greeting">
-        <h1 id="welcome-heading">Welcome to ColdMatch.</h1>
-        <p>Your profile is set up. Install the extension to start scoring profiles.</p>
-      </div>
 
-      <div class="card">
-        <div class="card-title">Install the Chrome extension</div>
-        <div class="card-sub">Open LinkedIn profiles and get instant match scores and personalized cold emails.</div>
-        <a href="#" class="btn-primary" id="download-btn">Add to Chrome</a>
-        <ul class="ext-steps">
-          <li><span class="step-num">1</span> Download and unzip the extension file.</li>
-          <li><span class="step-num">2</span> Go to <strong>chrome://extensions</strong> and enable Developer mode.</li>
-          <li><span class="step-num">3</span> Click "Load unpacked" and select the unzipped folder.</li>
-          <li><span class="step-num">4</span> Open any LinkedIn profile and click the ColdMatch icon.</li>
-        </ul>
-      </div>
+      <!-- ── HOME TAB ── -->
+      <div class="tab-panel active" id="tab-home">
 
-      <div class="card" id="gmail-card">
-        <div class="card-title">Connect Gmail</div>
-        <div class="card-sub">Save drafts directly to Gmail from the ColdMatch extension.</div>
-        <div id="gmail-not-connected">
-          <button class="btn-primary" id="connect-gmail-btn">Connect Gmail</button>
+        <div class="greeting">
+          <h1 id="welcome-heading">Welcome to ColdMatch.</h1>
+          <p>Your profile is set up. Install the extension to start scoring profiles.</p>
         </div>
-        <div id="gmail-connected" style="display:none;align-items:center;gap:16px;">
-          <span style="color:#059669;font-weight:500;font-size:14px;">Gmail connected</span>
-          <button class="btn-ghost" id="reconnect-gmail-btn" style="font-size:12px;padding:4px 10px;">Reconnect</button>
-        </div>
-      </div>
 
-      <div class="card">
-        <div class="card-title">Your profile</div>
-        <div id="profile-details"></div>
-        <hr class="profile-divider" id="resume-upload-divider" style="display:none;">
-        <div class="profile-row" id="resume-upload-row" style="display:none;">
-          <div style="font-weight:500;font-size:13px;color:var(--text-primary);">Resume</div>
-          <div id="resume-upload-status" style="display:flex;align-items:center;gap:10px;"></div>
+        <!-- Follow-up reminders (populated by JS) -->
+        <div class="reminders-section hidden" id="reminders-section">
+          <div class="reminders-title">Follow-ups due</div>
+          <div id="reminders-list"></div>
         </div>
-        <input type="file" id="resume-file-input" accept=".pdf" style="display:none;">
-        <hr class="profile-divider" id="resume-toggle-divider" style="display:none;">
-        <div class="profile-row" id="resume-toggle-row" style="display:none;">
-          <div>
-            <div class="profile-label" style="font-weight:500;color:var(--text-primary);">Attach resume to emails</div>
-            <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Your resume will be attached to every Gmail draft.</div>
-            <p id="resume-required-warning" style="display:none;font-size:12px;color:#d97706;margin-top:4px;">Upload a resume above to enable this feature.</p>
+
+        <div class="card">
+          <div class="card-title">Install the Chrome extension</div>
+          <div class="card-sub">Open LinkedIn profiles and get instant match scores and personalized cold emails.</div>
+          <a href="#" class="btn-primary" id="download-btn">Add to Chrome</a>
+          <ul class="ext-steps">
+            <li><span class="step-num">1</span> Download and unzip the extension file.</li>
+            <li><span class="step-num">2</span> Go to <strong>chrome://extensions</strong> and enable Developer mode.</li>
+            <li><span class="step-num">3</span> Click "Load unpacked" and select the unzipped folder.</li>
+            <li><span class="step-num">4</span> Open any LinkedIn profile and click the ColdMatch icon.</li>
+          </ul>
+        </div>
+
+        <div class="card" id="gmail-card">
+          <div class="card-title">Connect Gmail</div>
+          <div class="card-sub">Save drafts directly to Gmail from the ColdMatch extension.</div>
+          <div id="gmail-not-connected">
+            <button class="btn-primary" id="connect-gmail-btn">Connect Gmail</button>
           </div>
-          <label class="toggle-switch">
-            <input type="checkbox" id="attach-resume-toggle">
-            <span class="toggle-slider"></span>
-          </label>
+          <div id="gmail-connected" style="display:none;align-items:center;gap:16px;">
+            <span style="color:#059669;font-weight:500;font-size:14px;">Gmail connected</span>
+            <button class="btn-ghost" id="reconnect-gmail-btn" style="font-size:12px;padding:4px 10px;">Reconnect</button>
+          </div>
         </div>
-        <a href="/onboarding" class="link-subtle" style="margin-top:16px;display:inline-block;">Edit profile</a>
+
+        <div class="card">
+          <div class="card-title">Your profile</div>
+          <div id="profile-details"></div>
+          <hr class="profile-divider" id="resume-upload-divider" style="display:none;">
+          <div class="profile-row" id="resume-upload-row" style="display:none;">
+            <div style="font-weight:500;font-size:13px;color:var(--text-primary);">Resume</div>
+            <div id="resume-upload-status" style="display:flex;align-items:center;gap:10px;"></div>
+          </div>
+          <input type="file" id="resume-file-input" accept=".pdf" style="display:none;">
+          <hr class="profile-divider" id="resume-toggle-divider" style="display:none;">
+          <div class="profile-row" id="resume-toggle-row" style="display:none;">
+            <div>
+              <div class="profile-label" style="font-weight:500;color:var(--text-primary);">Attach resume to emails</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Your resume will be attached to every Gmail draft.</div>
+              <p id="resume-required-warning" style="display:none;font-size:12px;color:#d97706;margin-top:4px;">Upload a resume above to enable this feature.</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="attach-resume-toggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <a href="/onboarding" class="link-subtle" style="margin-top:16px;display:inline-block;">Edit profile</a>
+        </div>
+      </div><!-- /tab-home -->
+
+      <!-- ── TRACKER TAB ── -->
+      <div class="tab-panel" id="tab-tracker">
+        <div class="tracker-header">
+          <h2>Outreach Tracker</h2>
+          <div class="tracker-actions">
+            <button class="btn-ghost" id="check-replies-btn" style="font-size:12px;padding:6px 12px;">Check for replies</button>
+            <button class="btn-primary" id="add-contact-btn">+ Add contact</button>
+          </div>
+        </div>
+
+        <div class="tracker-table-wrap">
+          <div id="tracker-body">
+            <div class="tracker-empty">No contacts yet. Save a draft from the extension or add one manually.</div>
+          </div>
+        </div>
+      </div><!-- /tab-tracker -->
+
+    </div><!-- /main-content -->
+  </div><!-- /page -->
+
+  <!-- ── Contact Modal ── -->
+  <div class="modal-overlay" id="contact-modal">
+    <div class="modal">
+      <div class="modal-title" id="contact-modal-title">Add contact</div>
+      <div class="modal-field">
+        <label>Name *</label>
+        <input type="text" id="cm-name" placeholder="Full name" />
+      </div>
+      <div class="modal-field-row">
+        <div class="modal-field">
+          <label>Firm</label>
+          <input type="text" id="cm-firm" placeholder="e.g. Goldman Sachs" />
+        </div>
+        <div class="modal-field">
+          <label>Role</label>
+          <input type="text" id="cm-role" placeholder="e.g. VP" />
+        </div>
+      </div>
+      <div class="modal-field-row">
+        <div class="modal-field">
+          <label>Stage</label>
+          <select id="cm-stage">
+            <option value="Drafted">Drafted</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Replied">Replied</option>
+            <option value="Meeting Scheduled">Meeting Scheduled</option>
+            <option value="Offer">Offer</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label>Reply status</label>
+          <select id="cm-reply-status">
+            <option value="Awaiting Reply">Awaiting Reply</option>
+            <option value="Replied">Replied</option>
+            <option value="No Response">No Response</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-field">
+        <label>Follow-up date</label>
+        <input type="date" id="cm-followup-date" />
+      </div>
+      <div class="modal-field">
+        <label>Notes</label>
+        <textarea id="cm-notes" placeholder="Any context about this contact…"></textarea>
+      </div>
+      <div id="contact-modal-error" style="font-size:12px;color:#ef4444;display:none;margin-top:8px;"></div>
+      <div class="modal-actions">
+        <button class="btn-ghost" id="contact-modal-cancel">Cancel</button>
+        <button class="btn-primary" id="contact-modal-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Follow-up Modal ── -->
+  <div class="modal-overlay" id="followup-modal">
+    <div class="modal">
+      <div class="modal-title" id="followup-modal-title">Follow-up email</div>
+      <div id="followup-generating" class="modal-generating">
+        <span class="spinner"></span> Generating follow-up…
+      </div>
+      <div id="followup-result" style="display:none;">
+        <div class="modal-subject-line">Subject: <strong id="followup-subject"></strong></div>
+        <div class="modal-email-body" id="followup-body"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-ghost" id="followup-modal-close">Close</button>
+        <button class="btn-ghost" id="followup-copy-btn" style="display:none;">Copy</button>
+        <span class="followup-copy-confirm" id="followup-copy-confirm">Copied!</span>
+        <button class="btn-primary" id="followup-draft-btn" style="display:none;">Save as draft</button>
       </div>
     </div>
   </div>
@@ -318,23 +679,60 @@
       return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
     }
 
+    function formatDate(dateStr) {
+      if (!dateStr) return '—';
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function stageBadgeClass(stage) {
+      const map = {
+        'Drafted': 'badge-drafted',
+        'Contacted': 'badge-contacted',
+        'Replied': 'badge-replied',
+        'Meeting Scheduled': 'badge-meeting',
+        'Offer': 'badge-offer',
+      };
+      return map[stage] || 'badge-drafted';
+    }
+
+    function replyBadgeClass(status) {
+      const map = {
+        'Awaiting Reply': 'badge-awaiting',
+        'Replied': 'badge-replied',
+        'No Response': 'badge-no-response',
+      };
+      return map[status] || 'badge-awaiting';
+    }
+
+    // ── Tab switching ──
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'tracker') loadOutreach();
+      });
+    });
+
+    // ── Nav / logout ──
     document.getElementById('logout-btn').addEventListener('click', () => {
       localStorage.removeItem('cm_token');
       window.location.href = '/';
     });
 
+    // ── Load dashboard (profile + home) ──
     async function loadDashboard() {
       try {
         const res = await fetch('/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         if (res.status === 401) {
           localStorage.removeItem('cm_token');
           window.location.href = '/login';
           return;
         }
-
         const profile = res.ok ? await res.json() : null;
 
         if (profile?.name) {
@@ -351,7 +749,6 @@
             ['Goal',        profile.goal],
             ['Target role', profile.target_role],
           ].filter(([, v]) => v);
-
           details.innerHTML = rows.map(([label, value], i) => `
             ${i > 0 ? '<hr class="profile-divider">' : ''}
             <div class="profile-row">
@@ -368,14 +765,11 @@
           if (payload.email) document.getElementById('nav-email').textContent = payload.email;
         } catch (_) {}
 
-        // Show resume + toggle sections only if profile exists
         if (profile) {
           const hasResume = !!profile.has_resume;
-
           document.getElementById('resume-upload-divider').style.display = '';
           document.getElementById('resume-upload-row').style.display = '';
           renderResumeStatus(hasResume);
-
           document.getElementById('resume-toggle-divider').style.display = '';
           document.getElementById('resume-toggle-row').style.display = '';
           const toggleInput = document.getElementById('attach-resume-toggle');
@@ -388,6 +782,9 @@
 
         document.getElementById('loading-state').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
+
+        // Load follow-up reminders
+        loadFollowupReminders();
 
       } catch (err) {
         document.getElementById('loading-state').textContent = 'Failed to load. Please refresh.';
@@ -439,16 +836,11 @@
       this.value = '';
     });
 
-    loadDashboard();
-
     document.getElementById('attach-resume-toggle').addEventListener('change', async (e) => {
       try {
         await fetch('/profile', {
           method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify({ attach_resume: e.target.checked }),
         });
       } catch (_) {
@@ -456,6 +848,7 @@
       }
     });
 
+    // Gmail OAuth
     const gmailParam = new URLSearchParams(window.location.search).get('gmail');
     if (gmailParam === 'connected') {
       localStorage.setItem('gmail_connected', 'true');
@@ -463,7 +856,7 @@
     }
     if (localStorage.getItem('gmail_connected') === 'true') {
       document.getElementById('gmail-not-connected').style.display = 'none';
-      document.getElementById('gmail-connected').style.display = 'block';
+      document.getElementById('gmail-connected').style.display = 'flex';
     }
 
     async function startGmailOAuth() {
@@ -480,6 +873,299 @@
 
     document.getElementById('connect-gmail-btn').addEventListener('click', startGmailOAuth);
     document.getElementById('reconnect-gmail-btn').addEventListener('click', startGmailOAuth);
+
+    // ── Follow-up reminders ──
+    let outreachData = [];
+
+    async function loadFollowupReminders() {
+      try {
+        const res = await fetch('/outreach', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) return;
+        outreachData = await res.json();
+        renderFollowupReminders();
+      } catch (_) {}
+    }
+
+    function renderFollowupReminders() {
+      const today = new Date().toISOString().split('T')[0];
+      const due = outreachData.filter(e =>
+        e.follow_up_date && e.follow_up_date.split('T')[0] <= today &&
+        ['Drafted', 'Contacted'].includes(e.stage)
+      );
+      const section = document.getElementById('reminders-section');
+      const list = document.getElementById('reminders-list');
+      if (due.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      section.classList.remove('hidden');
+      list.innerHTML = due.map(e => `
+        <div class="reminder-item">
+          <div class="reminder-info">
+            <div class="reminder-name">${e.name}</div>
+            <div class="reminder-meta">${[e.firm, e.role].filter(Boolean).join(' · ') || 'No firm/role'} · Follow-up was ${formatDate(e.follow_up_date)}</div>
+          </div>
+          <button class="btn-followup" onclick="openFollowupModal('${e.id}', '${escHtml(e.name)}')">Generate follow-up</button>
+        </div>
+      `).join('');
+    }
+
+    function escHtml(str) {
+      return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // ── Outreach table ──
+    async function loadOutreach() {
+      try {
+        const res = await fetch('/outreach', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) return;
+        outreachData = await res.json();
+        renderTrackerTable();
+      } catch (_) {}
+    }
+
+    function renderTrackerTable() {
+      const container = document.getElementById('tracker-body');
+      if (outreachData.length === 0) {
+        container.innerHTML = '<div class="tracker-empty">No contacts yet. Save a draft from the extension or add one manually.</div>';
+        return;
+      }
+      container.innerHTML = `
+        <table class="tracker-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Firm</th>
+              <th>Role</th>
+              <th>Date Added</th>
+              <th>Stage</th>
+              <th>Reply</th>
+              <th>Follow-up</th>
+              <th>Notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${outreachData.map(e => `
+              <tr>
+                <td style="font-weight:600;white-space:nowrap;">${e.name}</td>
+                <td>${e.firm || '—'}</td>
+                <td>${e.role || '—'}</td>
+                <td style="white-space:nowrap;">
+                  ${formatDate(e.date_added)}
+                  <br><span class="badge ${e.source === 'extension' ? 'badge-source-ext' : 'badge-source-manual'}" style="margin-top:3px;">${e.source === 'extension' ? 'Draft Saved' : 'Added Manually'}</span>
+                </td>
+                <td><span class="badge ${stageBadgeClass(e.stage)}">${e.stage}</span></td>
+                <td><span class="badge ${replyBadgeClass(e.reply_status)}">${e.reply_status}</span></td>
+                <td style="white-space:nowrap;">${formatDate(e.follow_up_date)}</td>
+                <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escHtml(e.notes)}">${e.notes || '—'}</td>
+                <td style="white-space:nowrap;">
+                  <button class="action-link" onclick="openEditModal('${e.id}')">Edit</button>
+                  <button class="action-link delete" onclick="deleteEntry('${e.id}')">Delete</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // ── Check replies ──
+    document.getElementById('check-replies-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('check-replies-btn');
+      btn.disabled = true;
+      btn.textContent = 'Checking…';
+      try {
+        const res = await fetch('/outreach/check-replies', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (data.updated > 0) {
+          await loadOutreach();
+        }
+        btn.textContent = data.updated > 0 ? `${data.updated} updated` : 'Up to date';
+      } catch (_) {
+        btn.textContent = 'Check for replies';
+      }
+      btn.disabled = false;
+      setTimeout(() => { btn.textContent = 'Check for replies'; }, 3000);
+    });
+
+    // ── Contact modal ──
+    let editingId = null;
+
+    document.getElementById('add-contact-btn').addEventListener('click', () => {
+      editingId = null;
+      document.getElementById('contact-modal-title').textContent = 'Add contact';
+      document.getElementById('cm-name').value = '';
+      document.getElementById('cm-firm').value = '';
+      document.getElementById('cm-role').value = '';
+      document.getElementById('cm-stage').value = 'Drafted';
+      document.getElementById('cm-reply-status').value = 'Awaiting Reply';
+      document.getElementById('cm-followup-date').value = '';
+      document.getElementById('cm-notes').value = '';
+      document.getElementById('contact-modal-error').style.display = 'none';
+      document.getElementById('contact-modal').classList.add('open');
+    });
+
+    function openEditModal(id) {
+      const entry = outreachData.find(e => e.id === id);
+      if (!entry) return;
+      editingId = id;
+      document.getElementById('contact-modal-title').textContent = 'Edit contact';
+      document.getElementById('cm-name').value = entry.name || '';
+      document.getElementById('cm-firm').value = entry.firm || '';
+      document.getElementById('cm-role').value = entry.role || '';
+      document.getElementById('cm-stage').value = entry.stage || 'Drafted';
+      document.getElementById('cm-reply-status').value = entry.reply_status || 'Awaiting Reply';
+      document.getElementById('cm-followup-date').value = entry.follow_up_date ? entry.follow_up_date.split('T')[0] : '';
+      document.getElementById('cm-notes').value = entry.notes || '';
+      document.getElementById('contact-modal-error').style.display = 'none';
+      document.getElementById('contact-modal').classList.add('open');
+    }
+
+    function closeContactModal() {
+      document.getElementById('contact-modal').classList.remove('open');
+    }
+
+    document.getElementById('contact-modal-cancel').addEventListener('click', closeContactModal);
+
+    document.getElementById('contact-modal-save').addEventListener('click', async () => {
+      const name = document.getElementById('cm-name').value.trim();
+      const errorEl = document.getElementById('contact-modal-error');
+      if (!name) {
+        errorEl.textContent = 'Name is required.';
+        errorEl.style.display = '';
+        return;
+      }
+      const payload = {
+        name,
+        firm: document.getElementById('cm-firm').value.trim() || null,
+        role: document.getElementById('cm-role').value.trim() || null,
+        stage: document.getElementById('cm-stage').value,
+        reply_status: document.getElementById('cm-reply-status').value,
+        follow_up_date: document.getElementById('cm-followup-date').value || null,
+        notes: document.getElementById('cm-notes').value.trim() || null,
+      };
+      const saveBtn = document.getElementById('contact-modal-save');
+      saveBtn.disabled = true;
+      try {
+        let res;
+        if (editingId) {
+          res = await fetch(`/outreach/${editingId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify(payload),
+          });
+        } else {
+          res = await fetch('/outreach', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify(payload),
+          });
+        }
+        if (!res.ok) throw new Error('Save failed');
+        await loadOutreach();
+        closeContactModal();
+      } catch (_) {
+        errorEl.textContent = 'Could not save. Try again.';
+        errorEl.style.display = '';
+      }
+      saveBtn.disabled = false;
+    });
+
+    async function deleteEntry(id) {
+      if (!confirm('Delete this contact?')) return;
+      try {
+        await fetch(`/outreach/${id}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        outreachData = outreachData.filter(e => e.id !== id);
+        renderTrackerTable();
+      } catch (_) {}
+    }
+
+    // ── Follow-up modal ──
+    let followupSubject = '';
+    let followupBody    = '';
+    let followupEntryId = null;
+
+    async function openFollowupModal(id, name) {
+      followupEntryId = id;
+      document.getElementById('followup-modal-title').textContent = `Follow-up: ${name}`;
+      document.getElementById('followup-generating').style.display = '';
+      document.getElementById('followup-result').style.display = 'none';
+      document.getElementById('followup-copy-btn').style.display = 'none';
+      document.getElementById('followup-draft-btn').style.display = 'none';
+      document.getElementById('followup-copy-confirm').style.display = 'none';
+      document.getElementById('followup-modal').classList.add('open');
+
+      try {
+        const res = await fetch('/outreach/follow-up', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ outreachId: id }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed');
+        followupSubject = data.subject || '';
+        followupBody    = data.body    || '';
+        document.getElementById('followup-subject').textContent = followupSubject;
+        document.getElementById('followup-body').textContent    = followupBody;
+        document.getElementById('followup-generating').style.display = 'none';
+        document.getElementById('followup-result').style.display = '';
+        document.getElementById('followup-copy-btn').style.display = '';
+        document.getElementById('followup-draft-btn').style.display = '';
+      } catch (_) {
+        document.getElementById('followup-generating').textContent = 'Could not generate follow-up. Try again.';
+      }
+    }
+
+    document.getElementById('followup-modal-close').addEventListener('click', () => {
+      document.getElementById('followup-modal').classList.remove('open');
+    });
+
+    document.getElementById('followup-copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(followupBody).then(() => {
+        const confirm = document.getElementById('followup-copy-confirm');
+        confirm.style.display = 'inline';
+        setTimeout(() => { confirm.style.display = 'none'; }, 2000);
+      });
+    });
+
+    document.getElementById('followup-draft-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('followup-draft-btn');
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      try {
+        const res = await fetch('/auth/gmail/draft', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ subject: followupSubject, body: followupBody }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed');
+        btn.textContent = 'Saved ✓';
+      } catch (_) {
+        btn.textContent = 'Failed — try again';
+      }
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Save as draft'; }, 2500);
+    });
+
+    // Close modals on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.classList.remove('open');
+      });
+    });
+
+    loadDashboard();
   </script>
 
 </body>

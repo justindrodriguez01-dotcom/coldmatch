@@ -23,7 +23,6 @@ function buildSenderBlock(u) {
     `- Timeline: ${u.timeline || "not provided"}`,
     `- Work experience: ${u.work_experience || "not provided"}`,
     `- Activities and clubs: ${u.activities || "not provided"}`,
-    `- Background: ${u.background_blurb || "not provided"}`,
   ].join("\n");
 }
 
@@ -145,47 +144,47 @@ ${profileData}
 ANGLE — this drives the email's focus and the specific ask:
 ${angleDescription}${customNoteInstruction}${resumeInstruction}
 
-━━━ STEP 1: DETECT SHARED BACKGROUND (do this before writing anything) ━━━
+━━━ STEP 1: DETECT SHARED BACKGROUND ━━━
 
 SHARED UNIVERSITY — mandatory highest-priority hook:
-Compare sender's school against every institution in the recipient's profile. If they match (same university, any campus), this is the primary hook and must appear in TWO places:
-  1. Subject line must include the school name — e.g. "Fellow Michigan Alum", "Michigan → Goldman", "Dartmouth Student Quick Question". The name must literally appear.
-  2. Email opening must lead with the shared connection as the natural reason for reaching out — e.g. "I noticed you're a fellow Michigan alum", "As a fellow Wolverine", "I saw you went to Michigan — I'm a current junior there." It should feel like the reason they're writing, not a throwaway line.
+Compare sender's school against every institution in the recipient's profile. If they match, this is the primary hook and MUST appear in two places:
+  1. Subject line: simple and descriptive — e.g. "Fellow Michigan Ross Student Reaching Out", "University of Michigan Student Question". School name must literally appear. Keep it plain, not clever.
+  2. Email opening: the first sentence after the intro must reference the shared school as the natural reason for writing — e.g. "I noticed you went to Michigan too" or "I saw you're a fellow Ross alum."
 
 OTHER SHARED BACKGROUND:
-Check whether sender and recipient share clubs, student organizations, sports teams, Greek life, or hometown. If found:
-  • Weave in after the university mention if one exists, or
-  • Use as the opening hook if no shared university is present.
+Check for shared clubs, organizations, sports teams, Greek life, or hometown. Use after university mention, or as the hook if no shared university.
 
 ━━━ STEP 2: WRITE THE EMAIL ━━━
 
-Hi [first name],
+The email MUST follow this exact structure — no reordering:
 
-[Opening — 1 sentence]
-Use the strongest hook from Step 1. If no shared background exists, open with one specific verifiable fact from their actual career history, firm, or education — stated plainly, no compliments, no "I came across your profile."
+1. Greeting: Hi [first name],
 
-[Body — 2–3 sentences]
-Genuine curiosity driven by the angle. Specific to what this person actually did — their real roles, firm, or career decisions. If a customNote was provided, weave it in here naturally only if it fits. Do not force it.
+2. Sender intro (1 sentence): "I'm [name], a [year] [major] student at [school]."
 
-[Ask — 1 sentence]
-Low-pressure. Acknowledge they're busy. Ask for 15 minutes.
+3. Hook (1 sentence): The strongest connection from Step 1, or one specific verifiable fact from their actual career history — stated plainly. No compliments.
 
-Best,
-[Sender first name]
+4. Body (1–2 sentences): Genuine curiosity driven by the angle. Specific to what this person actually did. If customNote is provided, work it in here naturally only if it fits.
+
+5. CTA (1 sentence): Low-pressure. Acknowledge they're busy. End with "if you have time for a quick call" — do not say "15 minutes" or any specific time.
+
+6. Sign-off: Best,\\n[Sender first name]
 
 ━━━ RULES ━━━
 - Under 120 words total
+- Never mention how long the sender has been interested in finance or any field — no personal backstory, no "I've always been passionate about…"
+- Never say "15 minutes" — use "quick call" only, no time specified
 - Never invent details not in the profile
-- NEVER use: "your journey", "truly impressive", "I hope this finds you well", "would greatly appreciate", "any insights you could share", "thank you for considering", "I look forward to", "extensive experience", "really resonated", "was impressed by", "which is fascinating", "that kind of dedication", "built a strong career", "I came across your profile"
+- NEVER use: "your journey", "truly impressive", "I hope this finds you well", "would greatly appreciate", "any insights you could share", "thank you for considering", "I look forward to", "extensive experience", "really resonated", "was impressed by", "which is fascinating", "built a strong career", "I came across your profile"
 - Never summarize their About section
 - Never compliment a skill or trait directly
-- Never force a shared background connection that doesn't actually exist in the data
+- Never force a shared connection that doesn't exist in the data
 
 Return ONLY this JSON:
 {
-  "subject": "subject line — if shared university found, must include school name; otherwise ≤8 words, specific, no recipient name",
+  "subject": "subject line — if shared university: school name must appear, simple and descriptive; otherwise ≤8 words, specific, no recipient name",
   "body": "full email — \\n\\n between paragraphs, \\n between Best, and sender name",
-  "hook": "one specific line: e.g. 'Shared Michigan — school in subject + opening', 'No shared school — opens with their Carlyle→Blackstone move', 'AFA connection woven into body per custom note'"
+  "hook": "one specific line: e.g. 'Shared Michigan Ross — in subject + opening', 'No shared school — opens with Carlyle→Blackstone move', 'AFA connection woven into body'"
 }`,
       }],
     });
