@@ -34,22 +34,42 @@ const targetingStepEl = document.getElementById("targeting-step");
 
 const BACKEND = "https://liken-server-production.up.railway.app";
 
-// Parse firm and role from a LinkedIn headline like "Analyst at Goldman Sachs | IB"
+// Parse firm from a headline like "Analyst at Goldman Sachs"
 function parseHeadlineFirm(headline) {
   if (!headline) return null;
   const atMatch = headline.match(/\bat\s+(.+?)(?:\s*\|.*)?$/i);
   if (atMatch) return atMatch[1].trim();
-  const pipeMatch = headline.split("|");
-  if (pipeMatch.length > 1) return pipeMatch[pipeMatch.length - 1].trim();
   return null;
 }
+// Parse role from a headline like "Analyst at Goldman Sachs"
 function parseHeadlineRole(headline) {
   if (!headline) return null;
   const atMatch = headline.match(/^(.+?)\s+\bat\b/i);
   if (atMatch) return atMatch[1].trim();
-  const pipeMatch = headline.split("|");
-  if (pipeMatch.length > 1) return pipeMatch[0].trim();
-  return headline.split(" ").slice(0, 4).join(" ") || null;
+  return null;
+}
+
+// Extract firm from all available data: headline first, then first experience candidate ("Role — Firm")
+function extractFirmFromData(data) {
+  const fromHeadline = parseHeadlineFirm(data.headline);
+  if (fromHeadline) return fromHeadline;
+  // candidates with experience are formatted "Role — Company"
+  for (const c of (data.candidates || [])) {
+    const parts = c.split(' — ');
+    if (parts.length >= 2) return parts[parts.length - 1].trim();
+  }
+  return null;
+}
+
+// Extract role from all available data: headline first, then first experience candidate
+function extractRoleFromData(data) {
+  const fromHeadline = parseHeadlineRole(data.headline);
+  if (fromHeadline) return fromHeadline;
+  for (const c of (data.candidates || [])) {
+    const parts = c.split(' — ');
+    if (parts.length >= 2) return parts[0].trim();
+  }
+  return null;
 }
 
 // Convert all-caps or mixed-case names to Title Case
@@ -190,7 +210,12 @@ function init() {
       const scoreData = await callAI(combinedText);
       console.log("SCORE:", scoreData);
       lastStructuredData = combinedText;
-      lastParsed = { name: toTitleCase(data.name), headline: data.headline || "" };
+      lastParsed = {
+        name: toTitleCase(data.name),
+        headline: data.headline || "",
+        firm: extractFirmFromData(data),
+        role: extractRoleFromData(data),
+      };
       const partialLoad = !data.experienceRaw && !data.educationRaw;
       showScoreCard(scoreData, { name: toTitleCase(data.name) }, partialLoad);
     }
@@ -337,8 +362,8 @@ draftBtn.addEventListener("click", () => {
         body: JSON.stringify({
           to, subject, body,
           contactName: lastParsed?.name || null,
-          contactFirm: parseHeadlineFirm(lastParsed?.headline),
-          contactRole: parseHeadlineRole(lastParsed?.headline),
+          contactFirm: lastParsed?.firm || null,
+          contactRole: lastParsed?.role || null,
         }),
       });
       const data = await res.json();

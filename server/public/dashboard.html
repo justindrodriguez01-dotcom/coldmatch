@@ -491,6 +491,25 @@
       display: none;
       margin-left: 8px;
     }
+
+    /* Inline stage dropdown */
+    .stage-select {
+      border: none;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+    }
+    .stage-select-badge-drafted    { background: #e0e7ff; color: #3730a3; }
+    .stage-select-badge-contacted  { background: #dbeafe; color: #1e40af; }
+    .stage-select-badge-replied    { background: #d1fae5; color: #065f46; }
+    .stage-select-badge-meeting    { background: #dcfce7; color: #14532d; }
+    .stage-select-badge-offer      { background: #bbf7d0; color: #14532d; }
   </style>
 </head>
 <body>
@@ -681,8 +700,11 @@
 
     function formatDate(dateStr) {
       if (!dateStr) return '—';
-      const d = new Date(dateStr + 'T00:00:00');
-      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      // pg returns DATE columns as ISO strings like "2026-04-06T00:00:00.000Z" — take only the date part
+      const datePart = String(dateStr).split('T')[0]; // "2026-04-06"
+      const [y, m, d] = datePart.split('-').map(Number);
+      if (!y || !m || !d) return '—';
+      return new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
     function stageBadgeClass(stage) {
@@ -959,7 +981,11 @@
                   ${formatDate(e.date_added)}
                   <br><span class="badge ${e.source === 'extension' ? 'badge-source-ext' : 'badge-source-manual'}" style="margin-top:3px;">${e.source === 'extension' ? 'Draft Saved' : 'Added Manually'}</span>
                 </td>
-                <td><span class="badge ${stageBadgeClass(e.stage)}">${e.stage}</span></td>
+                <td>
+                  <select class="stage-select stage-select-${stageBadgeClass(e.stage)}" data-id="${e.id}" onchange="updateStage('${e.id}', this)">
+                    ${['Drafted','Contacted','Replied','Meeting Scheduled','Offer'].map(s => `<option value="${s}"${s===e.stage?' selected':''}>${s}</option>`).join('')}
+                  </select>
+                </td>
                 <td><span class="badge ${replyBadgeClass(e.reply_status)}">${e.reply_status}</span></td>
                 <td style="white-space:nowrap;">${formatDate(e.follow_up_date)}</td>
                 <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escHtml(e.notes)}">${e.notes || '—'}</td>
@@ -1078,6 +1104,21 @@
       }
       saveBtn.disabled = false;
     });
+
+    async function updateStage(id, selectEl) {
+      const stage = selectEl.value;
+      // Update badge color class
+      selectEl.className = 'stage-select stage-select-' + stageBadgeClass(stage);
+      try {
+        await fetch(`/outreach/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ stage }),
+        });
+        const entry = outreachData.find(e => e.id === id);
+        if (entry) entry.stage = stage;
+      } catch (_) {}
+    }
 
     async function deleteEntry(id) {
       if (!confirm('Delete this contact?')) return;
