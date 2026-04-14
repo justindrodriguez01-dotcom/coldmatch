@@ -60,7 +60,7 @@ POST /auth/login      { email, password }  → { token, userId }
 ```
 GET  /profile                        → profile object | null
 POST /profile  { name, school, year, major, hometown,
-                 goal, target_field, target_role,
+                 goal, target_role,
                  timeline, background_blurb,
                  work_experience, activities }
              → updated profile object

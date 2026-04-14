@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS profiles (
   major            TEXT,
   hometown         TEXT,
   goal             TEXT,
-  target_field     TEXT,
   target_role      TEXT,
   timeline         TEXT,
   background_blurb TEXT,

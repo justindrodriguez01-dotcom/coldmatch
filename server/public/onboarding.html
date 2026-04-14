@@ -397,25 +397,6 @@
         <div class="section-title">Goals</div>
 
         <div class="field">
-          <label for="target-field">Target field</label>
-          <select id="target-field">
-            <option value="">Select a field</option>
-            <option>Investment Banking</option>
-            <option>Private Equity / Venture Capital</option>
-            <option>Asset Management</option>
-            <option>Sales &amp; Trading</option>
-            <option>Consulting</option>
-            <option>Tech — Product Management</option>
-            <option>Tech — Engineering</option>
-            <option>Tech — Data / Analytics</option>
-            <option>Marketing / Brand</option>
-            <option>Real Estate</option>
-            <option>Law</option>
-            <option>Medicine / Healthcare</option>
-            <option>Still figuring it out</option>
-          </select>
-        </div>
-        <div class="field">
           <label for="recruiting-stage">Where are you in recruiting?</label>
           <select id="recruiting-stage">
             <option value="">Select</option>
@@ -425,7 +406,7 @@
             <option>Junior/Senior — actively recruiting for a full-time role</option>
           </select>
         </div>
-        <div class="field" id="target-areas-field" style="display:none;">
+        <div class="field" id="target-areas-field">
           <label for="target-areas">What area(s) of finance are you targeting? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
           <input type="text" id="target-areas" placeholder="e.g. Investment Banking, Sales &amp; Trading, Private Equity, Asset Management" />
         </div>
@@ -456,11 +437,6 @@
     if (urlToken) localStorage.setItem('cm_token', urlToken);
     const token = urlToken || localStorage.getItem('cm_token');
     if (!token) window.location.href = '/login';
-
-    // Show target-areas field when a recruiting stage is selected
-    document.getElementById('recruiting-stage').addEventListener('change', function () {
-      document.getElementById('target-areas-field').style.display = this.value ? '' : 'none';
-    });
 
     // ── Resume upload ──
     const uploadZone   = document.getElementById('upload-zone');
@@ -539,10 +515,8 @@
         if (p.major)            document.getElementById('major').value           = p.major;
         if (p.hometown)         document.getElementById('hometown').value        = p.hometown;
         if (p.target_location)  document.getElementById('target-location').value = p.target_location;
-        if (p.target_field)      document.getElementById('target-field').value      = p.target_field;
         if (p.recruiting_stage) {
           document.getElementById('recruiting-stage').value = p.recruiting_stage;
-          document.getElementById('target-areas-field').style.display = '';
         }
         if (p.target_areas)     document.getElementById('target-areas').value    = p.target_areas;
         if (p.timeline)         document.getElementById('timeline').value        = p.timeline;
@@ -593,7 +567,6 @@ if (p.activities)       document.getElementById('activities').value      = p.act
         major:             document.getElementById('major').value.trim(),
         hometown:          document.getElementById('hometown').value.trim(),
         target_location:   document.getElementById('target-location').value.trim(),
-        target_field:      document.getElementById('target-field').value,
         recruiting_stage:  document.getElementById('recruiting-stage').value,
         target_areas:      document.getElementById('target-areas').value.trim(),
         timeline:          document.getElementById('timeline').value,

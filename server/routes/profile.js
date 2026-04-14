@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     // Exclude resume_pdf (binary) from the response; expose has_resume flag instead
     const result = await query(
       `SELECT id, user_id, name, school, year, major, hometown, goal,
-              target_field, target_role, recruiting_stage, target_areas,
+              target_role, recruiting_stage, target_areas,
               timeline, background_blurb,
               work_experience, activities, gmail_tokens, attach_resume,
               resume_filename, (resume_pdf IS NOT NULL) AS has_resume, updated_at
@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const {
     name, school, year, major, hometown,
-    goal, target_field, target_role,
+    goal, target_role,
     recruiting_stage, target_areas,
     timeline, work_experience, activities,
   } = req.body;
@@ -52,9 +52,9 @@ router.post("/", async (req, res) => {
     const result = await query(
       `INSERT INTO profiles
          (user_id, name, school, year, major, hometown,
-          goal, target_field, target_role, recruiting_stage, target_areas,
+          goal, target_role, recruiting_stage, target_areas,
           timeline, work_experience, activities, updated_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,NOW())
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,NOW())
        ON CONFLICT (user_id) DO UPDATE SET
          name             = EXCLUDED.name,
          school           = EXCLUDED.school,
@@ -62,7 +62,6 @@ router.post("/", async (req, res) => {
          major            = EXCLUDED.major,
          hometown         = EXCLUDED.hometown,
          goal             = EXCLUDED.goal,
-         target_field     = EXCLUDED.target_field,
          target_role      = EXCLUDED.target_role,
          recruiting_stage = EXCLUDED.recruiting_stage,
          target_areas     = EXCLUDED.target_areas,
@@ -73,7 +72,7 @@ router.post("/", async (req, res) => {
        RETURNING *`,
       [
         req.userId, name, school, year, major, hometown,
-        goal, target_field, target_role, recruiting_stage, target_areas,
+        goal, target_role, recruiting_stage, target_areas,
         timeline,
         work_experience ? JSON.stringify(work_experience) : null,
         activities,

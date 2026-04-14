@@ -18,7 +18,6 @@ function buildSenderBlock(u) {
     `- Hometown: ${u.hometown || "not provided"}`,
     `- Target job location: ${u.target_job_location || "not provided"}`,
     `- Career goal: ${u.goal || "not provided"}`,
-    `- Target field: ${u.target_field || "not provided"}`,
     `- Target role type: ${u.target_role || "not provided"} (internship/full-time/exploring)`,
     `- Timeline: ${u.timeline || "not provided"}`,
     `- Work experience: ${u.work_experience || "not provided"}`,
