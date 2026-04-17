@@ -95,48 +95,72 @@ function buildProfileString(contact, assumedSchool) {
 // ─── Email prompt for CSV contacts ───────────────────────────────────────────
 
 function buildBatchEmailPrompt(profileData, userProfile, sharedSchool) {
-  const stage     = userProfile.recruiting_stage || "not provided";
-  const areas     = userProfile.target_areas     || "not provided";
-  const resume    = userProfile.attach_resume ? "true" : "false";
+  const stage = userProfile.recruiting_stage || "not provided";
+  const areas = userProfile.target_areas     || "not provided";
 
   const senderBlock = [
-    "SENDER DATA:",
-    `- Full name: ${userProfile.name     || "not provided"}`,
-    `- School: ${userProfile.school      || "not provided"}`,
-    `- Year: ${userProfile.year          || "not provided"}`,
-    `- Major: ${userProfile.major        || "not provided"}`,
-    `- Hometown: ${userProfile.hometown  || "not provided"}`,
+    `SENDER DATA:`,
+    `- Full name: ${userProfile.name       || "not provided"}`,
+    `- School: ${userProfile.school        || "not provided"}`,
+    `- Year: ${userProfile.year            || "not provided"}`,
+    `- Major: ${userProfile.major          || "not provided"}`,
+    `- Hometown: ${userProfile.hometown    || "not provided"}`,
     `- Activities & clubs: ${userProfile.activities || "not provided"}`,
     `- Recruiting stage: ${stage}`,
     `- Target areas: ${areas}`,
     `- Selected angle: How they broke into finance and their advice for someone trying to do the same`,
-    `- Attach resume: ${resume}`,
+    `- Attach resume: ${userProfile.attach_resume ? "true" : "false"}`,
   ].join("\n");
 
-  const recipientBlock = `RAW DATA — read carefully:\n${profileData}\n\nRECIPIENT DATA — populate ONLY from raw data above. Use NOT AVAILABLE if not present:\n- Full name: [extract]\n- Current role: [extract or NOT AVAILABLE]\n- Current firm: [extract or NOT AVAILABLE]\n- Education: [extract or NOT AVAILABLE]\nAny field marked NOT AVAILABLE must not be referenced in the email.`;
+  const recipientBlock = `\
+RAW SCRAPED DATA — read this carefully before filling in the block below:
+${profileData}
+
+RECIPIENT DATA — populate each field using ONLY what is explicitly stated in the raw data above.
+If a field is not clearly and explicitly present, write NOT AVAILABLE. Do not infer, invent, or assume.
+- Full name: [extract from data]
+- Current role: [job title — only if explicitly present, otherwise: NOT AVAILABLE]
+- Current firm: [employer — only if explicitly present, otherwise: NOT AVAILABLE]
+- Previous roles: [list of previous titles and firms from experience — only what is explicitly present, otherwise: NOT AVAILABLE]
+- Education: [schools attended — only what is explicitly in education data, otherwise: NOT AVAILABLE]
+- Location: [city/region — only if explicitly present, otherwise: NOT AVAILABLE]
+- About section: [verbatim if present, otherwise: NOT AVAILABLE]
+
+Any field marked NOT AVAILABLE must never be referenced, implied, or compensated for in the email.
+If a field is NOT AVAILABLE, act as if that information does not exist.`;
+
+  // CTA — 3-branch calibration matching generate.js
+  let ctaRule = `Ask: close with a low-pressure ask for a quick call. Acknowledge they're busy.`;
+  const sl = stage.toLowerCase();
+  if (sl.includes("building early connections") || sl.includes("exploring")) {
+    ctaRule = `Ask (soft): express genuine curiosity and close with something like "would love to hear your perspective if you ever have a few minutes." No pressure, no job ask.`;
+  } else if (sl.includes("actively looking for any relevant")) {
+    ctaRule = `Ask (warm): slightly more direct — "would love to connect and learn more about your path" — keep it relational, not transactional.`;
+  } else if (sl.includes("sophomore") || sl.includes("junior") || sl.includes("senior")) {
+    ctaRule = `Ask (direct): reference their target areas explicitly — "would love to find time for a quick call${areas !== "not provided" ? ` about ${areas} recruiting` : ""} if you're open to it."`;
+  }
+
+  const resumeRule = userProfile.attach_resume
+    ? `RESUME: The sender is attaching their resume. Include exactly one natural mention — e.g. "I've attached my resume for reference" — placed where it fits. Do not force it at the end.`
+    : `RESUME: attach_resume is false. Do NOT mention a resume anywhere in the email under any circumstances.`;
 
   const sharedSchoolNote = sharedSchool
     ? `SCHOOL HOOK: The sender and recipient both attended ${userProfile.school}. Lead with this — it is the strongest opener. State it plainly: "I noticed you went to [School] too" or "I saw you're a [School] alum."`
-    : "SCHOOL HOOK: No confirmed shared school. Use the recipient's role or career path as the hook instead.";
+    : `SCHOOL HOOK: No confirmed shared school. Use one specific, verified observation about the recipient's role or career path as the hook instead. Never invent a hook.`;
 
-  const resumeRule = userProfile.attach_resume
-    ? `RESUME: Include exactly one natural mention — e.g. "I've attached my resume for reference" — where it fits.`
-    : `RESUME: Do NOT mention a resume anywhere.`;
+  const subjectLine = sharedSchool
+    ? `If shared university confirmed: "[School Name] Student Reaching Out" or "[School Name] Student Interested in [Recipient's Firm or Field]" — e.g. "${userProfile.school || "School"} Student Interested in IB at [Firm]"`
+    : `No shared university: "[Sender School] Student Interested in [Recipient's Field or Firm]" — only reference firms or schools verified in the data.`;
 
-  let ctaRule = "Ask: close with a low-pressure ask for a quick call.";
-  const sl = stage.toLowerCase();
-  if (sl.includes("sophomore") || sl.includes("junior") || sl.includes("senior")) {
-    ctaRule = `Ask (direct): "would love to find time for a quick call${areas !== "not provided" ? ` about ${areas} recruiting` : ""} if you're open to it."`;
-  } else if (sl.includes("building early") || sl.includes("exploring")) {
-    ctaRule = `Ask (soft): "would love to hear your perspective if you ever have a few minutes."`;
-  }
-
-  return `CRITICAL RULES:
-1. Only reference facts explicitly listed in RECIPIENT DATA.
-2. Do not reference a school the recipient attended unless confirmed in their data (or the SCHOOL HOOK note above).
-3. Never invent specific deals, projects, or personal details.
-4. Never summarize the recipient's About section back to them.
-5. Under 120 words total (body only, excluding subject and sign-off).
+  return `CRITICAL RULES — NON-NEGOTIABLE. Violating any of these is a failure:
+1. Only reference facts explicitly listed in the RECIPIENT DATA block. Never invent or infer details.
+2. Do not reference a school the recipient attended unless it is explicitly listed in their education data (or the SCHOOL HOOK note below).
+3. Do not reference a firm unless it is explicitly listed as their current or previous employer.
+4. Do not imply shared experiences unless that connection is explicitly verified in both sender and recipient data.
+5. If a field is marked NOT AVAILABLE, do not mention it, imply it, or compensate by guessing around it.
+6. If there is limited genuine overlap between sender and recipient, write a shorter and more honest cold outreach email. Do not fabricate connections.
+7. Never summarize the recipient's About section back to them.
+8. Never mention how long the sender has been interested in finance or any personal backstory beyond their current school, year, and major.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -148,27 +172,72 @@ ${senderBlock}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+STEP 1 — VERIFY SHARED BACKGROUND (do this silently before writing anything):
+- Does the sender's school exactly match any school in the recipient's education data? If yes → shared university confirmed.
+- Do any of the sender's activities or clubs match any organization in the recipient's profile? If yes → shared org confirmed.
+- Does the sender's hometown match the recipient's location? If yes → shared location noted.
+Only use a connection if it is confirmed here. If nothing is confirmed, do not force one.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ${sharedSchoolNote}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-WRITE THE EMAIL:
-1. Greeting: Hi [first name only],
-2. Intro: "My name is [sender name], and I'm a [year] at [school] studying [major]."
-3. Hook: ${sharedSchool ? "Lead with the shared school (see SCHOOL HOOK)." : "One specific verified observation about their career."}
-4. Body (1-2 sentences): genuine curiosity about how they broke into finance.
+STEP 2 — WRITE THE EMAIL using this exact structure:
+
+1. Greeting: Hi [recipient first name only],
+   — Never use Mr. or Ms. Regardless of seniority, always use first name only.
+
+2. Intro (1 sentence): "My name is [sender full name], and I'm a [year] at [school] studying [major]."
+   — Use the exact school name and major from SENDER DATA.
+
+3. Hook (1 sentence): The single strongest verified connection from Step 1, stated plainly.
+   — If shared university confirmed: lead with that — e.g. "I noticed you went to [School] too" or "I saw you're a [School] alum."
+   — If no shared university: one specific, verified observation about the recipient's career based ONLY on confirmed RECIPIENT DATA. If no strong hook exists, use a brief honest reason for reaching out based on their field or role.
+   — Never invent a hook. Never compliment a trait directly.
+
+4. Body (1–2 sentences): Genuine curiosity about how they broke into finance and the path they took. Specific to what this person actually did.
+
 5. ${ctaRule}
+
 6. ${resumeRule}
+
 7. Sign-off: Best,\\n[sender full name]
 
-SUBJECT LINE: "${userProfile.school ? `${userProfile.school} Student` : "Student"} Reaching Out${sharedSchool ? "" : " — Interested in Your Path"}"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-BANNED PHRASES: "your journey", "truly impressive", "I hope this email finds you well",
-"which aligns with", "valuable insights", "extensive experience", "really resonated",
-"I look forward to", "15 minutes", any em dash (use comma or period instead).
+SUBJECT LINE RULES:
+- ${subjectLine}
+- Never say "Fellow Alum" — the sender is a current student, not an alum.
+- Never use "Quick Question" or any vague filler subject line.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HARD LIMITS:
+- Under 120 words total (body only, excluding subject and sign-off)
+- Email must sound like a real human wrote it — not AI, not a template
+
+BANNED PHRASES — do not use any of these under any circumstances:
+"your journey", "truly impressive", "your impressive background",
+"I came across your profile and was impressed", "I would greatly appreciate",
+"thank you for considering", "I hope this email finds you well",
+"I hope this note finds you well", "which aligns with my goals",
+"which aligns perfectly", "I noticed you also" (unless the shared connection is explicitly verified),
+"extensive experience", "really resonated", "built a strong career",
+"any insights you could share", "I look forward to", "which is fascinating",
+"15 minutes" or any specific time duration for the ask,
+any phrase that summarizes the recipient's About section,
+any phrase that invents a specific deal, project, or initiative not in the data,
+em dashes (—) in any form — rewrite any sentence that would use one to avoid it entirely; use a period, comma, or restructure the sentence instead
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Return ONLY this JSON:
-{ "subject": "...", "body": "..." }`;
+{
+  "subject": "subject line per the rules above",
+  "body": "full email — \\n\\n between paragraphs, \\n between Best, and sender name"
+}`;
 }
 
 // ─── POST /find/scrape ────────────────────────────────────────────────────────
