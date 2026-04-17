@@ -318,8 +318,8 @@ IMPORTANT: Seniority alone does NOT make someone High. A senior HR director at a
 CONTACTS TO SCORE (index: fields):
 ${contactList}
 
-Return ONLY a JSON array, one entry per contact in the same order, no markdown:
-[{"index":0,"matchLevel":"High","reason":"IB Analyst at Goldman — direct match for IB target"},...]`;
+Return ONLY valid JSON in this exact shape — a top-level object with a "scores" array:
+{"scores":[{"index":0,"matchLevel":"High","reason":"IB Analyst at Goldman — direct match for IB target"},...]}`;
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
@@ -329,10 +329,12 @@ Return ONLY a JSON array, one entry per contact in the same order, no markdown:
   });
 
   const raw = completion.choices[0].message.content.trim();
-  // The model may wrap in {"results":[...]} or return bare array
   const parsed = JSON.parse(raw);
-  const arr = Array.isArray(parsed) ? parsed : (parsed.results || parsed.contacts || Object.values(parsed)[0]);
-  if (!Array.isArray(arr)) throw new Error("Unexpected AI response shape");
+  // Accept {"scores":[...]}, {"results":[...]}, {"contacts":[...]}, or bare array
+  const arr = parsed.scores || parsed.results || parsed.contacts ||
+              (Array.isArray(parsed) ? parsed : Object.values(parsed).find(Array.isArray));
+  if (!Array.isArray(arr)) throw new Error("Unexpected AI response shape: " + raw.slice(0, 200));
+  console.log("[score-contacts] AI returned", arr.length, "scores, sample:", JSON.stringify(arr.slice(0,2)));
   return arr; // [{index, matchLevel, reason}]
 }
 
@@ -351,6 +353,14 @@ router.post("/score-contacts", async (req, res) => {
     );
     const userProfile = profileRes.rows[0] || {};
     const userSchool  = userProfile.school || "";
+
+    console.log("[score-contacts] user profile context:", {
+      goal:             userProfile.goal             || "(empty)",
+      target_areas:     userProfile.target_areas     || "(empty)",
+      recruiting_stage: userProfile.recruiting_stage || "(empty)",
+      school:           userProfile.school           || "(empty)",
+      profileRowFound:  !!profileRes.rows[0],
+    });
 
     // Existing tracker entries for alreadyContacted flag
     const outreachRes = await query(
