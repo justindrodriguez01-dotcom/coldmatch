@@ -7,15 +7,25 @@ import { getToken } from '../api'
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function autoMatch(col, field) {
-  const c = col.toLowerCase()
+  const c = col.toLowerCase().trim()
   const map = {
-    name:    ['name', 'full name', 'fullname', 'contact name'],
-    email:   ['email', 'e-mail', 'email address'],
-    company: ['company', 'firm', 'organization', 'employer'],
-    school:  ['school', 'university', 'college', 'institution'],
-    role:    ['role', 'title', 'job title', 'position', 'level'],
+    // "name" only matches full-name columns — NOT first/last alone
+    name:      ['full name', 'fullname', 'contact name', 'display name'],
+    firstName: ['first name', 'firstname', 'first', 'given name', 'givenname'],
+    lastName:  ['last name', 'lastname', 'last', 'surname', 'family name'],
+    email:     ['email', 'e-mail', 'email address', 'mail'],
+    company:   ['company', 'firm', 'organization', 'employer', 'company name'],
+    school:    ['school', 'university', 'college', 'institution', 'alma mater'],
+    role:      ['role', 'title', 'job title', 'position', 'level', 'function'],
   }
-  return (map[field] || []).some(m => c.includes(m))
+  return (map[field] || []).some(m => c === m || c.includes(m))
+}
+
+// Detect whether a columns array has separate first/last name columns
+function detectSplitName(cols) {
+  const first = cols.find(c => autoMatch(c, 'firstName'))
+  const last  = cols.find(c => autoMatch(c, 'lastName'))
+  return { first: first || null, last: last || null }
 }
 
 // ── Sub-component: SectionCard ─────────────────────────────────────────────────
@@ -344,6 +354,8 @@ function CSVSection({ profile }) {
   const [columns, setColumns] = useState([])
   const [allRows, setAllRows] = useState([])
   const [mapping, setMapping] = useState({})
+  // Split-name support: when CSV has First Name + Last Name columns separately
+  const [splitName, setSplitName] = useState({ first: null, last: null })
   const [scored, setScored] = useState([])
   const [selected, setSelected] = useState(new Set())
   const [emails, setEmails] = useState({})
@@ -372,14 +384,26 @@ function CSVSection({ profile }) {
     fd.append('file', file)
     try {
       const data = await apiFetch('/find/parse-upload', { method: 'POST', body: fd })
-      setColumns(data.columns || [])
+      const cols = data.columns || []
+      setColumns(cols)
       setAllRows(data.allRows || [])
       setFileName(file.name)
+
+      // Detect split first/last name columns
+      const split = detectSplitName(cols)
+      setSplitName(split)
+
       const autoMap = {}
       MAP_FIELDS.forEach(f => {
-        const match = (data.columns || []).find(c => autoMatch(c, f.key))
+        // Skip 'name' auto-match if we detected split columns — we'll handle it at score time
+        if (f.key === 'name' && (split.first || split.last)) return
+        const match = cols.find(c => autoMatch(c, f.key))
         if (match) autoMap[f.key] = match
       })
+      // If no full-name column but we have split, signal it with a sentinel
+      if (!autoMap.name && (split.first || split.last)) {
+        autoMap._splitName = true
+      }
       setMapping(autoMap)
       setStep(CSV_STEPS.MAPPING)
     } catch (err) {
@@ -388,20 +412,40 @@ function CSVSection({ profile }) {
   }
 
   async function scoreContacts() {
-    if (!mapping.name) { alert('Please map the Name column.'); return }
+    const hasSplit = mapping._splitName || (splitName.first && !mapping.name)
+    if (!mapping.name && !hasSplit) {
+      alert('Please map the Name column (or ensure First Name / Last Name columns are detected).')
+      return
+    }
+
     const contacts = allRows
-      .filter(r => r[mapping.name])
-      .map(r => ({
-        name:    r[mapping.name]    || '',
-        email:   r[mapping.email]   || '',
-        company: r[mapping.company] || '',
-        school:  r[mapping.school]  || '',
-        role:    r[mapping.role]    || '',
-      }))
+      .filter(r => {
+        if (hasSplit) return r[splitName.first] || r[splitName.last]
+        return r[mapping.name]
+      })
+      .map(r => {
+        let name = ''
+        if (hasSplit) {
+          const first = (r[splitName.first] || '').trim()
+          const last  = (r[splitName.last]  || '').trim()
+          name = [first, last].filter(Boolean).join(' ')
+        } else {
+          name = r[mapping.name] || ''
+        }
+        return {
+          name,
+          email:   mapping.email   ? (r[mapping.email]   || '') : '',
+          company: mapping.company ? (r[mapping.company] || '') : '',
+          school:  mapping.school  ? (r[mapping.school]  || '') : '',
+          role:    mapping.role    ? (r[mapping.role]    || '') : '',
+        }
+      })
+      .filter(c => c.name)
+
     try {
       const data = await apiFetch('/find/score-contacts', {
         method: 'POST',
-        body: JSON.stringify({ contacts, userSchool: profile?.school || '' }),
+        body: JSON.stringify({ contacts }),
       })
       const sc = data.contacts || []
       setScored(sc)
@@ -635,8 +679,41 @@ function CSVSection({ profile }) {
           <p className="text-[13px] text-gray-600 mb-4">
             <span className="font-medium">{fileName}</span> — {allRows.length} rows detected. Map the columns below.
           </p>
+
+          {/* Split name detection notice */}
+          {(splitName.first || splitName.last) && (
+            <div className="mb-4 px-3 py-2.5 bg-[#d4eced]/50 border border-[#0D7377]/20 rounded-lg text-[12px] text-[#0A5F63]">
+              <span className="font-semibold">Split name detected</span> — will combine{' '}
+              <span className="font-mono bg-white/60 px-1 rounded">{splitName.first}</span>
+              {splitName.last && <> + <span className="font-mono bg-white/60 px-1 rounded">{splitName.last}</span></>}
+              {' '}into a single full name automatically.
+            </div>
+          )}
+
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
-            {MAP_FIELDS.map(f => (
+            {/* Name field — show read-only when split detected, editable otherwise */}
+            <div>
+              <label className="field-label">
+                {(splitName.first || splitName.last) ? 'Name (auto)' : 'Name *'}
+              </label>
+              {(splitName.first || splitName.last) ? (
+                <div className="w-full px-2.5 py-2 border border-[#D4D2CF] rounded-md text-[12px] text-gray-400 bg-gray-50 cursor-not-allowed">
+                  {[splitName.first, splitName.last].filter(Boolean).join(' + ')}
+                </div>
+              ) : (
+                <select
+                  value={mapping.name || ''}
+                  onChange={e => setMapping(prev => ({ ...prev, name: e.target.value || undefined }))}
+                  className="w-full px-2.5 py-2 border border-[#D4D2CF] rounded-md text-[12px] text-gray-900 bg-white outline-none focus:border-[#0D7377] focus:ring-2 focus:ring-[#0D7377]/10"
+                >
+                  <option value="">— skip —</option>
+                  {columns.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              )}
+            </div>
+
+            {/* Other fields */}
+            {MAP_FIELDS.filter(f => f.key !== 'name').map(f => (
               <div key={f.key}>
                 <label className="field-label">{f.label}</label>
                 <select
@@ -716,6 +793,7 @@ function CSVSection({ profile }) {
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] font-semibold text-gray-900 truncate">{c.name}</div>
                     {meta && <div className="text-[11px] text-gray-500 truncate mt-0.5">{meta}</div>}
+                    {c.matchReason && <div className="text-[10px] text-gray-400 truncate mt-0.5 italic">{c.matchReason}</div>}
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <MatchBadge level={c.matchLevel} />

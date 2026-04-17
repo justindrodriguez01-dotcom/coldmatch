@@ -286,22 +286,75 @@ router.post("/parse-upload", upload.single("file"), async (req, res) => {
   }
 });
 
+// ─── AI-powered scoring using user's full profile as the primary filter ───────
+async function aiMatchLevel(contacts, userProfile) {
+  const openai = getOpenAI();
+
+  const userContext = [
+    `School: ${userProfile.school || "not provided"}`,
+    `Year: ${userProfile.year || "not provided"}`,
+    `Goal: ${userProfile.goal || "not provided"}`,
+    `Target areas: ${userProfile.target_areas || "not provided"}`,
+    `Recruiting stage: ${userProfile.recruiting_stage || "not provided"}`,
+    `Hometown: ${userProfile.hometown || "not provided"}`,
+  ].join("\n");
+
+  const contactList = contacts.map((c, i) =>
+    `${i}: name="${c.name}" role="${c.role || ""}" company="${c.company || ""}" school="${c.school || ""}"`
+  ).join("\n");
+
+  const prompt = `You are scoring contacts in a CSV alumni database for a student doing finance recruiting.
+
+USER PROFILE:
+${userContext}
+
+SCORING RULES — apply strictly in this order:
+1. HIGH: Contact's current role or firm directly matches the user's target_areas. E.g. if target is "Investment Banking", score High for IB analysts, associates, VPs, MDs at banks. If target is "Private Equity", score High for PE roles.
+2. MEDIUM: Adjacent finance roles clearly related but not the direct target. E.g. if targeting IB, PE/HF/VC/Corp Finance/FP&A = Medium. If targeting PE, hedge funds/VC/IB = Medium.
+3. LOW: Anything outside finance entirely (HR, engineering, marketing, accounting at non-finance firms, consulting unless targeting consulting, etc.) or roles with no overlap with the user's goal.
+
+IMPORTANT: Seniority alone does NOT make someone High. A senior HR director at a bank is LOW. A first-year IB analyst is HIGH if the user is targeting IB.
+
+CONTACTS TO SCORE (index: fields):
+${contactList}
+
+Return ONLY a JSON array, one entry per contact in the same order, no markdown:
+[{"index":0,"matchLevel":"High","reason":"IB Analyst at Goldman — direct match for IB target"},...]`;
+
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    temperature: 0,
+    messages: [{ role: "user", content: prompt }],
+    response_format: { type: "json_object" },
+  });
+
+  const raw = completion.choices[0].message.content.trim();
+  // The model may wrap in {"results":[...]} or return bare array
+  const parsed = JSON.parse(raw);
+  const arr = Array.isArray(parsed) ? parsed : (parsed.results || parsed.contacts || Object.values(parsed)[0]);
+  if (!Array.isArray(arr)) throw new Error("Unexpected AI response shape");
+  return arr; // [{index, matchLevel, reason}]
+}
+
 // ─── POST /find/score-contacts ────────────────────────────────────────────────
-// Body: { contacts: [{name,email,company,role,school,linkedin_url}], assumedSchool? }
+// Body: { contacts: [{name,email,company,role,school}] }
 router.post("/score-contacts", async (req, res) => {
-  const { contacts, assumedSchool } = req.body;
+  const { contacts } = req.body;
   if (!Array.isArray(contacts)) return res.status(400).json({ error: "contacts array required" });
 
   try {
+    // Fetch full user profile — goal/target_areas are the primary scoring filter
     const profileRes = await query(
-      "SELECT school FROM profiles WHERE user_id = $1",
+      `SELECT school, year, goal, target_areas, recruiting_stage, hometown
+       FROM profiles WHERE user_id = $1`,
       [req.userId]
     );
-    const userSchool = assumedSchool || profileRes.rows[0]?.school || "";
+    const userProfile = profileRes.rows[0] || {};
+    const userSchool  = userProfile.school || "";
 
-    // Existing tracker entries for dedup
+    // Existing tracker entries for alreadyContacted flag
     const outreachRes = await query(
-      "SELECT LOWER(name) AS n, LOWER(COALESCE(firm,'')) AS f FROM outreach WHERE user_id = $1",
+      "SELECT LOWER(name) AS n FROM outreach WHERE user_id = $1",
       [req.userId]
     );
     const existingSet = new Set(outreachRes.rows.map(r => r.n));
@@ -314,19 +367,48 @@ router.post("/score-contacts", async (req, res) => {
                   `${(c.name || "").toLowerCase()}|${(c.company || "").toLowerCase()}`;
       if (seen.has(key)) continue;
       seen.set(key, true);
-      const ml = matchLevel(c, userSchool);
       const alreadyContacted = existingSet.has((c.name || "").toLowerCase().trim());
-      deduped.push({ ...c, matchLevel: ml, alreadyContacted });
+      deduped.push({ ...c, alreadyContacted });
+    }
+
+    // Score in batches of 60 to stay within token limits
+    const BATCH = 60;
+    let scored = [];
+    for (let i = 0; i < deduped.length; i += BATCH) {
+      const batch = deduped.slice(i, i + BATCH);
+      try {
+        const results = await aiMatchLevel(batch, userProfile);
+        for (const r of results) {
+          const idx = r.index ?? 0;
+          if (batch[idx]) {
+            batch[idx].matchLevel = r.matchLevel || "Low";
+            batch[idx].matchReason = r.reason || "";
+          }
+        }
+      } catch (err) {
+        console.error("[find/score-contacts] AI scoring failed, falling back:", err.message);
+        // Fallback to heuristic if AI fails
+        for (const c of batch) {
+          c.matchLevel  = matchLevel(c, userSchool);
+          c.matchReason = "";
+        }
+      }
+      scored = scored.concat(batch);
+    }
+
+    // Ensure every contact has a matchLevel
+    for (const c of scored) {
+      if (!c.matchLevel) c.matchLevel = "Low";
     }
 
     // Sort: non-contacted first, then High > Medium > Low
     const order = { High: 0, Medium: 1, Low: 2 };
-    deduped.sort((a, b) => {
+    scored.sort((a, b) => {
       if (a.alreadyContacted !== b.alreadyContacted) return a.alreadyContacted ? 1 : -1;
       return (order[a.matchLevel] ?? 2) - (order[b.matchLevel] ?? 2);
     });
 
-    res.json({ contacts: deduped, userSchool });
+    res.json({ contacts: scored, userSchool });
   } catch (err) {
     console.error("[find/score-contacts]", err);
     res.status(500).json({ error: "Failed to score contacts" });
