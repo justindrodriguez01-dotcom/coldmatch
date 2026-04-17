@@ -612,7 +612,7 @@
           </p>
           <div class="hero-cta-group">
             <a href="/signup" class="btn-primary">Get ColdMatch free</a>
-            <p class="hero-fine-print">Free to use · Chrome extension</p>
+            <p class="hero-fine-print">Free to use</p>
           </div>
         </div>
 
@@ -632,7 +632,23 @@
               <!-- ── Scene 1: CSV Upload ── -->
               <div class="scene" id="scene-csv">
 
-                <!-- Step A: upload confirmation -->
+                <!-- Step A: empty dropzone prompt -->
+                <div class="scene-step" id="step-csv-dropzone">
+                  <div class="scene-label">CSV Import</div>
+                  <div class="upload-area">
+                    <div class="upload-file-icon">
+                      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 16 12 12 8 16"/>
+                        <line x1="12" y1="12" x2="12" y2="21"/>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                      </svg>
+                    </div>
+                    <div class="upload-filename">Upload your alumni database</div>
+                    <div class="upload-meta">Drag and drop your CSV file here</div>
+                  </div>
+                </div>
+
+                <!-- Step B: file detected -->
                 <div class="scene-step" id="step-csv-upload">
                   <div class="scene-label">CSV Import</div>
                   <div class="upload-area">
@@ -720,7 +736,7 @@
 
                 <!-- Step B: results + generate -->
                 <div class="scene-step" id="step-search-results">
-                  <div class="scene-label">3 matches found</div>
+                  <div class="scene-label">8 contacts found</div>
                   <div class="contact-list" id="search-rows">
                     <div class="contact-row" data-tier="high">
                       <div class="cbox checked">&#10003;</div>
@@ -729,15 +745,6 @@
                         <div class="contact-detail">J.P. Morgan · IB Analyst</div>
                       </div>
                       <span class="badge badge-high">High</span>
-                      <span class="row-done-check">&#10003;</span>
-                    </div>
-                    <div class="contact-row" data-tier="medium">
-                      <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Ryan Walsh</div>
-                        <div class="contact-detail">Bank of America · IB Analyst</div>
-                      </div>
-                      <span class="badge badge-medium">Medium</span>
                       <span class="row-done-check">&#10003;</span>
                     </div>
                     <div class="contact-row" data-tier="high">
@@ -749,10 +756,64 @@
                       <span class="badge badge-high">High</span>
                       <span class="row-done-check">&#10003;</span>
                     </div>
+                    <div class="contact-row" data-tier="high">
+                      <div class="cbox checked">&#10003;</div>
+                      <div class="contact-info">
+                        <div class="contact-name">Marcus Reed</div>
+                        <div class="contact-detail">Goldman Sachs · IB Analyst</div>
+                      </div>
+                      <span class="badge badge-high">High</span>
+                      <span class="row-done-check">&#10003;</span>
+                    </div>
+                    <div class="contact-row" data-tier="low">
+                      <div class="cbox"></div>
+                      <div class="contact-info">
+                        <div class="contact-name">Ryan Walsh</div>
+                        <div class="contact-detail">Bank of America · IB Analyst</div>
+                      </div>
+                      <span class="badge badge-low">Low</span>
+                      <span class="row-done-check">&#10003;</span>
+                    </div>
+                    <div class="contact-row" data-tier="high">
+                      <div class="cbox checked">&#10003;</div>
+                      <div class="contact-info">
+                        <div class="contact-name">Lily Zhang</div>
+                        <div class="contact-detail">Barclays · IB Associate</div>
+                      </div>
+                      <span class="badge badge-high">High</span>
+                      <span class="row-done-check">&#10003;</span>
+                    </div>
+                    <div class="contact-row" data-tier="high">
+                      <div class="cbox checked">&#10003;</div>
+                      <div class="contact-info">
+                        <div class="contact-name">Tyler Brooks</div>
+                        <div class="contact-detail">Lazard · IB Analyst</div>
+                      </div>
+                      <span class="badge badge-high">High</span>
+                      <span class="row-done-check">&#10003;</span>
+                    </div>
+                    <div class="contact-row" data-tier="high">
+                      <div class="cbox checked">&#10003;</div>
+                      <div class="contact-info">
+                        <div class="contact-name">Aisha Johnson</div>
+                        <div class="contact-detail">Jefferies · IB Analyst</div>
+                      </div>
+                      <span class="badge badge-high">High</span>
+                      <span class="row-done-check">&#10003;</span>
+                    </div>
+                    <div class="contact-row" data-tier="low">
+                      <div class="cbox"></div>
+                      <div class="contact-info">
+                        <div class="contact-name">Derek Hu</div>
+                        <div class="contact-detail">Accenture · Consultant</div>
+                      </div>
+                      <span class="badge badge-low">Low</span>
+                      <span class="row-done-check">&#10003;</span>
+                    </div>
                   </div>
-                  <div class="gen-btn" id="search-gen-btn">Generate drafts for all High matches</div>
+                  <div class="gen-btn" id="search-gen-btn">Generate 6 drafts</div>
                   <div class="progress-wrap" id="search-progress" style="display:none;">
-                    <div class="progress-lbl" id="search-progress-lbl">Saving draft 1 of 2...</div>
+                    <div class="progress-lbl" id="search-progress-lbl">Saving draft 1 of 6...</div>
                     <div class="progress-track">
                       <div class="progress-fill" id="search-progress-fill"></div>
                     </div>
@@ -925,6 +986,7 @@
 
     function runCsvScene(onDone) {
       // reset
+      hideStep('step-csv-dropzone');
       hideStep('step-csv-upload');
       hideStep('step-csv-list');
       document.getElementById('csv-progress').style.display = 'none';
@@ -935,30 +997,36 @@
       resetRows('csv-rows');
 
       showScene('scene-csv');
-      showStep('step-csv-upload');
+      showStep('step-csv-dropzone');
 
       setTimeout(() => {
-        hideStep('step-csv-upload');
+        hideStep('step-csv-dropzone');
         setTimeout(() => {
-          // restore transition for progress fill
-          document.getElementById('csv-progress-fill').style.transition = 'width 1.6s ease';
-          showStep('step-csv-list');
+          showStep('step-csv-upload');
 
           setTimeout(() => {
-            runProgress(
-              'csv-progress-fill', 'csv-progress-lbl', 'csv-progress', 'csv-rows', 'csv-gen-btn',
-              ['Saving draft 1 of 3...', 'Saving draft 2 of 3...', 'Saving draft 3 of 3...', '3 drafts saved to Gmail'],
-              true,
-              () => {
-                setTimeout(() => {
-                  hideScene('scene-csv');
-                  setTimeout(onDone, 450);
-                }, 600);
-              }
-            );
-          }, 2800);
+            hideStep('step-csv-upload');
+            setTimeout(() => {
+              document.getElementById('csv-progress-fill').style.transition = 'width 1.6s ease';
+              showStep('step-csv-list');
+
+              setTimeout(() => {
+                runProgress(
+                  'csv-progress-fill', 'csv-progress-lbl', 'csv-progress', 'csv-rows', 'csv-gen-btn',
+                  ['Saving draft 1 of 3...', 'Saving draft 2 of 3...', 'Saving draft 3 of 3...', '3 drafts saved to Gmail'],
+                  true,
+                  () => {
+                    setTimeout(() => {
+                      hideScene('scene-csv');
+                      setTimeout(onDone, 450);
+                    }, 600);
+                  }
+                );
+              }, 2800);
+            }, 60);
+          }, 2200);
         }, 60);
-      }, 2200);
+      }, 1500);
     }
 
     function typeText(el, text, cb) {
@@ -998,7 +1066,7 @@
             setTimeout(() => {
               runProgress(
                 'search-progress-fill', 'search-progress-lbl', 'search-progress', 'search-rows', 'search-gen-btn',
-                ['Saving draft 1 of 2...', 'Saving draft 2 of 2...', '2 drafts saved to Gmail'],
+                ['Saving draft 1 of 6...', 'Saving draft 2 of 6...', 'Saving draft 3 of 6...', 'Saving draft 4 of 6...', 'Saving draft 5 of 6...', 'Saving draft 6 of 6...', '6 drafts saved to Gmail'],
                 true,
                 () => {
                   setTimeout(() => {
