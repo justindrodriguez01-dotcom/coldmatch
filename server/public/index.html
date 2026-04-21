@@ -8,7 +8,7 @@
   <title>ColdMatch — Cold email for finance recruiting</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,11 +16,13 @@
       --bg: #F0F5F1;
       --white: #ffffff;
       --accent: #3D8B6F;
+      --accent-dark: #2d6a4f;
       --accent-hover: #2d6e56;
-      --accent-light: #e8f4ef;
+      --accent-light: #e8f5f0;
       --text: #1a1a1a;
       --text-secondary: #6b7280;
       --border: rgba(0,0,0,0.08);
+      --border-solid: #e5e7eb;
       --shadow-card: 0 2px 16px rgba(0,0,0,0.08);
       --radius: 12px;
     }
@@ -29,7 +31,7 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
+      background: var(--white);
       color: var(--text);
       font-size: 16px;
       line-height: 1.6;
@@ -44,7 +46,6 @@
       padding: 0 32px;
     }
 
-    /* ── Scroll fade-in ── */
     .fade-in {
       opacity: 0;
       transform: translateY(22px);
@@ -55,56 +56,15 @@
     .fade-in-delay-2 { transition-delay: 0.2s; }
     .fade-in-delay-3 { transition-delay: 0.3s; }
 
-    /* ── Buttons ── */
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 11px 22px;
-      background: var(--accent);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.15s, transform 0.1s;
-      letter-spacing: -0.01em;
-    }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-    .btn-primary:active { transform: translateY(0); }
-
-    .btn-white {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 13px 28px;
-      background: white;
-      color: var(--accent);
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.15s, transform 0.1s;
-      letter-spacing: -0.01em;
-    }
-    .btn-white:hover { background: #f0faf6; transform: translateY(-1px); }
-    .btn-white:active { transform: translateY(0); }
-
     /* ── Nav ── */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.97);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-solid);
     }
     .nav-inner {
       display: flex;
@@ -119,9 +79,63 @@
       text-decoration: none;
       letter-spacing: -0.025em;
     }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 11px 20px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      padding: 11px 20px;
+      background: white;
+      color: var(--accent);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .btn-white:hover { background: #f0faf6; transform: translateY(-1px); }
 
     /* ── Hero ── */
-    .hero { padding: 100px 0 80px; }
+    .hero {
+      background: var(--bg);
+      padding: 100px 0 80px;
+    }
     .hero-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -136,52 +150,74 @@
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: var(--accent-light);
+      padding: 4px 12px;
+      background: #e8f5f0;
       color: var(--accent);
       font-size: 13px;
       font-weight: 500;
-      border-radius: 100px;
+      border-radius: 20px;
       margin-bottom: 24px;
-      letter-spacing: -0.01em;
     }
     .hero h1 {
-      font-size: clamp(38px, 5vw, 56px);
-      font-weight: 700;
+      font-size: 56px;
+      font-weight: 800;
       letter-spacing: -0.03em;
-      line-height: 1.08;
+      line-height: 1.1;
       color: var(--text);
       margin-bottom: 20px;
+      max-width: 540px;
     }
     .hero-sub {
-      font-size: 18px;
+      font-size: 17px;
       color: var(--text-secondary);
       margin-bottom: 36px;
-      line-height: 1.65;
+      line-height: 1.7;
       max-width: 480px;
     }
-    .hero-cta-group {
+    .hero-form-wrap {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
+      width: 100%;
+      max-width: 440px;
     }
-    .hero-cta-group .btn-primary {
-      font-size: 15px;
-      padding: 13px 28px;
+    .email-form {
+      display: flex;
+      gap: 8px;
     }
+    .email-input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 16px;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      background: white;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .email-input:focus { border-color: var(--accent); }
+    .email-input::placeholder { color: var(--text-secondary); }
     .hero-fine-print {
       font-size: 13px;
       color: var(--text-secondary);
     }
-
-    /* ── Product Mockup ── */
+    .email-confirm {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+      display: none;
+    }
+    .email-confirm-cta { color: rgba(255,255,255,0.9); }
     .hero-right {
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
+    /* ── Product mockup ── */
     .product-mockup {
       background: var(--white);
       border: 1px solid rgba(0,0,0,0.09);
@@ -209,15 +245,13 @@
       font-weight: 500;
       margin-left: 6px;
     }
-
-    /* Mockup body: fixed height, scenes stack inside */
     .mockup-body {
       height: 420px;
       position: relative;
       overflow: hidden;
     }
 
-    /* Scenes overlap, fade in/out */
+    /* ── Scenes ── */
     .scene {
       position: absolute;
       inset: 0;
@@ -227,22 +261,10 @@
       pointer-events: none;
       overflow: hidden;
     }
-    .scene.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* Steps within a scene */
+    .scene.active { opacity: 1; pointer-events: auto; }
     .scene-step { display: none; }
-    .scene-step.active {
-      display: block;
-      animation: stepIn 0.35s ease;
-    }
-    @keyframes stepIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
+    .scene-step.active { display: block; animation: stepIn 0.35s ease; }
+    @keyframes stepIn { from { opacity: 0; } to { opacity: 1; } }
     .scene-label {
       font-size: 10px;
       font-weight: 600;
@@ -287,11 +309,7 @@
     .upload-check { color: var(--accent); font-weight: 700; }
 
     /* Contact list */
-    .contact-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
+    .contact-list { display: flex; flex-direction: column; gap: 7px; }
     .contact-row {
       display: flex;
       align-items: center;
@@ -302,334 +320,370 @@
       border: 1px solid rgba(0,0,0,0.06);
     }
     .cbox {
-      width: 15px;
-      height: 15px;
-      border-radius: 4px;
+      width: 15px; height: 15px; border-radius: 4px;
       border: 1.5px solid rgba(0,0,0,0.18);
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 9px;
     }
-    .cbox.checked {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-    }
+    .cbox.checked { background: var(--accent); border-color: var(--accent); color: white; }
     .contact-info { flex: 1; min-width: 0; }
-    .contact-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .contact-detail {
-      font-size: 11px;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .badge {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 100px;
-      flex-shrink: 0;
-    }
-    .badge-high   { background: rgba(61,139,111,0.12); color: var(--accent); }
-    .badge-medium { background: rgba(251,191,36,0.12);  color: #b45309; }
-    .badge-low    { background: rgba(0,0,0,0.06);       color: var(--text-secondary); }
-
-    /* Done check that appears after generation */
+    .contact-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .contact-detail { font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 100px; flex-shrink: 0; }
+    .badge-high { background: rgba(61,139,111,0.12); color: var(--accent); }
+    .badge-low  { background: rgba(0,0,0,0.06); color: var(--text-secondary); }
     .row-done-check {
-      font-size: 11px;
-      color: var(--accent);
-      font-weight: 700;
-      opacity: 0;
-      transform: scale(0);
+      font-size: 11px; color: var(--accent); font-weight: 700;
+      opacity: 0; transform: scale(0);
       transition: opacity 0.2s ease, transform 0.2s ease;
       flex-shrink: 0;
     }
-    .contact-row.done .row-done-check {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* Generate button */
+    .contact-row.done .row-done-check { opacity: 1; transform: scale(1); }
     .gen-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 10px 16px;
-      background: var(--accent);
-      color: white;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 10px;
-      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 10px 16px;
+      background: var(--accent); color: white;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
+      margin-top: 10px; cursor: pointer;
       transition: transform 0.1s, background 0.15s;
       user-select: none;
     }
-    .gen-btn.clicking {
-      transform: scale(0.97);
-      background: var(--accent-hover);
-    }
-
-    /* More contacts hint */
+    .gen-btn.clicking { transform: scale(0.97); background: var(--accent-hover); }
     .more-contacts {
-      font-size: 11px;
-      color: var(--text-secondary);
-      opacity: 0.55;
-      text-align: center;
-      padding: 5px 0 2px;
-      letter-spacing: -0.01em;
+      font-size: 11px; color: var(--text-secondary); opacity: 0.55;
+      text-align: center; padding: 5px 0 2px;
     }
-
-    /* Progress */
     .progress-wrap { margin-top: 10px; }
-    .progress-lbl {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-bottom: 7px;
-    }
-    .progress-track {
-      height: 4px;
-      background: rgba(0,0,0,0.07);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 2px;
-      width: 0%;
-      transition: width 1.6s ease;
-    }
+    .progress-lbl { font-size: 11px; color: var(--text-secondary); margin-bottom: 7px; }
+    .progress-track { height: 4px; background: rgba(0,0,0,0.07); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 1.6s ease; }
 
     /* Search bar */
     .search-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #f5f5f5;
-      border: 1.5px solid rgba(0,0,0,0.1);
-      border-radius: 8px;
-      padding: 10px 13px;
-      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+      background: #f5f5f5; border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 8px; padding: 10px 13px; margin-bottom: 14px;
     }
-    .search-bar svg { flex-shrink: 0; }
     .search-typed { font-size: 13px; color: var(--text); }
     .cursor {
-      display: inline-block;
-      width: 1.5px;
-      height: 13px;
-      background: var(--text);
-      vertical-align: middle;
-      margin-left: 1px;
+      display: inline-block; width: 1.5px; height: 13px;
+      background: var(--text); vertical-align: middle; margin-left: 1px;
       animation: blink 0.75s step-end infinite;
     }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* ── Logo ticker ── */
-    .ticker-section {
-      padding: 36px 0;
-      border-top: 1px solid var(--border);
-      overflow: hidden;
-    }
-    .ticker-label {
-      text-align: center;
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: 20px;
-    }
+    /* ── Ticker (preserved in comment below) ── */
+    .ticker-section { padding: 36px 0; border-top: 1px solid var(--border); overflow: hidden; }
     .ticker-track-outer {
       overflow: hidden;
       mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
       -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     }
-    .ticker-track {
-      display: flex;
-      align-items: center;
-      gap: 60px;
-      width: max-content;
-      animation: ticker-scroll 20s linear infinite;
+    .ticker-track { display: flex; align-items: center; gap: 60px; width: max-content; animation: ticker-scroll 20s linear infinite; }
+    @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-track img { height: 28px; width: auto; filter: grayscale(100%) opacity(0.45); flex-shrink: 0; }
+
+    /* ── Section shared ── */
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--accent); margin-bottom: 16px;
     }
-    @keyframes ticker-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header h2 {
+      font-size: 36px; font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.2; color: var(--text);
     }
-    .ticker-track img {
-      height: 28px;
-      width: auto;
-      filter: grayscale(100%) opacity(0.45);
-      flex-shrink: 0;
+    .section-header p {
+      font-size: 16px; color: var(--text-secondary);
+      max-width: 600px; margin: 16px auto 0; line-height: 1.65;
+    }
+
+    /* ── Problem ── */
+    .problem-section { background: var(--white); padding: 80px 0; }
+    .problem-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .problem-inner h2 {
+      font-size: 36px; font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.2;
+      color: var(--text); margin-bottom: 28px;
+    }
+    .problem-inner p {
+      font-size: 16px; color: var(--text-secondary);
+      line-height: 1.75; margin-bottom: 20px;
+    }
+    .problem-punchline {
+      font-size: 18px; font-weight: 600; color: var(--text);
+      margin-top: 4px; margin-bottom: 0;
+    }
+
+    /* ── Time comparison ── */
+    .time-section { background: var(--bg); padding: 80px 0; }
+    .comparison-card {
+      background: white; border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      max-width: 700px; margin: 0 auto; overflow: hidden;
+    }
+    .comparison-col-headers {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .comp-col-header {
+      padding: 20px 24px 16px;
+      font-size: 14px; font-weight: 600; text-align: center;
+    }
+    .comp-col-header.without { color: var(--text-secondary); border-right: 1px solid #f3f4f6; }
+    .comp-col-header.with-cm { color: var(--accent); }
+    .comparison-row { border-bottom: 1px solid #f3f4f6; }
+    .comp-task-label {
+      font-size: 12px; font-weight: 600; color: var(--text);
+      text-align: center; padding: 14px 24px 10px;
+      background: #fafafa; border-bottom: 1px solid #f3f4f6;
+    }
+    .comp-cells { display: grid; grid-template-columns: 1fr 1fr; }
+    .comp-cell { padding: 14px 20px; font-size: 13px; line-height: 1.5; text-align: center; }
+    .comp-cell.without { color: var(--text-secondary); border-right: 1px solid #f3f4f6; }
+    .comp-cell.with-cm { color: var(--accent); font-weight: 500; }
+    .comparison-footer {
+      background: var(--accent-dark); color: white;
+      text-align: center; padding: 20px 32px;
+      font-size: 14px; line-height: 1.6; font-weight: 500;
+    }
+
+    /* ── Email quality ── */
+    .email-quality-section { background: var(--white); padding: 80px 0; }
+    .email-cards {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 20px; max-width: 900px; margin: 0 auto 24px;
+    }
+    .email-card { border-radius: 12px; padding: 24px; }
+    .email-card-bad  { background: #fff5f5; border: 1px solid #fecaca; }
+    .email-card-good { background: #f0f9f5; border: 1px solid #a7f3d0; }
+    .email-card-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .email-card-bad  .email-card-label { color: #dc2626; }
+    .email-card-good .email-card-label { color: var(--accent); }
+    .email-fields { margin-bottom: 12px; font-size: 12px; color: var(--text-secondary); }
+    .email-field { display: flex; gap: 6px; margin-bottom: 4px; }
+    .email-field-label { font-weight: 600; color: var(--text); min-width: 52px; }
+    .email-divider { height: 1px; background: rgba(0,0,0,0.08); margin: 12px 0; }
+    .email-body { font-size: 12px; color: var(--text); line-height: 1.75; }
+    .hl-bad  { background: #fee2e2; border-radius: 2px; padding: 0 2px; }
+    .hl-good { background: #d1fae5; border-radius: 2px; padding: 0 2px; }
+    .email-quality-note {
+      text-align: center; font-size: 13px; color: var(--text-secondary);
+      max-width: 900px; margin: 0 auto;
     }
 
     /* ── How it works ── */
-    .how-section {
-      padding: 100px 0;
-      border-top: 1px solid var(--border);
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-    .section-eyebrow {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .section-header h2 {
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.15;
-      color: var(--text);
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+    .how-section { background: var(--bg); padding: 80px 0; }
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-card);
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-card);
       padding: 32px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.11);
-    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.11); }
     .card-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--accent-light);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
+      width: 44px; height: 44px; background: var(--accent-light);
+      border-radius: 10px; display: flex; align-items: center;
+      justify-content: center; margin-bottom: 18px;
     }
-    .card-icon svg {
-      width: 21px;
-      height: 21px;
+    .card-icon svg { width: 21px; height: 21px; }
+    .card h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+    .card p  { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+    /* ── Feature sections ── */
+    .feature-section { padding: 80px 0; }
+    .feature-white { background: var(--white); }
+    .feature-bg    { background: var(--bg); }
+    .feature-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
     }
-    .card h3 {
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      margin-bottom: 8px;
-      line-height: 1.3;
+    .feature-copy { display: flex; flex-direction: column; }
+    .feature-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--accent); margin-bottom: 14px;
     }
-    .card p {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.65;
+    .feature-copy h2 {
+      font-size: 30px; font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.2;
+      color: var(--text); max-width: 400px; margin-bottom: 16px;
+    }
+    .feature-copy p {
+      font-size: 15px; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 20px;
+    }
+    .feature-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .feature-bullets li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--text-secondary); line-height: 1.5;
+    }
+    .check-icon {
+      width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+      background: var(--accent); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-icon svg { width: 10px; height: 10px; }
+
+    .feature-mockup { display: flex; justify-content: center; align-items: flex-start; }
+
+    /* Feature static card */
+    .feature-card {
+      background: white; border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.07);
+      width: 100%; max-width: 420px; overflow: hidden;
+    }
+    .feature-card-header {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-secondary);
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid rgba(0,0,0,0.06); background: #fafafa;
     }
 
-    /* ── CTA section ── */
-    .cta-section { padding: 80px 0 100px; }
-    .cta-inner {
-      background: var(--accent);
-      border-radius: 20px;
-      padding: 72px 48px;
-      text-align: center;
+    /* Alumni DB mockup rows */
+    .fm-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .fm-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; background: #fafafa;
+      border-radius: 8px; border: 1px solid rgba(0,0,0,0.06);
     }
-    .cta-inner h2 {
-      font-size: clamp(30px, 4vw, 44px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.15;
-      color: white;
-      margin-bottom: 12px;
+    .fm-cbox {
+      width: 16px; height: 16px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; flex-shrink: 0;
     }
-    .cta-inner p {
-      font-size: 17px;
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 36px;
+    .fm-checked { background: var(--accent); color: white; }
+    .fm-empty   { border: 1.5px solid rgba(0,0,0,0.18); }
+    .fm-info { flex: 1; min-width: 0; }
+    .fm-name   { font-size: 12px; font-weight: 600; color: var(--text); }
+    .fm-detail { font-size: 11px; color: var(--text-secondary); }
+    .fm-badge  { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
+    .fm-high { background: rgba(61,139,111,0.12); color: var(--accent); }
+    .fm-low  { background: rgba(0,0,0,0.06); color: var(--text-secondary); }
+    .fm-more {
+      font-size: 11px; color: var(--text-secondary);
+      text-align: center; padding: 4px 0 8px; opacity: 0.6;
     }
+    .fm-btn {
+      margin: 0 16px 16px;
+      background: var(--accent); color: white;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
+      padding: 10px 16px; text-align: center;
+    }
+
+    /* Outreach tracker */
+    .tracker-wrap { padding: 4px 0; overflow-x: auto; }
+    .tracker-table { width: 100%; border-collapse: collapse; }
+    .tracker-table th {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-secondary);
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .tracker-table td {
+      font-size: 12px; color: var(--text);
+      padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,0.05);
+      vertical-align: middle;
+    }
+    .tracker-table tr:last-child td { border-bottom: none; }
+    .stage-pill { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 100px; white-space: nowrap; }
+    .s-drafted   { background: rgba(0,0,0,0.06);        color: var(--text-secondary); }
+    .s-contacted { background: rgba(59,130,246,0.1);    color: #2563eb; }
+    .s-replied   { background: rgba(61,139,111,0.12);   color: var(--accent); }
+    .s-meeting   { background: rgba(139,92,246,0.1);    color: #7c3aed; }
+    .reply-tag {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 10px; color: var(--accent); font-weight: 500; margin-top: 4px;
+    }
+    .reply-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+    /* Chrome extension mockup */
+    .ext-card {
+      background: white; border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      border: 1px solid rgba(0,0,0,0.08);
+      width: 280px; padding: 18px;
+    }
+    .ext-logo   { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 14px; }
+    .ext-name   { font-size: 13px; font-weight: 600; color: var(--text); }
+    .ext-detail { font-size: 11px; color: var(--text-secondary); margin-bottom: 16px; }
+    .ext-score-wrap { text-align: center; margin-bottom: 10px; }
+    .ext-score-num {
+      font-size: 48px; font-weight: 800;
+      color: var(--accent); line-height: 1;
+    }
+    .ext-score-label {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--text-secondary); margin-top: 4px;
+    }
+    .ext-bar-track { height: 4px; background: rgba(0,0,0,0.07); border-radius: 2px; overflow: hidden; margin-bottom: 14px; }
+    .ext-bar-fill  { height: 100%; background: var(--accent); border-radius: 2px; width: 84%; }
+    .ext-reasons { list-style: none; margin-bottom: 16px; }
+    .ext-reasons li {
+      font-size: 11px; color: var(--text-secondary);
+      padding: 3px 0; line-height: 1.4;
+      display: flex; align-items: flex-start; gap: 6px;
+    }
+    .ext-reasons li::before {
+      content: '';
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0; margin-top: 5px;
+    }
+    .ext-gen-btn {
+      background: var(--accent); color: white;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
+      padding: 10px 16px; text-align: center; width: 100%;
+    }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--accent); padding: 100px 0; text-align: center; }
+    .cta-section h2 {
+      font-size: 40px; font-weight: 700; color: white;
+      margin-bottom: 12px; letter-spacing: -0.025em;
+    }
+    .cta-section > .container > p {
+      font-size: 16px; color: rgba(255,255,255,0.85);
+      max-width: 500px; margin: 0 auto 36px; line-height: 1.65;
+    }
+    .cta-form-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .cta-form { display: flex; gap: 8px; max-width: 420px; width: 100%; }
+    .cta-form .email-input { background: white; color: var(--text); border-color: transparent; }
 
     /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 0;
-    }
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .footer-text {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    /* ── Email capture form ── */
-    .email-form {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-      max-width: 420px;
-    }
-    .email-input {
-      flex: 1;
-      min-width: 0;
-      padding: 12px 16px;
-      border: 1.5px solid rgba(0,0,0,0.12);
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
-      background: white;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .email-input:focus { border-color: var(--accent); }
-    .email-input::placeholder { color: var(--text-secondary); }
-    .email-form-cta { margin: 0 auto; justify-content: center; }
-    .email-confirm {
-      font-size: 14px;
-      font-weight: 500;
-      margin-top: 10px;
-      display: none;
-      color: var(--accent);
-    }
-    .email-confirm-cta { color: rgba(255,255,255,0.9); }
-    @media (max-width: 480px) {
-      .email-form { flex-direction: column; }
-      .email-form .btn-primary,
-      .email-form .btn-white { width: 100%; justify-content: center; }
-    }
+    footer { border-top: 1px solid var(--border-solid); padding: 24px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+    .footer-text { font-size: 13px; color: var(--text-secondary); }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .hero { padding: 72px 0 56px; }
       .hero-inner { grid-template-columns: 1fr; gap: 52px; }
+      .hero h1 { font-size: 40px; }
       .hero-right { justify-content: flex-start; }
+      .nav-links { display: none; }
       .cards-grid { grid-template-columns: 1fr; }
-      .cta-inner { padding: 48px 28px; }
+      .feature-inner { grid-template-columns: 1fr; gap: 48px; }
+      .email-cards { grid-template-columns: 1fr; }
+      .comparison-col-headers { display: none; }
+      .comp-cells { grid-template-columns: 1fr; }
+      .comp-cell.without { border-right: none; border-bottom: 1px solid #f3f4f6; }
       .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+      .feature-copy h2 { max-width: 100%; }
     }
     @media (max-width: 480px) {
       .container { padding: 0 20px; }
-      .hero h1 { font-size: 36px; }
       .product-mockup { max-width: 100%; }
       .mockup-body { height: 420px; }
+      .email-form { flex-direction: column; }
+      .cta-form { flex-direction: column; }
     }
   </style>
 </head>
@@ -640,6 +694,11 @@
     <div class="container">
       <div class="nav-inner">
         <a href="#" class="nav-logo">ColdMatch</a>
+        <ul class="nav-links">
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#extension">Extension</a></li>
+        </ul>
         <a href="#signup" class="btn-primary">Join the waitlist</a>
       </div>
     </div>
@@ -650,14 +709,14 @@
     <div class="container">
       <div class="hero-inner">
 
-        <!-- Left -->
+        <!-- Left copy -->
         <div class="hero-left fade-in">
           <div class="hero-badge">Built for finance recruiting</div>
-          <h1>Do the outreach.<br>Land the offer.</h1>
+          <h1>Cold email at scale. Without the grunt work.</h1>
           <p class="hero-sub">
-            ColdMatch scores your contacts, drafts personalized emails, and saves them straight to Gmail — so you can focus on the conversations that matter.
+            Networking is the most important part of finance recruiting. It is also the most time consuming. Finding the right people, drafting personalized emails, tracking follow-ups, ColdMatch handles all of it so you can focus on coffee chats, technicals, and actually being prepared.
           </p>
-          <div class="hero-cta-group">
+          <div class="hero-form-wrap">
             <form class="email-form" onsubmit="handleWaitlist(event,'hero-confirm')">
               <input class="email-input" type="email" placeholder="Your university email" required>
               <button type="submit" class="btn-primary">Join the waitlist</button>
@@ -667,23 +726,20 @@
           </div>
         </div>
 
-        <!-- Right: animated mockup -->
+        <!-- Right: animated mockup (CSV loop only) -->
         <div class="hero-right fade-in fade-in-delay-2">
           <div class="product-mockup">
-
             <div class="mockup-titlebar">
               <div class="mockup-dot mockup-dot-red"></div>
               <div class="mockup-dot mockup-dot-yellow"></div>
               <div class="mockup-dot mockup-dot-green"></div>
               <span class="mockup-win-title">ColdMatch</span>
             </div>
-
             <div class="mockup-body">
 
-              <!-- ── Scene 1: CSV Upload ── -->
+              <!-- Scene 1: CSV Upload -->
               <div class="scene" id="scene-csv">
 
-                <!-- Step A: empty dropzone prompt -->
                 <div class="scene-step" id="step-csv-dropzone">
                   <div class="scene-label">CSV Import</div>
                   <div class="upload-area">
@@ -699,7 +755,6 @@
                   </div>
                 </div>
 
-                <!-- Step B: file detected -->
                 <div class="scene-step" id="step-csv-upload">
                   <div class="scene-label">CSV Import</div>
                   <div class="upload-area">
@@ -719,7 +774,6 @@
                   </div>
                 </div>
 
-                <!-- Step B: ranked contacts + generate -->
                 <div class="scene-step" id="step-csv-list">
                   <div class="scene-label">Ranked by relevance</div>
                   <div class="contact-list" id="csv-rows">
@@ -772,10 +826,287 @@
 
               </div><!-- /scene-csv -->
 
-              <!-- ── Scene 2: Search ── -->
+            </div><!-- /mockup-body -->
+          </div><!-- /product-mockup -->
+        </div><!-- /hero-right -->
+
+      </div>
+    </div>
+  </section>
+
+  <!--
+  <div class="ticker-section">
+    <div class="ticker-track-outer">
+      <div class="ticker-track">
+        <img src="/images/schools/michigan.svg" alt="Michigan" onerror="this.style.display='none'">
+        <img src="/images/schools/nyu.svg" alt="NYU" onerror="this.style.display='none'">
+        <img src="/images/schools/georgetown.svg" alt="Georgetown" onerror="this.style.display='none'">
+        <img src="/images/schools/upenn.svg" alt="Penn" onerror="this.style.display='none'">
+        <img src="/images/schools/indiana.svg" alt="Indiana" onerror="this.style.display='none'">
+        <img src="/images/schools/cornell.svg" alt="Cornell" onerror="this.style.display='none'">
+        <img src="/images/schools/columbia.svg" alt="Columbia" onerror="this.style.display='none'">
+        <img src="/images/schools/duke.svg" alt="Duke" onerror="this.style.display='none'">
+        <img src="/images/schools/vanderbilt.svg" alt="Vanderbilt" onerror="this.style.display='none'">
+        <img src="/images/schools/uva.svg" alt="UVA" onerror="this.style.display='none'">
+        <img src="/images/schools/northwestern.svg" alt="Northwestern" onerror="this.style.display='none'">
+        <img src="/images/schools/michigan.svg" alt="Michigan" onerror="this.style.display='none'">
+        <img src="/images/schools/nyu.svg" alt="NYU" onerror="this.style.display='none'">
+        <img src="/images/schools/georgetown.svg" alt="Georgetown" onerror="this.style.display='none'">
+        <img src="/images/schools/upenn.svg" alt="Penn" onerror="this.style.display='none'">
+        <img src="/images/schools/indiana.svg" alt="Indiana" onerror="this.style.display='none'">
+        <img src="/images/schools/cornell.svg" alt="Cornell" onerror="this.style.display='none'">
+        <img src="/images/schools/columbia.svg" alt="Columbia" onerror="this.style.display='none'">
+        <img src="/images/schools/duke.svg" alt="Duke" onerror="this.style.display='none'">
+        <img src="/images/schools/vanderbilt.svg" alt="Vanderbilt" onerror="this.style.display='none'">
+        <img src="/images/schools/uva.svg" alt="UVA" onerror="this.style.display='none'">
+        <img src="/images/schools/northwestern.svg" alt="Northwestern" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+  -->
+
+  <!-- Problem section -->
+  <section class="problem-section">
+    <div class="container">
+      <div class="problem-inner fade-in">
+        <span class="section-eyebrow">THE REALITY</span>
+        <h2>Networking is how you get the offer. Almost nobody does it at scale.</h2>
+        <p>Finance recruiting is not just about grades and clubs. The students who get the offer are the ones who sent the most emails, had the most calls, and built the most relationships. Most students know this. Most students still only send a handful of emails because writing them takes too long.</p>
+        <p class="problem-punchline">ColdMatch changes that math.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Time comparison -->
+  <section class="time-section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-eyebrow">THE MATH</span>
+        <h2>One email used to take 20 minutes. Now it takes seconds.</h2>
+      </div>
+      <div class="comparison-card fade-in">
+        <div class="comparison-col-headers">
+          <div class="comp-col-header without">Without ColdMatch</div>
+          <div class="comp-col-header with-cm">With ColdMatch</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comp-task-label">Finding the right people to email</div>
+          <div class="comp-cells">
+            <div class="comp-cell without">2+ hours of LinkedIn searching</div>
+            <div class="comp-cell with-cm">Scored and ranked instantly</div>
+          </div>
+        </div>
+        <div class="comparison-row">
+          <div class="comp-task-label">Writing one personalized email</div>
+          <div class="comp-cells">
+            <div class="comp-cell without">20 minutes per email</div>
+            <div class="comp-cell with-cm">Generated in seconds</div>
+          </div>
+        </div>
+        <div class="comparison-row">
+          <div class="comp-task-label">Saving drafts and tracking outreach</div>
+          <div class="comp-cells">
+            <div class="comp-cell without">Manual copy paste into spreadsheets</div>
+            <div class="comp-cell with-cm">Auto-saved to Gmail and tracker</div>
+          </div>
+        </div>
+        <div class="comparison-row">
+          <div class="comp-task-label">Following up</div>
+          <div class="comp-cells">
+            <div class="comp-cell without">Easy to forget, easy to lose track</div>
+            <div class="comp-cell with-cm">Follow-up reminders built in</div>
+          </div>
+        </div>
+        <div class="comparison-footer">
+          The average student spends hours on outreach that should take minutes. ColdMatch gives that time back.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Email quality -->
+  <section class="email-quality-section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-eyebrow">EMAIL QUALITY</span>
+        <h2>Bankers can spot an AI email in two seconds.</h2>
+        <p>Most AI tools produce the same generic, filler-heavy templates. Finance professionals see through them immediately. ColdMatch is trained to write emails that sound like you wrote them, specific, concise, and focused on a real connection.</p>
+      </div>
+      <div class="email-cards fade-in">
+
+        <!-- Bad email -->
+        <div class="email-card email-card-bad">
+          <div class="email-card-label">AI Slop</div>
+          <div class="email-fields">
+            <div class="email-field">
+              <span class="email-field-label">To:</span>
+              <span>ryan.chen@gs.com</span>
+            </div>
+            <div class="email-field">
+              <span class="email-field-label">Subject:</span>
+              <span>Aspiring Finance Professional Seeking Guidance</span>
+            </div>
+          </div>
+          <div class="email-divider"></div>
+          <div class="email-body">
+            Hi Ryan, I hope this email finds you well! My name is Justin Rodriguez and I am a sophomore at the University of Michigan Ross School of Business. I came across your LinkedIn profile and was <span class="hl-bad">truly impressed</span> by your <span class="hl-bad">remarkable journey</span> from Michigan Ross to Goldman Sachs <span class="hl-bad">&mdash;</span> a path that <span class="hl-bad">really resonated with me</span> and <span class="hl-bad">aligns perfectly</span> with my career goals as an aspiring finance professional. I am <span class="hl-bad">deeply passionate</span> about breaking into investment banking <span class="hl-bad">&mdash;</span> specifically the kind of high-impact advisory work that Goldman is known for <span class="hl-bad">&mdash;</span> and would <span class="hl-bad">greatly appreciate</span> any insights you could share about your path and the recruiting process. A quick call at your earliest convenience would mean the world to me as I look to gain <span class="hl-bad">invaluable guidance</span> from someone who has navigated this journey so successfully. I have attached my resume below for your reference. Warm regards, Justin Rodriguez
+          </div>
+        </div>
+
+        <!-- Good email -->
+        <div class="email-card email-card-good">
+          <div class="email-card-label">ColdMatch</div>
+          <div class="email-fields">
+            <div class="email-field">
+              <span class="email-field-label">To:</span>
+              <span>ryan.chen@gs.com</span>
+            </div>
+            <div class="email-field">
+              <span class="email-field-label">Subject:</span>
+              <span>Michigan Ross Student Interested in IB at Goldman</span>
+            </div>
+          </div>
+          <div class="email-divider"></div>
+          <div class="email-body">
+            Hi Ryan, I hope you are doing well. My name is Justin Rodriguez and I am a sophomore studying Business at Michigan Ross interested in IB opportunities at Goldman. I noticed you <span class="hl-good">also went to Ross</span> before transitioning to M&amp;A at Goldman and I was wondering if you would be available for a quick call in the coming weeks. I would be more than happy to find a time that works for you. In case it is helpful, I have attached my resume for reference. Looking forward to hearing from you. Best, and <span class="hl-good">Go Blue</span>! Justin
+          </div>
+        </div>
+
+      </div>
+      <p class="email-quality-note fade-in">No filler words. No em dashes. No generic openers. Just a short, specific, human email.</p>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-eyebrow">HOW IT WORKS</span>
+        <h2>From contact list to Gmail draft in under a minute.</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card fade-in fade-in-delay-1">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <h3>Upload your alumni database</h3>
+          <p>Drop in your club or school alumni list. ColdMatch scores every contact by relevance to your goals.</p>
+        </div>
+        <div class="card fade-in fade-in-delay-2">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <h3>Generate emails that sound human</h3>
+          <p>No templates, no filler. Every email references your shared background, their specific firm, and your recruiting goals.</p>
+        </div>
+        <div class="card fade-in fade-in-delay-3">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 12 20 22 4 22 4 12"/>
+              <polyline points="22 7 12 2 2 7"/>
+              <line x1="12" y1="22" x2="12" y2="7"/>
+            </svg>
+          </div>
+          <h3>Saved straight to Gmail</h3>
+          <p>Every draft lands in your Gmail drafts folder. Review, edit, and send when you are ready. Nothing gets sent without you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature A: Alumni Database -->
+  <section class="feature-section feature-white" id="features">
+    <div class="container">
+      <div class="feature-inner">
+        <div class="feature-copy fade-in">
+          <span class="feature-label">ALUMNI DATABASE</span>
+          <h2>Turn your alumni list into 50 personalized drafts in minutes.</h2>
+          <p>Upload your club or school alumni database as a CSV. ColdMatch scores every contact by how relevant they are to your goals, ranks them by priority, and drafts a personalized email for each one.</p>
+          <ul class="feature-bullets">
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Scores and ranks every contact by IB relevance
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Drafts emails that reference your shared background and their specific firm
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Saves directly to Gmail. Nothing gets sent without you.
+            </li>
+          </ul>
+        </div>
+        <div class="feature-mockup fade-in fade-in-delay-1">
+          <div class="feature-card">
+            <div class="feature-card-header">Ranked by Relevance</div>
+            <div class="fm-list">
+              <div class="fm-row">
+                <div class="fm-cbox fm-checked">&#10003;</div>
+                <div class="fm-info">
+                  <div class="fm-name">Alex Chen</div>
+                  <div class="fm-detail">Goldman Sachs · IB Analyst</div>
+                </div>
+                <span class="fm-badge fm-high">High</span>
+              </div>
+              <div class="fm-row">
+                <div class="fm-cbox fm-checked">&#10003;</div>
+                <div class="fm-info">
+                  <div class="fm-name">Sarah Kim</div>
+                  <div class="fm-detail">Morgan Stanley · IB Associate</div>
+                </div>
+                <span class="fm-badge fm-high">High</span>
+              </div>
+              <div class="fm-row">
+                <div class="fm-cbox fm-empty"></div>
+                <div class="fm-info">
+                  <div class="fm-name">Mike Torres</div>
+                  <div class="fm-detail">Deloitte · Consultant</div>
+                </div>
+                <span class="fm-badge fm-low">Low</span>
+              </div>
+              <div class="fm-row">
+                <div class="fm-cbox fm-checked">&#10003;</div>
+                <div class="fm-info">
+                  <div class="fm-name">Priya Patel</div>
+                  <div class="fm-detail">Evercore · IB Analyst</div>
+                </div>
+                <span class="fm-badge fm-high">High</span>
+              </div>
+            </div>
+            <div class="fm-more">+ 46 more contacts</div>
+            <div class="fm-btn">Generate 50 drafts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature B: Find Anyone -->
+  <section class="feature-section feature-bg">
+    <div class="container">
+      <div class="feature-inner">
+        <div class="feature-mockup fade-in">
+          <div class="product-mockup">
+            <div class="mockup-titlebar">
+              <div class="mockup-dot mockup-dot-red"></div>
+              <div class="mockup-dot mockup-dot-yellow"></div>
+              <div class="mockup-dot mockup-dot-green"></div>
+              <span class="mockup-win-title">ColdMatch</span>
+            </div>
+            <div class="mockup-body">
+
+              <!-- Scene: Search -->
               <div class="scene" id="scene-search">
 
-                <!-- Step A: typing search query -->
                 <div class="scene-step" id="step-search-input">
                   <div class="scene-label">Find contacts</div>
                   <div class="search-bar">
@@ -786,7 +1117,6 @@
                   </div>
                 </div>
 
-                <!-- Step B: results + generate -->
                 <div class="scene-step" id="step-search-results">
                   <div class="scene-label">8 contacts found</div>
                   <div class="contact-list" id="search-rows">
@@ -837,99 +1167,156 @@
 
             </div><!-- /mockup-body -->
           </div><!-- /product-mockup -->
-        </div><!-- /hero-right -->
-
+        </div>
+        <div class="feature-copy fade-in fade-in-delay-1">
+          <span class="feature-label">FIND ANYONE</span>
+          <h2>Search for contacts at any firm, from any school.</h2>
+          <p>Type a firm name or school and ColdMatch finds the right people to reach out to, complete with emails already included. No manual searching, no spreadsheets.</p>
+          <ul class="feature-bullets">
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Search by firm, school, or role
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Contacts returned with emails included
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Same scoring and draft generation as the alumni flow
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!--
-  <div class="ticker-section">
-    <div class="ticker-track-outer">
-      <div class="ticker-track">
-        <img src="/images/schools/michigan.svg" alt="Michigan" onerror="this.style.display='none'">
-        <img src="/images/schools/nyu.svg" alt="NYU" onerror="this.style.display='none'">
-        <img src="/images/schools/georgetown.svg" alt="Georgetown" onerror="this.style.display='none'">
-        <img src="/images/schools/upenn.svg" alt="Penn" onerror="this.style.display='none'">
-        <img src="/images/schools/indiana.svg" alt="Indiana" onerror="this.style.display='none'">
-        <img src="/images/schools/cornell.svg" alt="Cornell" onerror="this.style.display='none'">
-        <img src="/images/schools/columbia.svg" alt="Columbia" onerror="this.style.display='none'">
-        <img src="/images/schools/duke.svg" alt="Duke" onerror="this.style.display='none'">
-        <img src="/images/schools/vanderbilt.svg" alt="Vanderbilt" onerror="this.style.display='none'">
-        <img src="/images/schools/uva.svg" alt="UVA" onerror="this.style.display='none'">
-        <img src="/images/schools/northwestern.svg" alt="Northwestern" onerror="this.style.display='none'">
-        <img src="/images/schools/michigan.svg" alt="Michigan" onerror="this.style.display='none'">
-        <img src="/images/schools/nyu.svg" alt="NYU" onerror="this.style.display='none'">
-        <img src="/images/schools/georgetown.svg" alt="Georgetown" onerror="this.style.display='none'">
-        <img src="/images/schools/upenn.svg" alt="Penn" onerror="this.style.display='none'">
-        <img src="/images/schools/indiana.svg" alt="Indiana" onerror="this.style.display='none'">
-        <img src="/images/schools/cornell.svg" alt="Cornell" onerror="this.style.display='none'">
-        <img src="/images/schools/columbia.svg" alt="Columbia" onerror="this.style.display='none'">
-        <img src="/images/schools/duke.svg" alt="Duke" onerror="this.style.display='none'">
-        <img src="/images/schools/vanderbilt.svg" alt="Vanderbilt" onerror="this.style.display='none'">
-        <img src="/images/schools/uva.svg" alt="UVA" onerror="this.style.display='none'">
-        <img src="/images/schools/northwestern.svg" alt="Northwestern" onerror="this.style.display='none'">
+  <!-- Feature C: Chrome Extension -->
+  <section class="feature-section feature-white" id="extension">
+    <div class="container">
+      <div class="feature-inner">
+        <div class="feature-mockup fade-in">
+          <div class="ext-card">
+            <div class="ext-logo">ColdMatch</div>
+            <div class="ext-name">Brett Geffner</div>
+            <div class="ext-detail">VP, Real Estate Private Equity · New York</div>
+            <div class="ext-score-wrap">
+              <div class="ext-score-num">84</div>
+              <div class="ext-score-label">Match Score</div>
+            </div>
+            <div class="ext-bar-track">
+              <div class="ext-bar-fill"></div>
+            </div>
+            <ul class="ext-reasons">
+              <li>Strong overlap in finance recruiting pipeline</li>
+              <li>Michigan alumni connection</li>
+            </ul>
+            <div class="ext-gen-btn">Generate email</div>
+          </div>
+        </div>
+        <div class="feature-copy fade-in fade-in-delay-1">
+          <span class="feature-label">CHROME EXTENSION</span>
+          <h2>See your match score on any LinkedIn profile.</h2>
+          <p>While browsing LinkedIn, the ColdMatch extension instantly scores whoever you are looking at so you know if they are worth reaching out to before you spend time writing an email. One click to generate and save to Gmail drafts.</p>
+          <ul class="feature-bullets">
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Match score 0 to 100 with reasoning on every LinkedIn profile
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Generate a personalized email directly from the extension
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Saves to Gmail drafts in one click
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  -->
+  </section>
 
-  <!-- How it works -->
-  <section class="how-section">
+  <!-- Feature D: Outreach Tracker -->
+  <section class="feature-section feature-bg">
     <div class="container">
-      <div class="fade-in section-header">
-        <span class="section-eyebrow">How it works</span>
-        <h2>From alumni list to Gmail draft<br>in under a minute.</h2>
-      </div>
-      <div class="cards-grid">
-
-        <div class="card fade-in fade-in-delay-1">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-            </svg>
-          </div>
-          <h3>Upload your alumni database</h3>
-          <p>Drop in your club or school alumni list. ColdMatch scores every contact by relevance to your goals.</p>
+      <div class="feature-inner">
+        <div class="feature-copy fade-in">
+          <span class="feature-label">OUTREACH TRACKER</span>
+          <h2>Track every conversation in one place.</h2>
+          <p>Every draft you save automatically appears in your outreach tracker. Update stages, log replies, and set follow-up reminders so nothing falls through the cracks during recruiting season.</p>
+          <ul class="feature-bullets">
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Auto-populated every time you save a draft
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Track stage: Drafted, Contacted, Replied, Meeting Scheduled, Offer
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 10 10" fill="none"><polyline points="2,5 4,7 8,3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Automatic reply detection via Gmail
+            </li>
+          </ul>
         </div>
-
-        <div class="card fade-in fade-in-delay-2">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
+        <div class="feature-mockup fade-in fade-in-delay-1">
+          <div class="feature-card">
+            <div class="feature-card-header">Outreach Tracker</div>
+            <div class="tracker-wrap">
+              <table class="tracker-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Firm</th>
+                    <th>Stage</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Alex Chen</td>
+                    <td>Goldman Sachs</td>
+                    <td><span class="stage-pill s-contacted">Contacted</span></td>
+                    <td>Apr 14</td>
+                  </tr>
+                  <tr>
+                    <td>Sarah Kim</td>
+                    <td>Morgan Stanley</td>
+                    <td>
+                      <span class="stage-pill s-replied">Replied</span>
+                      <div class="reply-tag"><span class="reply-dot"></span>Reply detected</div>
+                    </td>
+                    <td>Apr 12</td>
+                  </tr>
+                  <tr>
+                    <td>Marcus Reed</td>
+                    <td>Evercore</td>
+                    <td><span class="stage-pill s-drafted">Drafted</span></td>
+                    <td>Apr 16</td>
+                  </tr>
+                  <tr>
+                    <td>Priya Patel</td>
+                    <td>Citi</td>
+                    <td><span class="stage-pill s-meeting">Meeting Scheduled</span></td>
+                    <td>Apr 10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <h3>Generate personalized emails</h3>
-          <p>AI drafts emails that actually sound human — referencing your shared background, their firm, and your recruiting goals.</p>
         </div>
-
-        <div class="card fade-in fade-in-delay-3">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 12 20 22 4 22 4 12"/>
-              <polyline points="22 7 12 2 2 7"/>
-              <line x1="12" y1="22" x2="12" y2="7"/>
-            </svg>
-          </div>
-          <h3>Saved straight to Gmail</h3>
-          <p>Every draft lands in your Gmail folder. Review, tweak, and send when you're ready.</p>
-        </div>
-
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="cta-section">
+  <section class="cta-section" id="signup">
     <div class="container">
-      <div class="cta-inner fade-in" id="signup">
-        <h2>Be the first to get access.</h2>
-        <p>ColdMatch is currently in private beta. Join the waitlist and we'll reach out when you're ready to start.</p>
-        <form class="email-form email-form-cta" onsubmit="handleWaitlist(event,'cta-confirm')">
+      <h2 class="fade-in">Be the first to get access.</h2>
+      <p class="fade-in">ColdMatch is currently in private beta. Join the waitlist and we will reach out when you are ready to start.</p>
+      <div class="cta-form-wrap fade-in">
+        <form class="cta-form" onsubmit="handleWaitlist(event,'cta-confirm')">
           <input class="email-input" type="email" placeholder="Your university email" required>
           <button type="submit" class="btn-white">Join the waitlist</button>
         </form>
@@ -949,7 +1336,7 @@
   </footer>
 
   <script>
-    // ── Scroll fade-in ──
+    // Scroll fade-in
     const scrollObs = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('visible'); scrollObs.unobserve(e.target); }
@@ -958,7 +1345,7 @@
     );
     document.querySelectorAll('.fade-in').forEach((el) => scrollObs.observe(el));
 
-    // ── Waitlist form ──
+    // Waitlist form
     async function handleWaitlist(e, confirmId) {
       e.preventDefault();
       const form = e.target;
@@ -975,17 +1362,17 @@
         });
       } catch (_) {}
       form.style.display = 'none';
-      confirmEl.textContent = "You\u2019re on the list.";
+      confirmEl.textContent = 'You are on the list.';
       confirmEl.style.display = 'block';
     }
 
-    // ── Mockup animation ──
+    // Mockup animation
     const SEARCH_QUERY = 'Michigan alumni at bulge bracket banks';
 
-    function showScene(id)  { document.getElementById(id).classList.add('active'); }
-    function hideScene(id)  { document.getElementById(id).classList.remove('active'); }
-    function showStep(id)   { document.getElementById(id).classList.add('active'); }
-    function hideStep(id)   { document.getElementById(id).classList.remove('active'); }
+    function showScene(id) { document.getElementById(id).classList.add('active'); }
+    function hideScene(id) { document.getElementById(id).classList.remove('active'); }
+    function showStep(id)  { document.getElementById(id).classList.add('active'); }
+    function hideStep(id)  { document.getElementById(id).classList.remove('active'); }
 
     function resetRows(listId) {
       document.querySelectorAll('#' + listId + ' .contact-row').forEach(r => r.classList.remove('done'));
@@ -1002,7 +1389,6 @@
         const fill = document.getElementById(fillId);
         const lbl  = document.getElementById(lblId);
 
-        // Kick off fill animation
         requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = '100%'; }));
 
         const rows = Array.from(document.querySelectorAll('#' + listId + ' .contact-row'))
@@ -1022,7 +1408,6 @@
     }
 
     function runCsvScene(onDone) {
-      // reset
       hideStep('step-csv-dropzone');
       hideStep('step-csv-upload');
       hideStep('step-csv-list');
@@ -1076,7 +1461,6 @@
     }
 
     function runSearchScene(onDone) {
-      // reset
       hideStep('step-search-input');
       hideStep('step-search-results');
       document.getElementById('search-progress').style.display = 'none';
@@ -1118,11 +1502,17 @@
       });
     }
 
-    function loop() {
-      runCsvScene(() => setTimeout(() => runSearchScene(() => setTimeout(loop, 400)), 400));
+    // Hero: CSV loop only
+    function heroLoop() {
+      runCsvScene(() => setTimeout(heroLoop, 400));
     }
+    setTimeout(heroLoop, 900);
 
-    setTimeout(loop, 900);
+    // Feature B: search loop
+    function searchLoop() {
+      runSearchScene(() => setTimeout(searchLoop, 400));
+    }
+    setTimeout(searchLoop, 1200);
   </script>
 
 </body>
