@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon32.png">
-  <title>ColdMatch — Cold email for finance recruiting</title>
+  <title>ColdMatch: Cold email for finance recruiting</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -181,10 +181,7 @@
       width: 100%;
       max-width: 440px;
     }
-    .email-form {
-      display: flex;
-      gap: 8px;
-    }
+    .email-form { display: flex; gap: 8px; }
     .email-input {
       flex: 1;
       min-width: 0;
@@ -200,22 +197,10 @@
     }
     .email-input:focus { border-color: var(--accent); }
     .email-input::placeholder { color: var(--text-secondary); }
-    .hero-fine-print {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-    .email-confirm {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--accent);
-      display: none;
-    }
+    .hero-fine-print { font-size: 13px; color: var(--text-secondary); }
+    .email-confirm { font-size: 14px; font-weight: 500; color: var(--accent); display: none; }
     .email-confirm-cta { color: rgba(255,255,255,0.9); }
-    .hero-right {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    .hero-right { display: flex; justify-content: center; align-items: center; }
 
     /* ── Product mockup ── */
     .product-mockup {
@@ -236,95 +221,38 @@
       background: #fafafa;
     }
     .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .mockup-dot-red   { background: #ff5f57; }
-    .mockup-dot-yellow{ background: #febc2e; }
-    .mockup-dot-green { background: #28c840; }
-    .mockup-win-title {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      margin-left: 6px;
-    }
-    .mockup-body {
-      height: 420px;
-      position: relative;
-      overflow: hidden;
-    }
+    .mockup-dot-red    { background: #ff5f57; }
+    .mockup-dot-yellow { background: #febc2e; }
+    .mockup-dot-green  { background: #28c840; }
+    .mockup-win-title { font-size: 12px; color: var(--text-secondary); font-weight: 500; margin-left: 6px; }
+    .mockup-body { height: 420px; position: relative; overflow: hidden; }
 
-    /* ── Scenes ── */
+    /* Scenes (used by both hero and feature-B search) */
     .scene {
-      position: absolute;
-      inset: 0;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-      overflow: hidden;
+      position: absolute; inset: 0; padding: 20px;
+      opacity: 0; transition: opacity 0.4s ease;
+      pointer-events: none; overflow: hidden;
     }
     .scene.active { opacity: 1; pointer-events: auto; }
     .scene-step { display: none; }
     .scene-step.active { display: block; animation: stepIn 0.35s ease; }
     @keyframes stepIn { from { opacity: 0; } to { opacity: 1; } }
     .scene-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-secondary);
-      margin-bottom: 14px;
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 14px;
     }
 
-    /* Upload area */
-    .upload-area {
-      border: 2px dashed rgba(61,139,111,0.28);
-      border-radius: 10px;
-      padding: 32px 20px;
-      text-align: center;
-      background: rgba(61,139,111,0.03);
-    }
-    .upload-file-icon {
-      width: 42px;
-      height: 42px;
-      background: var(--accent-light);
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 12px;
-    }
-    .upload-filename {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .upload-meta {
-      font-size: 12px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-    .upload-check { color: var(--accent); font-weight: 700; }
-
-    /* Contact list */
+    /* Contact list (shared: hero + feature-B) */
     .contact-list { display: flex; flex-direction: column; gap: 7px; }
     .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 11px;
-      background: #fafafa;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.06);
+      display: flex; align-items: center; gap: 9px;
+      padding: 9px 11px; background: #fafafa;
+      border-radius: 8px; border: 1px solid rgba(0,0,0,0.06);
     }
     .cbox {
       width: 15px; height: 15px; border-radius: 4px;
-      border: 1.5px solid rgba(0,0,0,0.18);
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 9px;
+      border: 1.5px solid rgba(0,0,0,0.18); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 9px;
     }
     .cbox.checked { background: var(--accent); border-color: var(--accent); color: white; }
     .contact-info { flex: 1; min-width: 0; }
@@ -336,8 +264,7 @@
     .row-done-check {
       font-size: 11px; color: var(--accent); font-weight: 700;
       opacity: 0; transform: scale(0);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      flex-shrink: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease; flex-shrink: 0;
     }
     .contact-row.done .row-done-check { opacity: 1; transform: scale(1); }
     .gen-btn {
@@ -346,20 +273,52 @@
       background: var(--accent); color: white;
       border-radius: 8px; font-size: 13px; font-weight: 600;
       margin-top: 10px; cursor: pointer;
-      transition: transform 0.1s, background 0.15s;
-      user-select: none;
+      transition: transform 0.1s, background 0.15s; user-select: none;
     }
     .gen-btn.clicking { transform: scale(0.97); background: var(--accent-hover); }
-    .more-contacts {
-      font-size: 11px; color: var(--text-secondary); opacity: 0.55;
-      text-align: center; padding: 5px 0 2px;
-    }
+    .more-contacts { font-size: 11px; color: var(--text-secondary); opacity: 0.55; text-align: center; padding: 5px 0 2px; }
     .progress-wrap { margin-top: 10px; }
     .progress-lbl { font-size: 11px; color: var(--text-secondary); margin-bottom: 7px; }
     .progress-track { height: 4px; background: rgba(0,0,0,0.07); border-radius: 2px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 1.6s ease; }
 
-    /* Search bar */
+    /* ── Gmail drafts view (hero phase 3) ── */
+    .gmail-header {
+      display: flex; align-items: center; gap: 8px;
+      padding-bottom: 10px; margin-bottom: 6px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .gmail-m {
+      width: 22px; height: 22px; border-radius: 4px;
+      background: #ea4335; color: white;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .gmail-folder { font-size: 13px; color: var(--text-secondary); }
+    .gmail-count  { font-size: 13px; font-weight: 700; color: var(--text); }
+    .gmail-rows { display: flex; flex-direction: column; }
+    .gmail-row {
+      display: flex; align-items: center; gap: 9px;
+      padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .gmail-row:last-child { border-bottom: none; }
+    .gmail-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #e8f5f0; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: var(--accent);
+    }
+    .gmail-row-content { flex: 1; min-width: 0; }
+    .gmail-subject { font-size: 11px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 1px; }
+    .gmail-preview { font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gmail-draft-pill { font-size: 9px; font-weight: 600; color: #ea4335; background: #fef2f2; border-radius: 3px; padding: 2px 5px; flex-shrink: 0; }
+    .gmail-bar {
+      margin-top: 8px; background: var(--accent); color: white;
+      border-radius: 6px; font-size: 11px; font-weight: 600;
+      padding: 7px 12px; text-align: center;
+    }
+
+    /* ── Search bar (feature-B) ── */
     .search-bar {
       display: flex; align-items: center; gap: 8px;
       background: #f5f5f5; border: 1.5px solid rgba(0,0,0,0.1);
@@ -373,7 +332,7 @@
     }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* ── Ticker (preserved in comment below) ── */
+    /* ── Ticker (preserved in comment) ── */
     .ticker-section { padding: 36px 0; border-top: 1px solid var(--border); overflow: hidden; }
     .ticker-track-outer {
       overflow: hidden;
@@ -387,36 +346,19 @@
     /* ── Section shared ── */
     .section-eyebrow {
       display: inline-block;
-      font-size: 11px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 2px;
-      color: var(--accent); margin-bottom: 16px;
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--accent); margin-bottom: 16px;
     }
     .section-header { text-align: center; margin-bottom: 56px; }
-    .section-header h2 {
-      font-size: 36px; font-weight: 700;
-      letter-spacing: -0.025em; line-height: 1.2; color: var(--text);
-    }
-    .section-header p {
-      font-size: 16px; color: var(--text-secondary);
-      max-width: 600px; margin: 16px auto 0; line-height: 1.65;
-    }
+    .section-header h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; color: var(--text); }
+    .section-header p { font-size: 16px; color: var(--text-secondary); max-width: 600px; margin: 16px auto 0; line-height: 1.65; }
 
     /* ── Problem ── */
     .problem-section { background: var(--white); padding: 80px 0; }
     .problem-inner { max-width: 720px; margin: 0 auto; text-align: center; }
-    .problem-inner h2 {
-      font-size: 36px; font-weight: 700;
-      letter-spacing: -0.025em; line-height: 1.2;
-      color: var(--text); margin-bottom: 28px;
-    }
-    .problem-inner p {
-      font-size: 16px; color: var(--text-secondary);
-      line-height: 1.75; margin-bottom: 20px;
-    }
-    .problem-punchline {
-      font-size: 18px; font-weight: 600; color: var(--text);
-      margin-top: 4px; margin-bottom: 0;
-    }
+    .problem-inner h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; color: var(--text); margin-bottom: 28px; }
+    .problem-inner p { font-size: 16px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 20px; }
+    .problem-punchline { font-size: 18px; font-weight: 600; color: var(--text); margin-top: 4px; margin-bottom: 0; }
 
     /* ── Time comparison ── */
     .time-section { background: var(--bg); padding: 80px 0; }
@@ -425,66 +367,62 @@
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
       max-width: 700px; margin: 0 auto; overflow: hidden;
     }
-    .comparison-col-headers {
-      display: grid; grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid #f3f4f6;
-    }
+    .comparison-col-headers { display: grid; grid-template-columns: 1fr 1fr; }
     .comp-col-header {
       padding: 20px 24px 16px;
-      font-size: 14px; font-weight: 600; text-align: center;
+      font-size: 14px; font-weight: 700; text-align: center;
     }
-    .comp-col-header.without { color: var(--text-secondary); border-right: 1px solid #f3f4f6; }
-    .comp-col-header.with-cm { color: var(--accent); }
+    .comp-col-header.without {
+      color: #374151; background: #fef2f2;
+      border-right: 1px solid #fde8e8;
+    }
+    .comp-col-header.with-cm { color: var(--accent); background: #f0fdf4; }
     .comparison-row { border-bottom: 1px solid #f3f4f6; }
     .comp-task-label {
-      font-size: 12px; font-weight: 600; color: var(--text);
-      text-align: center; padding: 14px 24px 10px;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      text-align: left; padding: 14px 24px 10px;
       background: #fafafa; border-bottom: 1px solid #f3f4f6;
     }
     .comp-cells { display: grid; grid-template-columns: 1fr 1fr; }
     .comp-cell { padding: 14px 20px; font-size: 13px; line-height: 1.5; text-align: center; }
-    .comp-cell.without { color: var(--text-secondary); border-right: 1px solid #f3f4f6; }
-    .comp-cell.with-cm { color: var(--accent); font-weight: 500; }
+    .comp-cell.without { color: var(--text-secondary); background: #fef2f2; border-right: 1px solid #fde8e8; }
+    .comp-cell.with-cm { color: var(--accent); background: #f0fdf4; font-weight: 500; }
     .comparison-footer {
       background: var(--accent-dark); color: white;
-      text-align: center; padding: 20px 32px;
-      font-size: 14px; line-height: 1.6; font-weight: 500;
+      text-align: center; padding: 24px 32px;
+      font-size: 15px; line-height: 1.6; font-weight: 500;
     }
 
     /* ── Email quality ── */
     .email-quality-section { background: var(--white); padding: 80px 0; }
     .email-cards {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 20px; max-width: 900px; margin: 0 auto 24px;
+      gap: 20px; max-width: 1000px; margin: 0 auto 24px;
+      align-items: stretch;
     }
-    .email-card { border-radius: 12px; padding: 24px; }
+    .email-card { border-radius: 12px; padding: 24px; display: flex; flex-direction: column; }
     .email-card-bad  { background: #fff5f5; border: 1px solid #fecaca; }
     .email-card-good { background: #f0f9f5; border: 1px solid #a7f3d0; }
-    .email-card-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; margin-bottom: 16px;
-    }
+    .email-card-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
     .email-card-bad  .email-card-label { color: #dc2626; }
     .email-card-good .email-card-label { color: var(--accent); }
     .email-fields { margin-bottom: 12px; font-size: 12px; color: var(--text-secondary); }
     .email-field { display: flex; gap: 6px; margin-bottom: 4px; }
     .email-field-label { font-weight: 600; color: var(--text); min-width: 52px; }
-    .email-divider { height: 1px; background: rgba(0,0,0,0.08); margin: 12px 0; }
-    .email-body { font-size: 12px; color: var(--text); line-height: 1.75; }
+    .email-divider { height: 1px; background: rgba(0,0,0,0.08); margin: 12px 0; flex-shrink: 0; }
+    .email-body { font-size: 12px; color: var(--text); line-height: 1.75; flex: 1; overflow-y: auto; max-height: 280px; }
+    .email-body p { margin-bottom: 10px; }
+    .email-body p:last-child { margin-bottom: 0; }
     .hl-bad  { background: #fee2e2; border-radius: 2px; padding: 0 2px; }
     .hl-good { background: #d1fae5; border-radius: 2px; padding: 0 2px; }
-    .email-quality-note {
-      text-align: center; font-size: 13px; color: var(--text-secondary);
-      max-width: 900px; margin: 0 auto;
-    }
+    .email-quality-note { text-align: center; font-size: 13px; color: var(--text-secondary); max-width: 1000px; margin: 0 auto; }
 
     /* ── How it works ── */
     .how-section { background: var(--bg); padding: 80px 0; }
     .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .card {
       background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-card);
-      padding: 32px;
+      border-radius: var(--radius); box-shadow: var(--shadow-card); padding: 32px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.11); }
@@ -501,36 +439,15 @@
     .feature-section { padding: 80px 0; }
     .feature-white { background: var(--white); }
     .feature-bg    { background: var(--bg); }
-    .feature-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
-    }
+    .feature-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     .feature-copy { display: flex; flex-direction: column; }
-    .feature-label {
-      font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 2px; color: var(--accent); margin-bottom: 14px;
-    }
-    .feature-copy h2 {
-      font-size: 30px; font-weight: 700;
-      letter-spacing: -0.025em; line-height: 1.2;
-      color: var(--text); max-width: 400px; margin-bottom: 16px;
-    }
-    .feature-copy p {
-      font-size: 15px; color: var(--text-secondary);
-      line-height: 1.7; margin-bottom: 20px;
-    }
+    .feature-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 14px; }
+    .feature-copy h2 { font-size: 30px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; color: var(--text); max-width: 400px; margin-bottom: 16px; }
+    .feature-copy p  { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
     .feature-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .feature-bullets li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; color: var(--text-secondary); line-height: 1.5;
-    }
-    .check-icon {
-      width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
-      background: var(--accent); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .feature-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .check-icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .check-icon svg { width: 10px; height: 10px; }
-
     .feature-mockup { display: flex; justify-content: center; align-items: flex-start; }
 
     /* Feature static card */
@@ -538,27 +455,19 @@
       background: white; border-radius: 12px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
       border: 1px solid rgba(0,0,0,0.07);
-      width: 100%; max-width: 420px; overflow: hidden;
+      width: 100%; max-width: 460px; overflow: hidden;
     }
     .feature-card-header {
       font-size: 10px; font-weight: 600; text-transform: uppercase;
       letter-spacing: 0.08em; color: var(--text-secondary);
-      padding: 14px 18px 12px;
+      padding: 16px 24px 14px;
       border-bottom: 1px solid rgba(0,0,0,0.06); background: #fafafa;
     }
 
     /* Alumni DB mockup rows */
-    .fm-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
-    .fm-row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 12px; background: #fafafa;
-      border-radius: 8px; border: 1px solid rgba(0,0,0,0.06);
-    }
-    .fm-cbox {
-      width: 16px; height: 16px; border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 9px; flex-shrink: 0;
-    }
+    .fm-list { padding: 16px 24px; display: flex; flex-direction: column; gap: 8px; }
+    .fm-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #fafafa; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
+    .fm-cbox { width: 16px; height: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0; }
     .fm-checked { background: var(--accent); color: white; }
     .fm-empty   { border: 1.5px solid rgba(0,0,0,0.18); }
     .fm-info { flex: 1; min-width: 0; }
@@ -567,92 +476,42 @@
     .fm-badge  { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
     .fm-high { background: rgba(61,139,111,0.12); color: var(--accent); }
     .fm-low  { background: rgba(0,0,0,0.06); color: var(--text-secondary); }
-    .fm-more {
-      font-size: 11px; color: var(--text-secondary);
-      text-align: center; padding: 4px 0 8px; opacity: 0.6;
-    }
-    .fm-btn {
-      margin: 0 16px 16px;
-      background: var(--accent); color: white;
-      border-radius: 8px; font-size: 13px; font-weight: 600;
-      padding: 10px 16px; text-align: center;
-    }
+    .fm-more { font-size: 11px; color: var(--text-secondary); text-align: center; padding: 4px 0 8px; opacity: 0.6; }
+    .fm-btn { margin: 0 24px 20px; background: var(--accent); color: white; border-radius: 8px; font-size: 13px; font-weight: 600; padding: 10px 16px; text-align: center; }
 
     /* Outreach tracker */
     .tracker-wrap { padding: 4px 0; overflow-x: auto; }
     .tracker-table { width: 100%; border-collapse: collapse; }
-    .tracker-table th {
-      font-size: 10px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--text-secondary);
-      padding: 10px 14px; text-align: left;
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-    }
-    .tracker-table td {
-      font-size: 12px; color: var(--text);
-      padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,0.05);
-      vertical-align: middle;
-    }
+    .tracker-table th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.07); }
+    .tracker-table td { font-size: 12px; color: var(--text); padding: 12px 16px; border-bottom: 1px solid rgba(0,0,0,0.05); vertical-align: middle; }
     .tracker-table tr:last-child td { border-bottom: none; }
     .stage-pill { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 100px; white-space: nowrap; }
-    .s-drafted   { background: rgba(0,0,0,0.06);        color: var(--text-secondary); }
-    .s-contacted { background: rgba(59,130,246,0.1);    color: #2563eb; }
-    .s-replied   { background: rgba(61,139,111,0.12);   color: var(--accent); }
-    .s-meeting   { background: rgba(139,92,246,0.1);    color: #7c3aed; }
-    .reply-tag {
-      display: flex; align-items: center; gap: 4px;
-      font-size: 10px; color: var(--accent); font-weight: 500; margin-top: 4px;
-    }
+    .s-drafted   { background: rgba(0,0,0,0.06);      color: var(--text-secondary); }
+    .s-contacted { background: rgba(59,130,246,0.1);  color: #2563eb; }
+    .s-replied   { background: rgba(61,139,111,0.12); color: var(--accent); }
+    .s-meeting   { background: rgba(139,92,246,0.1);  color: #7c3aed; }
+    .reply-tag { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--accent); font-weight: 500; margin-top: 4px; }
     .reply-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
     /* Chrome extension mockup */
-    .ext-card {
-      background: white; border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-      border: 1px solid rgba(0,0,0,0.08);
-      width: 280px; padding: 18px;
-    }
+    .ext-card { background: white; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.10); border: 1px solid rgba(0,0,0,0.08); width: 280px; padding: 24px; }
     .ext-logo   { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 14px; }
     .ext-name   { font-size: 13px; font-weight: 600; color: var(--text); }
     .ext-detail { font-size: 11px; color: var(--text-secondary); margin-bottom: 16px; }
     .ext-score-wrap { text-align: center; margin-bottom: 10px; }
-    .ext-score-num {
-      font-size: 48px; font-weight: 800;
-      color: var(--accent); line-height: 1;
-    }
-    .ext-score-label {
-      font-size: 10px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 2px;
-      color: var(--text-secondary); margin-top: 4px;
-    }
+    .ext-score-num  { font-size: 56px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .ext-score-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); margin-top: 4px; }
     .ext-bar-track { height: 4px; background: rgba(0,0,0,0.07); border-radius: 2px; overflow: hidden; margin-bottom: 14px; }
     .ext-bar-fill  { height: 100%; background: var(--accent); border-radius: 2px; width: 84%; }
     .ext-reasons { list-style: none; margin-bottom: 16px; }
-    .ext-reasons li {
-      font-size: 11px; color: var(--text-secondary);
-      padding: 3px 0; line-height: 1.4;
-      display: flex; align-items: flex-start; gap: 6px;
-    }
-    .ext-reasons li::before {
-      content: '';
-      width: 4px; height: 4px; border-radius: 50%;
-      background: var(--accent); flex-shrink: 0; margin-top: 5px;
-    }
-    .ext-gen-btn {
-      background: var(--accent); color: white;
-      border-radius: 8px; font-size: 13px; font-weight: 600;
-      padding: 10px 16px; text-align: center; width: 100%;
-    }
+    .ext-reasons li { font-size: 11px; color: var(--text-secondary); padding: 3px 0; line-height: 1.4; display: flex; align-items: flex-start; gap: 6px; }
+    .ext-reasons li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 5px; }
+    .ext-gen-btn { background: var(--accent); color: white; border-radius: 8px; font-size: 13px; font-weight: 600; padding: 10px 16px; text-align: center; width: 100%; }
 
     /* ── CTA ── */
     .cta-section { background: var(--accent); padding: 100px 0; text-align: center; }
-    .cta-section h2 {
-      font-size: 40px; font-weight: 700; color: white;
-      margin-bottom: 12px; letter-spacing: -0.025em;
-    }
-    .cta-section > .container > p {
-      font-size: 16px; color: rgba(255,255,255,0.85);
-      max-width: 500px; margin: 0 auto 36px; line-height: 1.65;
-    }
+    .cta-section h2 { font-size: 40px; font-weight: 700; color: white; margin-bottom: 12px; letter-spacing: -0.025em; }
+    .cta-section > .container > p { font-size: 16px; color: rgba(255,255,255,0.85); max-width: 500px; margin: 0 auto 36px; line-height: 1.65; }
     .cta-form-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .cta-form { display: flex; gap: 8px; max-width: 420px; width: 100%; }
     .cta-form .email-input { background: white; color: var(--text); border-color: transparent; }
@@ -674,7 +533,7 @@
       .email-cards { grid-template-columns: 1fr; }
       .comparison-col-headers { display: none; }
       .comp-cells { grid-template-columns: 1fr; }
-      .comp-cell.without { border-right: none; border-bottom: 1px solid #f3f4f6; }
+      .comp-cell.without { border-right: none; border-bottom: 1px solid #fde8e8; }
       .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
       .feature-copy h2 { max-width: 100%; }
     }
@@ -714,7 +573,7 @@
           <div class="hero-badge">Built for finance recruiting</div>
           <h1>Cold email at scale. Without the grunt work.</h1>
           <p class="hero-sub">
-            Networking is the most important part of finance recruiting. It is also the most time consuming. Finding the right people, drafting personalized emails, tracking follow-ups, ColdMatch handles all of it so you can focus on coffee chats, technicals, and actually being prepared.
+            Networking drives finance recruiting. Finding people, writing emails, and tracking follow-ups takes hours. ColdMatch handles all of it.
           </p>
           <div class="hero-form-wrap">
             <form class="email-form" onsubmit="handleWaitlist(event,'hero-confirm')">
@@ -726,7 +585,7 @@
           </div>
         </div>
 
-        <!-- Right: animated mockup (CSV loop only) -->
+        <!-- Right: animated mockup -->
         <div class="hero-right fade-in fade-in-delay-2">
           <div class="product-mockup">
             <div class="mockup-titlebar">
@@ -737,94 +596,112 @@
             </div>
             <div class="mockup-body">
 
-              <!-- Scene 1: CSV Upload -->
-              <div class="scene" id="scene-csv">
-
-                <div class="scene-step" id="step-csv-dropzone">
-                  <div class="scene-label">CSV Import</div>
-                  <div class="upload-area">
-                    <div class="upload-file-icon">
-                      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="16 16 12 12 8 16"/>
-                        <line x1="12" y1="12" x2="12" y2="21"/>
-                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
-                      </svg>
+              <!-- Phase A: Contacts list + generate -->
+              <div class="scene" id="hero-contacts">
+                <div class="scene-label">Ranked by Relevance</div>
+                <div class="contact-list">
+                  <div class="contact-row" data-tier="high">
+                    <div class="cbox checked">&#10003;</div>
+                    <div class="contact-info">
+                      <div class="contact-name">Alex Chen</div>
+                      <div class="contact-detail">Goldman Sachs · IB Analyst</div>
                     </div>
-                    <div class="upload-filename">Upload your alumni database</div>
-                    <div class="upload-meta">Drag and drop your CSV file here</div>
+                    <span class="badge badge-high">High</span>
+                  </div>
+                  <div class="contact-row" data-tier="high">
+                    <div class="cbox checked">&#10003;</div>
+                    <div class="contact-info">
+                      <div class="contact-name">Sarah Kim</div>
+                      <div class="contact-detail">Morgan Stanley · IB Associate</div>
+                    </div>
+                    <span class="badge badge-high">High</span>
+                  </div>
+                  <div class="contact-row" data-tier="low">
+                    <div class="cbox"></div>
+                    <div class="contact-info">
+                      <div class="contact-name">Mike Torres</div>
+                      <div class="contact-detail">Deloitte · Consultant</div>
+                    </div>
+                    <span class="badge badge-low">Low</span>
+                  </div>
+                  <div class="contact-row" data-tier="high">
+                    <div class="cbox checked">&#10003;</div>
+                    <div class="contact-info">
+                      <div class="contact-name">Priya Patel</div>
+                      <div class="contact-detail">Evercore · IB Analyst</div>
+                    </div>
+                    <span class="badge badge-high">High</span>
                   </div>
                 </div>
-
-                <div class="scene-step" id="step-csv-upload">
-                  <div class="scene-label">CSV Import</div>
-                  <div class="upload-area">
-                    <div class="upload-file-icon">
-                      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                      </svg>
-                    </div>
-                    <div class="upload-filename">PCT_Alumni.csv</div>
-                    <div class="upload-meta">
-                      437 contacts detected
-                      <span class="upload-check">&#10003;</span>
-                    </div>
+                <div class="more-contacts">+ 46 more contacts</div>
+                <div class="gen-btn" id="hero-gen-btn">Generate 50 drafts</div>
+                <div class="progress-wrap" id="hero-progress-wrap" style="display:none;">
+                  <div class="progress-lbl">Saving draft 23 of 50...</div>
+                  <div class="progress-track">
+                    <div class="progress-fill" id="hero-progress-fill"></div>
                   </div>
                 </div>
+              </div><!-- /hero-contacts -->
 
-                <div class="scene-step" id="step-csv-list">
-                  <div class="scene-label">Ranked by relevance</div>
-                  <div class="contact-list" id="csv-rows">
-                    <div class="contact-row" data-tier="high">
-                      <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Alex Chen</div>
-                        <div class="contact-detail">Goldman Sachs · IB Analyst</div>
-                      </div>
-                      <span class="badge badge-high">High</span>
-                      <span class="row-done-check">&#10003;</span>
+              <!-- Phase B: Gmail drafts view -->
+              <div class="scene" id="hero-gmail">
+                <div class="gmail-header">
+                  <div class="gmail-m">M</div>
+                  <span class="gmail-folder">Drafts</span>
+                  <strong class="gmail-count">50</strong>
+                </div>
+                <div class="gmail-rows">
+                  <div class="gmail-row">
+                    <div class="gmail-avatar">AC</div>
+                    <div class="gmail-row-content">
+                      <div class="gmail-subject">Michigan Ross Student Interested in IB at Goldman</div>
+                      <div class="gmail-preview">Hi Ryan, I hope you are doing well...</div>
                     </div>
-                    <div class="contact-row" data-tier="high">
-                      <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Sarah Kim</div>
-                        <div class="contact-detail">Morgan Stanley · IB Associate</div>
-                      </div>
-                      <span class="badge badge-high">High</span>
-                      <span class="row-done-check">&#10003;</span>
-                    </div>
-                    <div class="contact-row" data-tier="low">
-                      <div class="cbox"></div>
-                      <div class="contact-info">
-                        <div class="contact-name">Mike Torres</div>
-                        <div class="contact-detail">Deloitte · Consultant</div>
-                      </div>
-                      <span class="badge badge-low">Low</span>
-                      <span class="row-done-check">&#10003;</span>
-                    </div>
-                    <div class="contact-row" data-tier="high">
-                      <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Priya Patel</div>
-                        <div class="contact-detail">Evercore · IB Analyst</div>
-                      </div>
-                      <span class="badge badge-high">High</span>
-                      <span class="row-done-check">&#10003;</span>
-                    </div>
+                    <span class="gmail-draft-pill">Draft</span>
                   </div>
-                  <div class="more-contacts">+ 46 more quality contacts</div>
-                  <div class="gen-btn" id="csv-gen-btn">Generate 50 drafts</div>
-                  <div class="progress-wrap" id="csv-progress" style="display:none;">
-                    <div class="progress-lbl" id="csv-progress-lbl">Saving draft 1 of 50...</div>
-                    <div class="progress-track">
-                      <div class="progress-fill" id="csv-progress-fill"></div>
+                  <div class="gmail-row">
+                    <div class="gmail-avatar">SK</div>
+                    <div class="gmail-row-content">
+                      <div class="gmail-subject">Fellow PCT Brother</div>
+                      <div class="gmail-preview">Hi Sarah, I hope you are doing well...</div>
                     </div>
+                    <span class="gmail-draft-pill">Draft</span>
+                  </div>
+                  <div class="gmail-row">
+                    <div class="gmail-avatar">PP</div>
+                    <div class="gmail-row-content">
+                      <div class="gmail-subject">Ross Student Reaching Out</div>
+                      <div class="gmail-preview">Hi Priya, I hope you are doing well...</div>
+                    </div>
+                    <span class="gmail-draft-pill">Draft</span>
+                  </div>
+                  <div class="gmail-row">
+                    <div class="gmail-avatar">JL</div>
+                    <div class="gmail-row-content">
+                      <div class="gmail-subject">Michigan Student Interested in PE at Blackstone</div>
+                      <div class="gmail-preview">Hi Jordan, I hope you are doing well...</div>
+                    </div>
+                    <span class="gmail-draft-pill">Draft</span>
+                  </div>
+                  <div class="gmail-row">
+                    <div class="gmail-avatar">MR</div>
+                    <div class="gmail-row-content">
+                      <div class="gmail-subject">Fellow Ross Alum at Morgan Stanley</div>
+                      <div class="gmail-preview">Hi Marcus, I hope you are doing well...</div>
+                    </div>
+                    <span class="gmail-draft-pill">Draft</span>
+                  </div>
+                  <div class="gmail-row">
+                    <div class="gmail-avatar">EP</div>
+                    <div class="gmail-row-content">
+                      <div class="gmail-subject">Michigan Ross Student, Quick Question</div>
+                      <div class="gmail-preview">Hi Emma, I hope you are doing well...</div>
+                    </div>
+                    <span class="gmail-draft-pill">Draft</span>
                   </div>
                 </div>
-
-              </div><!-- /scene-csv -->
+                <div class="gmail-bar">50 drafts saved by ColdMatch</div>
+              </div><!-- /hero-gmail -->
 
             </div><!-- /mockup-body -->
           </div><!-- /product-mockup -->
@@ -871,7 +748,7 @@
       <div class="problem-inner fade-in">
         <span class="section-eyebrow">THE REALITY</span>
         <h2>Networking is how you get the offer. Almost nobody does it at scale.</h2>
-        <p>Finance recruiting is not just about grades and clubs. The students who get the offer are the ones who sent the most emails, had the most calls, and built the most relationships. Most students know this. Most students still only send a handful of emails because writing them takes too long.</p>
+        <p>The students who get the offer sent more emails, had more calls, and built more relationships. Most students know this but still only reach out to a handful of people because writing personalized emails takes too long.</p>
         <p class="problem-punchline">ColdMatch changes that math.</p>
       </div>
     </div>
@@ -906,7 +783,7 @@
         <div class="comparison-row">
           <div class="comp-task-label">Saving drafts and tracking outreach</div>
           <div class="comp-cells">
-            <div class="comp-cell without">Manual copy paste into spreadsheets</div>
+            <div class="comp-cell without">Manually saving drafts and updating a spreadsheet</div>
             <div class="comp-cell with-cm">Auto-saved to Gmail and tracker</div>
           </div>
         </div>
@@ -938,18 +815,16 @@
         <div class="email-card email-card-bad">
           <div class="email-card-label">AI Slop</div>
           <div class="email-fields">
-            <div class="email-field">
-              <span class="email-field-label">To:</span>
-              <span>ryan.chen@gs.com</span>
-            </div>
-            <div class="email-field">
-              <span class="email-field-label">Subject:</span>
-              <span>Aspiring Finance Professional Seeking Guidance</span>
-            </div>
+            <div class="email-field"><span class="email-field-label">To:</span><span>ryan.chen@gs.com</span></div>
+            <div class="email-field"><span class="email-field-label">Subject:</span><span>Aspiring Finance Professional Seeking Guidance</span></div>
           </div>
           <div class="email-divider"></div>
           <div class="email-body">
-            Hi Ryan, I hope this email finds you well! My name is Justin Rodriguez and I am a sophomore at the University of Michigan Ross School of Business. I came across your LinkedIn profile and was <span class="hl-bad">truly impressed</span> by your <span class="hl-bad">remarkable journey</span> from Michigan Ross to Goldman Sachs <span class="hl-bad">&mdash;</span> a path that <span class="hl-bad">really resonated with me</span> and <span class="hl-bad">aligns perfectly</span> with my career goals as an aspiring finance professional. I am <span class="hl-bad">deeply passionate</span> about breaking into investment banking <span class="hl-bad">&mdash;</span> specifically the kind of high-impact advisory work that Goldman is known for <span class="hl-bad">&mdash;</span> and would <span class="hl-bad">greatly appreciate</span> any insights you could share about your path and the recruiting process. A quick call at your earliest convenience would mean the world to me as I look to gain <span class="hl-bad">invaluable guidance</span> from someone who has navigated this journey so successfully. I have attached my resume below for your reference. Warm regards, Justin Rodriguez
+            <p>Hi Ryan, I hope this email finds you well! My name is Justin Rodriguez and I am a sophomore at the University of Michigan Ross School of Business.</p>
+            <p>I came across your LinkedIn profile and was <span class="hl-bad">truly impressed</span> by your <span class="hl-bad">remarkable journey</span> from Michigan Ross to Goldman Sachs <span class="hl-bad">&mdash;</span> a path that <span class="hl-bad">really resonated with me</span> and <span class="hl-bad">aligns perfectly</span> with my career goals as an aspiring finance professional.</p>
+            <p>I am <span class="hl-bad">deeply passionate</span> about breaking into investment banking <span class="hl-bad">&mdash;</span> specifically the kind of high-impact advisory work that Goldman is known for <span class="hl-bad">&mdash;</span> and would <span class="hl-bad">greatly appreciate</span> any insights you could share about your path and the recruiting process.</p>
+            <p>A quick call at your earliest convenience would mean the world to me as I look to gain <span class="hl-bad">invaluable guidance</span> from someone who has navigated this journey so successfully.</p>
+            <p>I have attached my resume below for your reference. Warm regards, Justin Rodriguez</p>
           </div>
         </div>
 
@@ -957,18 +832,16 @@
         <div class="email-card email-card-good">
           <div class="email-card-label">ColdMatch</div>
           <div class="email-fields">
-            <div class="email-field">
-              <span class="email-field-label">To:</span>
-              <span>ryan.chen@gs.com</span>
-            </div>
-            <div class="email-field">
-              <span class="email-field-label">Subject:</span>
-              <span>Michigan Ross Student Interested in IB at Goldman</span>
-            </div>
+            <div class="email-field"><span class="email-field-label">To:</span><span>ryan.chen@gs.com</span></div>
+            <div class="email-field"><span class="email-field-label">Subject:</span><span>Michigan Ross Student Interested in IB at Goldman</span></div>
           </div>
           <div class="email-divider"></div>
           <div class="email-body">
-            Hi Ryan, I hope you are doing well. My name is Justin Rodriguez and I am a sophomore studying Business at Michigan Ross interested in IB opportunities at Goldman. I noticed you <span class="hl-good">also went to Ross</span> before transitioning to M&amp;A at Goldman and I was wondering if you would be available for a quick call in the coming weeks. I would be more than happy to find a time that works for you. In case it is helpful, I have attached my resume for reference. Looking forward to hearing from you. Best, and <span class="hl-good">Go Blue</span>! Justin
+            <p>Hi Ryan, I hope you are doing well.</p>
+            <p>My name is Justin Rodriguez and I am a sophomore studying Business at Michigan Ross interested in IB opportunities at Goldman.</p>
+            <p>I noticed you <span class="hl-good">also went to Ross</span> before transitioning to M&amp;A at Goldman and I was wondering if you would be available for a quick call in the coming weeks. I would be more than happy to find a time that works for you.</p>
+            <p>In case it is helpful, I have attached my resume for reference.</p>
+            <p>Looking forward to hearing from you. Best, and <span class="hl-good">Go Blue</span>! Justin</p>
           </div>
         </div>
 
@@ -988,14 +861,11 @@
         <div class="card fade-in fade-in-delay-1">
           <div class="card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="#3D8B6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </div>
-          <h3>Upload your alumni database</h3>
-          <p>Drop in your club or school alumni list. ColdMatch scores every contact by relevance to your goals.</p>
+          <h3>Find your people</h3>
+          <p>Upload an alumni list or search by firm and school. ColdMatch scores and ranks every contact by how relevant they are to your goals.</p>
         </div>
         <div class="card fade-in fade-in-delay-2">
           <div class="card-icon">
@@ -1005,7 +875,7 @@
             </svg>
           </div>
           <h3>Generate emails that sound human</h3>
-          <p>No templates, no filler. Every email references your shared background, their specific firm, and your recruiting goals.</p>
+          <p>No templates, no filler. Short, specific emails that reference your real connection and make a simple ask.</p>
         </div>
         <div class="card fade-in fade-in-delay-3">
           <div class="card-icon">
@@ -1015,8 +885,8 @@
               <line x1="12" y1="22" x2="12" y2="7"/>
             </svg>
           </div>
-          <h3>Saved straight to Gmail</h3>
-          <p>Every draft lands in your Gmail drafts folder. Review, edit, and send when you are ready. Nothing gets sent without you.</p>
+          <h3>Track everything automatically</h3>
+          <p>Drafts save to Gmail, contacts log to your tracker, and replies get detected automatically. Zero manual work.</p>
         </div>
       </div>
     </div>
@@ -1051,34 +921,22 @@
             <div class="fm-list">
               <div class="fm-row">
                 <div class="fm-cbox fm-checked">&#10003;</div>
-                <div class="fm-info">
-                  <div class="fm-name">Alex Chen</div>
-                  <div class="fm-detail">Goldman Sachs · IB Analyst</div>
-                </div>
+                <div class="fm-info"><div class="fm-name">Alex Chen</div><div class="fm-detail">Goldman Sachs · IB Analyst</div></div>
                 <span class="fm-badge fm-high">High</span>
               </div>
               <div class="fm-row">
                 <div class="fm-cbox fm-checked">&#10003;</div>
-                <div class="fm-info">
-                  <div class="fm-name">Sarah Kim</div>
-                  <div class="fm-detail">Morgan Stanley · IB Associate</div>
-                </div>
+                <div class="fm-info"><div class="fm-name">Sarah Kim</div><div class="fm-detail">Morgan Stanley · IB Associate</div></div>
                 <span class="fm-badge fm-high">High</span>
               </div>
               <div class="fm-row">
                 <div class="fm-cbox fm-empty"></div>
-                <div class="fm-info">
-                  <div class="fm-name">Mike Torres</div>
-                  <div class="fm-detail">Deloitte · Consultant</div>
-                </div>
+                <div class="fm-info"><div class="fm-name">Mike Torres</div><div class="fm-detail">Deloitte · Consultant</div></div>
                 <span class="fm-badge fm-low">Low</span>
               </div>
               <div class="fm-row">
                 <div class="fm-cbox fm-checked">&#10003;</div>
-                <div class="fm-info">
-                  <div class="fm-name">Priya Patel</div>
-                  <div class="fm-detail">Evercore · IB Analyst</div>
-                </div>
+                <div class="fm-info"><div class="fm-name">Priya Patel</div><div class="fm-detail">Evercore · IB Analyst</div></div>
                 <span class="fm-badge fm-high">High</span>
               </div>
             </div>
@@ -1104,9 +962,8 @@
             </div>
             <div class="mockup-body">
 
-              <!-- Scene: Search -->
+              <!-- Apollo search animation -->
               <div class="scene" id="scene-search">
-
                 <div class="scene-step" id="step-search-input">
                   <div class="scene-label">Find contacts</div>
                   <div class="search-bar">
@@ -1116,40 +973,27 @@
                     <span class="search-typed" id="search-typed"></span><span class="cursor" id="search-cursor"></span>
                   </div>
                 </div>
-
                 <div class="scene-step" id="step-search-results">
                   <div class="scene-label">8 contacts found</div>
                   <div class="contact-list" id="search-rows">
                     <div class="contact-row">
                       <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Jordan Lee</div>
-                        <div class="contact-detail">J.P. Morgan · IB Analyst</div>
-                      </div>
+                      <div class="contact-info"><div class="contact-name">Jordan Lee</div><div class="contact-detail">J.P. Morgan · IB Analyst</div></div>
                       <span class="row-done-check">&#10003;</span>
                     </div>
                     <div class="contact-row">
                       <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Emma Park</div>
-                        <div class="contact-detail">Citi · IB Analyst</div>
-                      </div>
+                      <div class="contact-info"><div class="contact-name">Emma Park</div><div class="contact-detail">Citi · IB Analyst</div></div>
                       <span class="row-done-check">&#10003;</span>
                     </div>
                     <div class="contact-row">
                       <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Marcus Reed</div>
-                        <div class="contact-detail">Goldman Sachs · IB Analyst</div>
-                      </div>
+                      <div class="contact-info"><div class="contact-name">Marcus Reed</div><div class="contact-detail">Goldman Sachs · IB Analyst</div></div>
                       <span class="row-done-check">&#10003;</span>
                     </div>
                     <div class="contact-row">
                       <div class="cbox checked">&#10003;</div>
-                      <div class="contact-info">
-                        <div class="contact-name">Lily Zhang</div>
-                        <div class="contact-detail">Barclays · IB Associate</div>
-                      </div>
+                      <div class="contact-info"><div class="contact-name">Lily Zhang</div><div class="contact-detail">Barclays · IB Associate</div></div>
                       <span class="row-done-check">&#10003;</span>
                     </div>
                   </div>
@@ -1157,16 +1001,13 @@
                   <div class="gen-btn" id="search-gen-btn">Generate 8 drafts</div>
                   <div class="progress-wrap" id="search-progress" style="display:none;">
                     <div class="progress-lbl" id="search-progress-lbl">Saving draft 1 of 8...</div>
-                    <div class="progress-track">
-                      <div class="progress-fill" id="search-progress-fill"></div>
-                    </div>
+                    <div class="progress-track"><div class="progress-fill" id="search-progress-fill"></div></div>
                   </div>
                 </div>
-
               </div><!-- /scene-search -->
 
-            </div><!-- /mockup-body -->
-          </div><!-- /product-mockup -->
+            </div>
+          </div>
         </div>
         <div class="feature-copy fade-in fade-in-delay-1">
           <span class="feature-label">FIND ANYONE</span>
@@ -1204,9 +1045,7 @@
               <div class="ext-score-num">84</div>
               <div class="ext-score-label">Match Score</div>
             </div>
-            <div class="ext-bar-track">
-              <div class="ext-bar-fill"></div>
-            </div>
+            <div class="ext-bar-track"><div class="ext-bar-fill"></div></div>
             <ul class="ext-reasons">
               <li>Strong overlap in finance recruiting pipeline</li>
               <li>Michigan alumni connection</li>
@@ -1266,23 +1105,16 @@
             <div class="tracker-wrap">
               <table class="tracker-table">
                 <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Firm</th>
-                    <th>Stage</th>
-                    <th>Date</th>
-                  </tr>
+                  <tr><th>Name</th><th>Firm</th><th>Stage</th><th>Date</th></tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Alex Chen</td>
-                    <td>Goldman Sachs</td>
+                    <td>Alex Chen</td><td>Goldman Sachs</td>
                     <td><span class="stage-pill s-contacted">Contacted</span></td>
                     <td>Apr 14</td>
                   </tr>
                   <tr>
-                    <td>Sarah Kim</td>
-                    <td>Morgan Stanley</td>
+                    <td>Sarah Kim</td><td>Morgan Stanley</td>
                     <td>
                       <span class="stage-pill s-replied">Replied</span>
                       <div class="reply-tag"><span class="reply-dot"></span>Reply detected</div>
@@ -1290,14 +1122,12 @@
                     <td>Apr 12</td>
                   </tr>
                   <tr>
-                    <td>Marcus Reed</td>
-                    <td>Evercore</td>
+                    <td>Marcus Reed</td><td>Evercore</td>
                     <td><span class="stage-pill s-drafted">Drafted</span></td>
                     <td>Apr 16</td>
                   </tr>
                   <tr>
-                    <td>Priya Patel</td>
-                    <td>Citi</td>
+                    <td>Priya Patel</td><td>Citi</td>
                     <td><span class="stage-pill s-meeting">Meeting Scheduled</span></td>
                     <td>Apr 10</td>
                   </tr>
@@ -1366,7 +1196,53 @@
       confirmEl.style.display = 'block';
     }
 
-    // Mockup animation
+    // ── Hero animation: contacts -> generate -> gmail drafts ──
+    function heroAnimLoop() {
+      const contactsEl = document.getElementById('hero-contacts');
+      const gmailEl    = document.getElementById('hero-gmail');
+      const genBtn     = document.getElementById('hero-gen-btn');
+      const progressWrap = document.getElementById('hero-progress-wrap');
+      const progressFill = document.getElementById('hero-progress-fill');
+
+      // Reset state
+      gmailEl.classList.remove('active');
+      contactsEl.classList.add('active');
+      genBtn.classList.remove('clicking');
+      genBtn.style.display = 'flex';
+      progressWrap.style.display = 'none';
+      progressFill.style.transition = 'none';
+      progressFill.style.width = '0%';
+
+      // Step 1: show contacts for 3s
+      setTimeout(() => {
+        // Step 2: animate button click, show progress bar
+        genBtn.classList.add('clicking');
+        setTimeout(() => {
+          genBtn.classList.remove('clicking');
+          genBtn.style.display = 'none';
+          progressWrap.style.display = 'block';
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            progressFill.style.transition = 'width 1.6s ease';
+            progressFill.style.width = '100%';
+          }));
+
+          // Step 3: after 2s crossfade to Gmail view
+          setTimeout(() => {
+            contactsEl.classList.remove('active');
+            gmailEl.classList.add('active');
+
+            // Hold Gmail view for 3s then loop
+            setTimeout(() => {
+              setTimeout(heroAnimLoop, 400);
+            }, 3000);
+          }, 2000);
+        }, 400);
+      }, 3000);
+    }
+
+    setTimeout(heroAnimLoop, 900);
+
+    // ── Feature B: Apollo search animation ──
     const SEARCH_QUERY = 'Michigan alumni at bulge bracket banks';
 
     function showScene(id) { document.getElementById(id).classList.add('active'); }
@@ -1381,74 +1257,23 @@
     function runProgress(fillId, lblId, wrapId, listId, genBtnId, labels, highTiersOnly, onDone) {
       const genBtn = document.getElementById(genBtnId);
       genBtn.classList.add('clicking');
-
       setTimeout(() => {
         genBtn.style.display = 'none';
         document.getElementById(wrapId).style.display = 'block';
-
         const fill = document.getElementById(fillId);
         const lbl  = document.getElementById(lblId);
-
         requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = '100%'; }));
-
         const rows = Array.from(document.querySelectorAll('#' + listId + ' .contact-row'))
           .filter(r => !highTiersOnly || r.dataset.tier === 'high');
-
         lbl.textContent = labels[0];
-
         rows.forEach((row, i) => {
           setTimeout(() => {
             row.classList.add('done');
             lbl.textContent = labels[i + 1] || labels[labels.length - 1];
           }, 500 + i * 550);
         });
-
         setTimeout(onDone, 500 + rows.length * 550 + 1200);
       }, 280);
-    }
-
-    function runCsvScene(onDone) {
-      hideStep('step-csv-dropzone');
-      hideStep('step-csv-upload');
-      hideStep('step-csv-list');
-      document.getElementById('csv-progress').style.display = 'none';
-      document.getElementById('csv-progress-fill').style.transition = 'none';
-      document.getElementById('csv-progress-fill').style.width = '0%';
-      document.getElementById('csv-gen-btn').classList.remove('clicking');
-      document.getElementById('csv-gen-btn').style.display = 'flex';
-      resetRows('csv-rows');
-
-      showScene('scene-csv');
-      showStep('step-csv-dropzone');
-
-      setTimeout(() => {
-        hideStep('step-csv-dropzone');
-        setTimeout(() => {
-          showStep('step-csv-upload');
-
-          setTimeout(() => {
-            hideStep('step-csv-upload');
-            setTimeout(() => {
-              document.getElementById('csv-progress-fill').style.transition = 'width 1.6s ease';
-              showStep('step-csv-list');
-
-              setTimeout(() => {
-                runProgress(
-                  'csv-progress-fill', 'csv-progress-lbl', 'csv-progress', 'csv-rows', 'csv-gen-btn',
-                  ['Saving draft 1 of 50...', 'Saving draft 12 of 50...', 'Saving draft 23 of 50...', '50 drafts saved to Gmail \u2713'],
-                  true,
-                  () => {
-                    setTimeout(() => {
-                      hideScene('scene-csv');
-                      setTimeout(onDone, 450);
-                    }, 600);
-                  }
-                );
-              }, 2800);
-            }, 60);
-          }, 2200);
-        }, 60);
-      }, 1500);
     }
 
     function typeText(el, text, cb) {
@@ -1477,13 +1302,11 @@
 
       typeText(document.getElementById('search-typed'), SEARCH_QUERY, () => {
         document.getElementById('search-cursor').style.display = 'none';
-
         setTimeout(() => {
           hideStep('step-search-input');
           setTimeout(() => {
             document.getElementById('search-progress-fill').style.transition = 'width 1.6s ease';
             showStep('step-search-results');
-
             setTimeout(() => {
               runProgress(
                 'search-progress-fill', 'search-progress-lbl', 'search-progress', 'search-rows', 'search-gen-btn',
@@ -1502,13 +1325,6 @@
       });
     }
 
-    // Hero: CSV loop only
-    function heroLoop() {
-      runCsvScene(() => setTimeout(heroLoop, 400));
-    }
-    setTimeout(heroLoop, 900);
-
-    // Feature B: search loop
     function searchLoop() {
       runSearchScene(() => setTimeout(searchLoop, 400));
     }
