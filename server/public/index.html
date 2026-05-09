@@ -112,6 +112,20 @@
     }
     .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .btn-primary:active { transform: translateY(0); }
+    .btn-login {
+      display: inline-flex;
+      align-items: center;
+      padding: 11px 16px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-login:hover { color: var(--accent); }
     .btn-white {
       display: inline-flex;
       align-items: center;
@@ -558,6 +572,7 @@
           <li><a href="#features">Features</a></li>
           <li><a href="#extension">Extension</a></li>
         </ul>
+        <a href="/login" class="btn-login">Log in</a>
         <a href="#signup" class="btn-primary">Join the waitlist</a>
       </div>
     </div>
